@@ -1,0 +1,22 @@
+# Laravel environment and secrets
+.env
+**/.env
+
+# Installed dependencies
+vendor/
+**/vendor/
+node_modules/
+**/node_modules/
+
+# Runtime and local development files
+*.log
+**/storage/framework/cache/data/*
+**/storage/framework/sessions/*
+**/storage/framework/views/*
+**/bootstrap/cache/*.php
+
+# IDE and operating-system files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db

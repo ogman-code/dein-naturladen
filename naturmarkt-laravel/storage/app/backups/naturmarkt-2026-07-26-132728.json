@@ -1,0 +1,53 @@
+{
+    "created_at": "2026-07-26T13:27:28+02:00",
+    "orders": [
+        {
+            "id": 2,
+            "customer_name": null,
+            "email": "gabrielsrominescu@gmail.com",
+            "phone": null,
+            "street": null,
+            "postal_code": null,
+            "city": null,
+            "country_code": "DE",
+            "address": "Am Hedernfeld 16 81375",
+            "notes": null,
+            "payment_method": "PayPal",
+            "payment_status": "Offen",
+            "cart": "[{\"name\":\"Sirup Gelee Royal\",\"price\":\"10,00 EUR\",\"category\":\"Sirupmix\",\"image\":\"https:\\\/\\\/cdn.shopify.com\\\/s\\\/files\\\/1\\\/0927\\\/7089\\\/4211\\\/files\\\/A4767CD0-B717-4105-B0D0-FA3D404C0CD3.png?v=1760003556\",\"url\":\"http:\\\/\\\/127.0.0.1\\\/produkte\\\/sirup\\\/sirup-gelee-royal\",\"quantity\":1}]",
+            "subtotal": "0.00",
+            "shipping": "0.00",
+            "discount": "0.00",
+            "coupon_code": null,
+            "total": "14.90",
+            "status": "Neu",
+            "created_at": "2026-07-16 21:31:19",
+            "updated_at": "2026-07-16 21:31:19"
+        },
+        {
+            "id": 4,
+            "customer_name": "gabriel rominescu",
+            "email": "gabrielsrominescu@gmail.com",
+            "phone": "01605478254",
+            "street": "Am Hedernfeld",
+            "postal_code": "1",
+            "city": "Test",
+            "country_code": "DE",
+            "address": "Am Hedernfeld, 1 Test",
+            "notes": "Test",
+            "payment_method": "PayPal",
+            "payment_status": "Offen",
+            "cart": "[{\"name\":\"Gesichtsgel Bienengift & Gelee Royal\",\"price\":\"16,00 EUR\",\"category\":\"Cremes & Salben\",\"image\":\"https:\\\/\\\/cdn.shopify.com\\\/s\\\/files\\\/1\\\/0927\\\/7089\\\/4211\\\/files\\\/EF0DD709-6991-4B45-9616-84EEDFD20438.png?v=1760002231\",\"url\":\"http:\\\/\\\/127.0.0.1\\\/produkte\\\/cremes-salben\\\/gesichtsgel-bienengift-gelee-royal\",\"quantity\":1}]",
+            "subtotal": "0.00",
+            "shipping": "0.00",
+            "discount": "0.00",
+            "coupon_code": null,
+            "total": "20.90",
+            "status": "Neu",
+            "created_at": "2026-07-16 21:52:19",
+            "updated_at": "2026-07-16 21:52:19"
+        }
+    ],
+    "newsletter": [],
+    "product_overrides": []
+}
