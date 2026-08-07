@@ -19,6 +19,7 @@
         <a class="brand" href="{{ route('home') }}" aria-label="Naturmarkt Startseite"><img class="brand-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a>
         <div class="nav-links">
             <a href="{{ route('cart') }}">Zurück zum Warenkorb</a>
+            <a href="{{ $customer ? route('customer.account') : route('customer.login') }}">{{ $customer ? 'Mein Konto' : 'Anmelden' }}</a>
         </div>
         <a class="cart-button" href="{{ route('cart') }}" aria-label="Mein Warenkorb">
             <span>Warenkorb</span>
@@ -53,15 +54,15 @@
                         <div class="checkout-field-grid">
                             <label>
                                 Name
-                                <input type="text" name="name" autocomplete="name" placeholder="Vor- und Nachname" required>
+                                <input type="text" name="name" value="{{ $customer?->name }}" autocomplete="name" placeholder="Vor- und Nachname" required>
                             </label>
                             <label>
                                 Handy / Telefon
-                                <input type="tel" name="phone" autocomplete="tel" placeholder="Telefonnummer" required>
+                                <input type="tel" name="phone" value="{{ $customer?->phone }}" autocomplete="tel" placeholder="Telefonnummer" required>
                             </label>
                             <label>
                                 E-Mail
-                                <input type="email" name="email" autocomplete="email" placeholder="deine@email.de" required>
+                                <input type="email" name="email" value="{{ $customer?->email }}" autocomplete="email" placeholder="deine@email.de" required>
                             </label>
                         </div>
                     </div>
@@ -71,21 +72,21 @@
                         <div class="checkout-field-grid">
                             <label class="wide-field">
                                 Straße und Hausnummer
-                                <input type="text" name="street" autocomplete="street-address" placeholder="Musterstraße 12" required>
+                                <input type="text" name="street" value="{{ $customer?->street }}" autocomplete="street-address" placeholder="Musterstraße 12" required>
                             </label>
                             <label>
                                 PLZ
-                                <input type="text" name="postal_code" autocomplete="postal-code" placeholder="12345" required>
+                                <input type="text" name="postal_code" value="{{ $customer?->postal_code }}" autocomplete="postal-code" placeholder="12345" required>
                             </label>
                             <label>
                                 Ort
-                                <input type="text" name="city" autocomplete="address-level2" placeholder="Musterstadt" required>
+                                <input type="text" name="city" value="{{ $customer?->city }}" autocomplete="address-level2" placeholder="Musterstadt" required>
                             </label>
                             <label>
                                 Lieferland
                                 <select name="country_code" id="shipping-country" required>
                                     @foreach ($shippingCountries as $code => $country)
-                                        <option value="{{ $code }}" @selected($code === 'DE')>{{ $country['name'] }}</option>
+                                        <option value="{{ $code }}" @selected($code === ($customer?->country_code ?? 'DE'))>{{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                             </label>

@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerAuthController;
+use App\Http\Controllers\CustomerAuthController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -32,6 +33,14 @@ Route::get('/besitzer', [OwnerAuthController::class, 'show'])->name('owner.login
 Route::post('/besitzer/registrieren', [OwnerAuthController::class, 'register'])->middleware('throttle:5,1')->name('owner.register');
 Route::post('/besitzer/anmelden', [OwnerAuthController::class, 'login'])->middleware('throttle:5,1')->name('owner.authenticate');
 Route::post('/besitzer/abmelden', [OwnerAuthController::class, 'logout'])->name('owner.logout');
+Route::get('/kundenkonto/anmelden', [CustomerAuthController::class, 'show'])->name('customer.login');
+Route::post('/kundenkonto/registrieren', [CustomerAuthController::class, 'register'])->middleware('throttle:5,1')->name('customer.register');
+Route::post('/kundenkonto/anmelden', [CustomerAuthController::class, 'login'])->middleware('throttle:5,1')->name('customer.authenticate');
+Route::middleware(['customer.auth', 'throttle:60,1'])->prefix('kundenkonto')->group(function () {
+    Route::get('/', [CustomerAuthController::class, 'account'])->name('customer.account');
+    Route::put('/daten', [CustomerAuthController::class, 'update'])->name('customer.update');
+    Route::post('/abmelden', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+});
 Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(function () {
     Route::get('/bestellungen', [HomeController::class, 'adminOrders'])->name('admin.orders');
     Route::post('/bestellungen/{id}/status', [HomeController::class, 'updateOrderStatus'])->name('admin.orders.status');

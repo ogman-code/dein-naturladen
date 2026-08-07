@@ -201,12 +201,15 @@ class HomeController extends Controller
         return response($xml, 200, ['Content-Type' => 'application/xml']);
     }
 
-    public function checkoutPage(): View
+    public function checkoutPage(Request $request): View
     {
+        $customerId = $request->session()->get('customer_user_id');
+
         return view('checkout', [
             'categories' => $this->homeCategories(),
             'shippingCountries' => config('naturmarkt.shipping.countries', []),
             'payments' => config('naturmarkt.payments'),
+            'customer' => $customerId ? DB::table('customer_users')->find($customerId) : null,
         ]);
     }
 
@@ -383,6 +386,7 @@ class HomeController extends Controller
         );
 
         $orderId = DB::table('checkout_requests')->insertGetId([
+            'customer_user_id' => $request->session()->get('customer_user_id'),
             'customer_name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],

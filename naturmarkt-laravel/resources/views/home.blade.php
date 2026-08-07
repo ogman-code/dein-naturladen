@@ -48,6 +48,7 @@
                 </div>
             </div>
             <a href="#kontakt">Kontakt</a>
+            <a href="{{ session()->has('customer_user_id') ? route('customer.account') : route('customer.login') }}">{{ session()->has('customer_user_id') ? 'Mein Konto' : 'Anmelden' }}</a>
             <a href="{{ route('owner.login') }}">Besitzer</a>
             <form class="header-search" action="{{ route('search') }}" method="get">
                 <label class="sr-only" for="global-search">Produkte suchen</label>

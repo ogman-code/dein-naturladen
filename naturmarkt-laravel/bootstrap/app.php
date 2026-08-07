@@ -9,6 +9,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin.basic' => \App\Http\Middleware\AdminBasicAuth::class,
             'owner.auth' => \App\Http\Middleware\OwnerAuthenticated::class,
+            'customer.auth' => \App\Http\Middleware\CustomerAuthenticated::class,
         ]);
     })
     ->withExceptions(fn (Exceptions $exceptions) => null)

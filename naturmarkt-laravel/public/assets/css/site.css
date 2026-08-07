@@ -2314,3 +2314,37 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .star-rating-input label:hover, .star-rating-input label:hover ~ label, .star-rating-input input:checked ~ label { color: #d69b22; }
 .star-rating-input input:focus-visible + label { outline: 2px solid #365c35; outline-offset: 3px; }
 @media (max-width: 760px) { .reviews-layout { grid-template-columns: 1fr; } .review-form { position: static; } .review-card > div { align-items: flex-start; flex-direction: column; gap: .3rem; } }
+
+/* Customer accounts */
+.customer-auth-body, .customer-account-body { min-height: 100vh; background: #f4f6f1; }
+.account-simple-header { display: flex; align-items: center; justify-content: space-between; padding-top: 24px; padding-bottom: 24px; }
+.account-simple-header img { width: 175px; }
+.account-simple-header > a:last-child { color: #24543b; font-weight: 750; }
+.customer-auth-shell { display: grid; grid-template-columns: .72fr 1.28fr; gap: clamp(32px, 6vw, 90px); align-items: center; min-height: calc(100vh - 110px); padding-top: 40px; padding-bottom: 70px; }
+.customer-auth-intro h1, .account-heading h1 { margin: 8px 0 18px; font: 700 clamp(2.6rem, 5vw, 4.8rem)/1 Fraunces, Georgia, serif; }
+.customer-auth-intro p { color: #647067; font-size: 1.08rem; line-height: 1.65; }
+.customer-auth-intro ul { display: grid; gap: 10px; padding: 0; list-style: none; }
+.customer-auth-intro li::before { content: "✓"; margin-right: 9px; color: #3f7957; font-weight: 900; }
+.customer-auth-forms { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; align-items: start; }
+.customer-auth-card, .account-panel { padding: clamp(24px, 4vw, 38px); border: 1px solid #dfe5df; border-radius: 20px; background: #fff; box-shadow: 0 18px 50px rgba(30,55,40,.07); }
+.customer-auth-card h2, .account-panel h2 { margin: 5px 0 22px; font: 700 1.8rem/1.1 Fraunces, Georgia, serif; }
+.customer-auth-card form, .account-address-form { display: grid; gap: 14px; }
+.customer-auth-card label, .account-address-form label { display: grid; gap: 6px; color: #526158; font-size: .82rem; font-weight: 800; }
+.customer-auth-card input, .account-address-form input, .account-address-form select { width: 100%; min-height: 47px; border: 1px solid #ccd5ce; border-radius: 10px; padding: 0 13px; background: #fbfcfa; font: inherit; }
+.customer-auth-card button, .account-logout { min-height: 47px; border: 0; border-radius: 10px; padding: 0 18px; color: #fff; background: #24543b; cursor: pointer; font-weight: 800; }
+.account-page { padding-top: 65px; padding-bottom: 90px; }
+.account-heading { display: flex; align-items: end; justify-content: space-between; gap: 24px; margin-bottom: 38px; }
+.account-heading h1 { font-size: clamp(2.4rem, 5vw, 4rem); }
+.account-heading p { margin: 0; color: #647067; }
+.account-layout { display: grid; grid-template-columns: minmax(300px, .72fr) minmax(0, 1.28fr); gap: 24px; align-items: start; }
+.account-address-form { grid-template-columns: 1fr 1fr; }
+.account-address-form .wide-field, .account-address-form button { grid-column: 1 / -1; }
+.account-orders { display: grid; gap: 14px; }
+.customer-order-card { border: 1px solid #e0e6df; border-radius: 14px; padding: 18px; }
+.customer-order-card > div, .customer-order-card footer, .customer-order-card li { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.customer-order-card > div time { color: #788178; }
+.order-status { border-radius: 999px; padding: 5px 10px; color: #285338; background: #e5f2e7; font-size: .78rem; font-weight: 800; }
+.customer-order-card ul { display: grid; gap: 8px; margin: 17px 0; padding: 17px 0; border-top: 1px solid #edf0eb; border-bottom: 1px solid #edf0eb; list-style: none; }
+.customer-order-card footer > strong { font: 700 1.25rem Fraunces, Georgia, serif; }
+@media (max-width: 980px) { .customer-auth-shell, .account-layout { grid-template-columns: 1fr; } }
+@media (max-width: 700px) { .customer-auth-forms { grid-template-columns: 1fr; } .account-heading { align-items: flex-start; flex-direction: column; } .account-address-form { grid-template-columns: 1fr; } .customer-order-card > div { align-items: flex-start; flex-wrap: wrap; } }
