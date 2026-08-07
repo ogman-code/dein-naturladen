@@ -465,6 +465,23 @@ adminProductSearch?.addEventListener('input', () => {
     const query = adminProductSearch.value.trim().toLowerCase();
     document.querySelectorAll('[data-admin-product]').forEach((product) => {
         product.hidden = !product.dataset.adminProduct.includes(query);
+        if (query && !product.hidden) product.closest('[data-admin-category]').open = true;
+        if (!query) product.open = false;
+    });
+    document.querySelectorAll('[data-admin-category]').forEach((category) => {
+        const hasMatches = [...category.querySelectorAll('[data-admin-product]')].some((product) => !product.hidden);
+        category.hidden = !hasMatches;
+        if (!query) category.open = false;
+    });
+});
+
+document.querySelectorAll('[data-category-target]').forEach((button) => {
+    button.addEventListener('click', () => {
+        const category = document.getElementById(button.dataset.categoryTarget);
+        if (!category) return;
+        category.hidden = false;
+        category.open = true;
+        category.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 
