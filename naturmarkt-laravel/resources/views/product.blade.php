@@ -55,6 +55,10 @@
                 <div class="product-detail-info">
                     <span class="eyebrow">{{ $category['name'] }}</span>
                     <h1>{{ $product['name'] }}</h1>
+                    <a class="product-rating-summary" href="#bewertungen" aria-label="{{ $reviewCount ? $averageRating . ' von 5 Sternen bei ' . $reviewCount . ' Bewertungen' : 'Noch keine Bewertungen' }}">
+                        <span class="rating-stars" aria-hidden="true">{{ $reviewCount ? str_repeat('★', (int) round($averageRating)) . str_repeat('☆', 5 - (int) round($averageRating)) : '☆☆☆☆☆' }}</span>
+                        <span>{{ $reviewCount ? number_format($averageRating, 1, ',', '.') . ' (' . $reviewCount . ')' : 'Als Erste:r bewerten' }}</span>
+                    </a>
                     <strong class="detail-price">{{ $product['price'] }}</strong>
 
                     <div class="product-benefit-grid">
@@ -95,6 +99,57 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <section class="section reviews-section" id="bewertungen">
+        <div class="container reviews-layout">
+            <div class="reviews-list-panel">
+                <div class="section-heading compact">
+                    <div>
+                        <span class="eyebrow">Kundenmeinungen</span>
+                        <h2>Bewertungen</h2>
+                    </div>
+                    @if ($reviewCount)
+                        <div class="reviews-average"><strong>{{ number_format($averageRating, 1, ',', '.') }}</strong><span class="rating-stars" aria-hidden="true">{{ str_repeat('★', (int) round($averageRating)) }}{{ str_repeat('☆', 5 - (int) round($averageRating)) }}</span><small>{{ $reviewCount }} {{ $reviewCount === 1 ? 'Bewertung' : 'Bewertungen' }}</small></div>
+                    @endif
+                </div>
+
+                @forelse ($reviews as $review)
+                    <article class="review-card">
+                        <div><strong>{{ $review->name }}</strong><span class="rating-stars" aria-label="{{ $review->rating }} von 5 Sternen">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</span></div>
+                        <p>{{ $review->comment }}</p>
+                        <time datetime="{{ $review->created_at }}">{{ \Illuminate\Support\Carbon::parse($review->created_at)->locale('de')->translatedFormat('d. F Y') }}</time>
+                    </article>
+                @empty
+                    <div class="cart-empty-state"><strong>Noch keine Bewertungen.</strong><p>Teile deine Erfahrung mit diesem Produkt.</p></div>
+                @endforelse
+            </div>
+
+            <form class="review-form" action="{{ route('products.reviews.store', [$category['key'], $product['handle']]) }}" method="post">
+                @csrf
+                <span class="eyebrow">Deine Erfahrung</span>
+                <h2>Produkt bewerten</h2>
+
+                @if (session('review_success'))
+                    <div class="review-success" role="status">{{ session('review_success') }}</div>
+                @endif
+                @if ($errors->any())
+                    <div class="review-errors" role="alert"><strong>Bitte prüfe deine Eingaben:</strong><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
+                @endif
+
+                <fieldset class="star-rating-input">
+                    <legend>Bewertung</legend>
+                    @for ($star = 5; $star >= 1; $star--)
+                        <input id="rating-{{ $star }}" name="rating" type="radio" value="{{ $star }}" @checked((int) old('rating') === $star) required>
+                        <label for="rating-{{ $star }}" title="{{ $star }} Sterne">★</label>
+                    @endfor
+                </fieldset>
+                <label><span>Name</span><input name="name" type="text" value="{{ old('name') }}" minlength="2" maxlength="80" autocomplete="name" required></label>
+                <label><span>Kommentar</span><textarea name="comment" rows="5" minlength="10" maxlength="1500" required>{{ old('comment') }}</textarea></label>
+                <button class="button primary" type="submit">Bewertung veröffentlichen</button>
+                <small>Dein Name und deine Bewertung werden öffentlich angezeigt.</small>
+            </form>
         </div>
     </section>
 

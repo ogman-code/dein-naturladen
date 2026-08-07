@@ -17,6 +17,9 @@ Route::get('/produkte/sirup', [HomeController::class, 'syrups'])->name('categori
 Route::get('/produkte/verschiedenes', [HomeController::class, 'miscellaneous'])->name('categories.miscellaneous');
 Route::get('/produkte/halbedelsteine-co', [HomeController::class, 'gemstones'])->name('categories.gemstones');
 Route::get('/produkte/{category}/{product}', [HomeController::class, 'product'])->name('products.show');
+Route::post('/produkte/{category}/{product}/bewertungen', [HomeController::class, 'storeReview'])
+    ->middleware('throttle:5,1')
+    ->name('products.reviews.store');
 Route::get('/warenkorb', [HomeController::class, 'cart'])->name('cart');
 Route::get('/kasse', [HomeController::class, 'checkoutPage'])->name('checkout.page');
 Route::get('/kontakt', [HomeController::class, 'contact'])->name('contact');

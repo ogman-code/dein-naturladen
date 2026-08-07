@@ -86,26 +86,72 @@ class HomeController extends Controller
             ->all();
 
         $enrichedProduct = $this->enrichProduct($productData, $categoryData);
+        $reviews = DB::table('product_reviews')
+            ->where('category', $category)
+            ->where('product', $product)
+            ->latest()
+            ->get();
+        $reviewCount = $reviews->count();
+        $averageRating = $reviewCount > 0 ? round((float) $reviews->avg('rating'), 1) : null;
+
+        $productSchema = [
+            '@context' => 'https://schema.org',
+            '@type' => 'Product',
+            'name' => $enrichedProduct['name'],
+            'image' => [$enrichedProduct['image']],
+            'description' => $enrichedProduct['description'],
+            'offers' => [
+                '@type' => 'Offer',
+                'priceCurrency' => 'EUR',
+                'price' => (float) str_replace(',', '.', str_replace('.', '', str_replace(' EUR', '', $enrichedProduct['price']))),
+                'availability' => $enrichedProduct['active'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
+                'url' => $enrichedProduct['url'],
+            ],
+        ];
+
+        if ($reviewCount > 0) {
+            $productSchema['aggregateRating'] = [
+                '@type' => 'AggregateRating',
+                'ratingValue' => $averageRating,
+                'reviewCount' => $reviewCount,
+            ];
+        }
 
         return view('product', [
             'category' => $categoryData,
             'product' => $enrichedProduct,
             'relatedProducts' => array_map(fn (array $item) => $this->enrichProduct($item, $categoryData), $relatedProducts),
-            'productSchema' => json_encode([
-                '@context' => 'https://schema.org',
-                '@type' => 'Product',
-                'name' => $enrichedProduct['name'],
-                'image' => [$enrichedProduct['image']],
-                'description' => $enrichedProduct['description'],
-                'offers' => [
-                    '@type' => 'Offer',
-                    'priceCurrency' => 'EUR',
-                    'price' => (float) str_replace(',', '.', str_replace('.', '', str_replace(' EUR', '', $enrichedProduct['price']))),
-                    'availability' => $enrichedProduct['active'] ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock',
-                    'url' => $enrichedProduct['url'],
-                ],
-            ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'reviews' => $reviews,
+            'reviewCount' => $reviewCount,
+            'averageRating' => $averageRating,
+            'productSchema' => json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         ]);
+    }
+
+    public function storeReview(Request $request, string $category, string $product): RedirectResponse
+    {
+        $this->productFromCatalog($category, $product);
+
+        $validated = $request->validate([
+            'name' => ['required', 'string', 'min:2', 'max:80'],
+            'rating' => ['required', 'integer', 'between:1,5'],
+            'comment' => ['required', 'string', 'min:10', 'max:1500'],
+        ]);
+
+        DB::table('product_reviews')->insert([
+            'category' => $category,
+            'product' => $product,
+            'name' => trim($validated['name']),
+            'rating' => $validated['rating'],
+            'comment' => trim($validated['comment']),
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return redirect()
+            ->route('products.show', [$category, $product])
+            ->withFragment('bewertungen')
+            ->with('review_success', 'Danke! Deine Bewertung wurde veröffentlicht.');
     }
 
     public function cart(): View
