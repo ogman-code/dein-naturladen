@@ -23,11 +23,11 @@
                     <label><span>Passwort</span><input type="password" name="password" autocomplete="current-password" required></label>
                     <button type="submit">Anmelden</button>
                 </form>
-                <div class="auth-choice"><span>oder / or …</span></div>
-                <button class="auth-switch" type="button" data-show-register>Registrieren / Konto erstellen <span aria-hidden="true">→</span></button>
+                <div class="auth-choice"><span>oder</span></div>
+                <button class="auth-switch" type="button" data-show-register><span>Konto erstellen</span> <span aria-hidden="true">→</span></button>
             </section>
             <section class="customer-auth-card customer-auth-page customer-auth-register" aria-hidden="true">
-                <button class="auth-back" type="button" data-show-login><span aria-hidden="true">←</span> Zurück zur Anmeldung</button>
+                <button class="auth-back" type="button" data-show-login><span aria-hidden="true">←</span> <span>Zurück zur Anmeldung</span></button>
                 <span class="eyebrow">Neu dabei</span><h2>Konto erstellen</h2>
                 @if($errors->any() && old('auth_mode') === 'register')<p class="auth-error">{{ $errors->first() }}</p>@endif
                 <form method="post" action="{{ route('customer.register') }}">@csrf
