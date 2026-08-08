@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
+use Stripe\StripeClient;
 
 class HomeController extends Controller
 {
@@ -474,7 +475,50 @@ class HomeController extends Controller
             'updated_at' => now(),
         ]);
 
-        foreach ($totals['cart'] as $item) {
+        $stripeCheckoutUrl = null;
+        if ($validated['payment_method'] === 'Kreditkarte') {
+            try {
+                $stripeSession = (new StripeClient(config('naturmarkt.payments.stripe_secret')))
+                    ->checkout->sessions->create([
+                        'mode' => 'payment',
+                        'payment_method_types' => ['card'],
+                        'client_reference_id' => (string) $orderId,
+                        'customer_email' => $validated['email'],
+                        'line_items' => [[
+                            'price_data' => [
+                                'currency' => 'eur',
+                                'unit_amount' => (int) round($totals['total'] * 100),
+                                'product_data' => [
+                                    'name' => "Naturmarkt Bestellung #{$orderId}",
+                                    'description' => count($totals['cart']).' Produktpositionen inklusive Versand und Rabatt',
+                                ],
+                            ],
+                            'quantity' => 1,
+                        ]],
+                        'metadata' => ['order_id' => (string) $orderId],
+                        'payment_intent_data' => ['metadata' => ['order_id' => (string) $orderId]],
+                        'success_url' => route('stripe.success').'?session_id={CHECKOUT_SESSION_ID}',
+                        'cancel_url' => route('checkout.page', ['payment' => 'cancelled']),
+                    ]);
+
+                $stripeCheckoutUrl = $stripeSession->url;
+                DB::table('checkout_requests')->where('id', $orderId)->update([
+                    'stripe_session_id' => $stripeSession->id,
+                    'payment_status' => 'Zahlung ausstehend',
+                    'updated_at' => now(),
+                ]);
+            } catch (\Throwable $exception) {
+                DB::table('checkout_requests')->where('id', $orderId)->update([
+                    'payment_status' => 'Fehlgeschlagen',
+                    'updated_at' => now(),
+                ]);
+                Log::error('Stripe Checkout konnte nicht gestartet werden.', ['order_id' => $orderId, 'error' => $exception->getMessage()]);
+
+                return response()->json(['message' => 'Die Kreditkartenzahlung konnte nicht gestartet werden. Bitte versuche es erneut oder wähle Überweisung.'], 502);
+            }
+        }
+
+        foreach ($validated['payment_method'] === 'Kreditkarte' ? [] : $totals['cart'] as $item) {
             DB::table('product_overrides')
                 ->where('category_key', $item['category_key'])
                 ->where('product_handle', $item['product_handle'])
@@ -504,16 +548,19 @@ class HomeController extends Controller
             ]);
         }
 
-        session(['completed_order' => [
-            'id' => $orderId,
-            'total' => $totals['total'],
-            'email' => $validated['email'],
-            'payment_method' => $validated['payment_method'],
-        ]]);
+        if ($validated['payment_method'] !== 'Kreditkarte') {
+            session(['completed_order' => [
+                'id' => $orderId,
+                'total' => $totals['total'],
+                'email' => $validated['email'],
+                'payment_method' => $validated['payment_method'],
+            ]]);
+        }
 
         return response()->json([
-            'redirect' => route('checkout.thank-you'),
-            'message' => "Danke! Deine Bestellung #{$orderId} wurde gespeichert.",
+            'redirect' => $stripeCheckoutUrl ?: route('checkout.thank-you'),
+            'payment_pending' => (bool) $stripeCheckoutUrl,
+            'message' => $stripeCheckoutUrl ? 'Du wirst zur sicheren Kreditkartenzahlung weitergeleitet.' : "Danke! Deine Bestellung #{$orderId} wurde gespeichert.",
         ]);
     }
 

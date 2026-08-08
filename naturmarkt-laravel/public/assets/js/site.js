@@ -434,7 +434,7 @@ checkoutForm?.addEventListener('submit', async (event) => {
         }
 
         checkoutMessage.textContent = data.message;
-        trackAnalytics('order_completed');
+        if (!data.payment_pending) trackAnalytics('order_completed');
         window.location.href = data.redirect || '/danke';
     } catch (error) {
         checkoutMessage.textContent = error.message || 'Die Anfrage konnte nicht gespeichert werden.';

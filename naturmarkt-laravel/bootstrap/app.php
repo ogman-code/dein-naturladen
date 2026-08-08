@@ -6,6 +6,7 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(web: __DIR__.'/../routes/web.php', commands: __DIR__.'/../routes/console.php', health: '/up')
     ->withMiddleware(function (Middleware $middleware) {
         $middleware->trustProxies(at: '*');
+        $middleware->validateCsrfTokens(except: ['stripe/webhook']);
         $middleware->alias([
             'admin.basic' => \App\Http\Middleware\AdminBasicAuth::class,
             'owner.auth' => \App\Http\Middleware\OwnerAuthenticated::class,

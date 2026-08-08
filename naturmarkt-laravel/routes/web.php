@@ -3,6 +3,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerAuthController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\AnalyticsController;
+use App\Http\Controllers\StripeController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -56,3 +57,5 @@ Route::post('/analytics/events', [AnalyticsController::class, 'track'])->middlew
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');
+Route::get('/zahlung/erfolgreich', [StripeController::class, 'success'])->name('stripe.success');
+Route::post('/stripe/webhook', [StripeController::class, 'webhook'])->name('stripe.webhook');

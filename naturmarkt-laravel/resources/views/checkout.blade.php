@@ -49,6 +49,9 @@
 
             <div class="checkout-layout">
                 <form class="checkout-form-panel" id="checkout-form">
+                    @if(request('payment') === 'cancelled')
+                        <div class="review-errors" role="alert"><strong>Zahlung abgebrochen.</strong> Dein Warenkorb ist noch vorhanden. Du kannst es erneut versuchen oder eine andere Bezahlmethode wählen.</div>
+                    @endif
                     <div class="form-section">
                         <span class="payment-title">Kontakt</span>
                         <div class="checkout-field-grid">
@@ -108,20 +111,18 @@
                             <span class="payment-icon paypal-icon" aria-hidden="true">PayPal</span>
                             <span>PayPal @if(!$payments['paypal_enabled'])<small>Zahlungslink folgt nach der Bestellung</small>@endif</span>
                         </label>
-                        @if($payments['stripe_enabled'])
                         <label class="payment-option">
-                            <input type="radio" name="payment_method" value="Kreditkarte">
+                            <input type="radio" name="payment_method" value="Kreditkarte" @disabled(!$payments['stripe_enabled'])>
                             <span class="payment-icon visa-icon" aria-hidden="true">VISA</span>
-                            <span>Kreditkarte</span>
+                            <span>Kreditkarte <small>Visa, Mastercard und weitere Karten · sicher über Stripe</small>@if(!$payments['stripe_enabled'])<small>Noch nicht aktiviert</small>@endif</span>
                         </label>
-                        @endif
                         <label class="payment-option">
                             <input type="radio" name="payment_method" value="Ueberweisung" checked>
                             <span class="payment-icon bank-icon" aria-hidden="true">IBAN</span>
                             <span>Überweisung</span>
                         </label>
                         @if(!$payments['paypal_enabled'] || !$payments['stripe_enabled'])
-                            <small>PayPal ist als manuelle Zahlung verfügbar. Die automatische Weiterleitung wird später mit dem Händlerkonto verbunden.</small>
+                            <small>Nicht aktivierte Zahlungsarten werden verfügbar, sobald die Händlerzugangsdaten hinterlegt sind.</small>
                         @endif
                     </div>
 
