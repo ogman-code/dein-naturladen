@@ -161,6 +161,27 @@ const couponCode = document.querySelector('#coupon-code');
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 const shippingConfig = window.NATURMARKT_SHIPPING || {};
 
+function trackAnalytics(event, details = {}) {
+    if (document.body.classList.contains('admin-body') || localStorage.getItem('naturmarkt-cookie-consent') !== 'all') return;
+
+    fetch('/analytics/events', {
+        method: 'POST',
+        keepalive: true,
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken },
+        body: JSON.stringify({ event, path: window.location.pathname, ...details }),
+    }).catch(() => {});
+}
+
+function trackCurrentPage() {
+    trackAnalytics('page_view');
+    if (document.body.dataset.productHandle) {
+        trackAnalytics('product_view', {
+            category: document.body.dataset.productCategory,
+            product: document.body.dataset.productHandle,
+        });
+    }
+}
+
 function getCart() {
     try {
         return JSON.parse(localStorage.getItem(storageKey)) || [];
@@ -326,6 +347,10 @@ document.querySelectorAll('.add-to-cart').forEach((button) => {
         saveCart(cart);
         renderCart();
         cartDrawer?.classList.add('open');
+        trackAnalytics('add_to_cart', {
+            category: button.dataset.category || '',
+            product: button.dataset.url?.split('/').filter(Boolean).pop() || button.dataset.name,
+        });
     });
 });
 
@@ -376,6 +401,7 @@ checkoutForm?.addEventListener('submit', async (event) => {
 
     checkoutMessage.textContent = 'Deine Anfrage wird gespeichert...';
     placeOrder.disabled = true;
+    trackAnalytics('checkout_started');
 
     try {
         const response = await fetch('/checkout', {
@@ -408,6 +434,7 @@ checkoutForm?.addEventListener('submit', async (event) => {
         }
 
         checkoutMessage.textContent = data.message;
+        trackAnalytics('order_completed');
         window.location.href = data.redirect || '/danke';
     } catch (error) {
         checkoutMessage.textContent = error.message || 'Die Anfrage konnte nicht gespeichert werden.';
@@ -420,6 +447,7 @@ shippingCountry?.addEventListener('change', renderCart);
 couponCode?.addEventListener('input', renderCart);
 
 renderCart();
+trackCurrentPage();
 
 const consentKey = 'naturmarkt-cookie-consent';
 if (!document.body.classList.contains('admin-body') && !localStorage.getItem(consentKey)) {
@@ -442,6 +470,7 @@ if (!document.body.classList.contains('admin-body') && !localStorage.getItem(con
         if (!choice) return;
         localStorage.setItem(consentKey, choice);
         banner.remove();
+        if (choice === 'all') trackCurrentPage();
     });
 }
 

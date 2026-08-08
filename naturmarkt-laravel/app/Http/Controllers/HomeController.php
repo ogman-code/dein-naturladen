@@ -71,7 +71,7 @@ class HomeController extends Controller
         return $this->category('halbedelsteine-co');
     }
 
-    public function product(string $category, string $product): View
+    public function product(Request $request, string $category, string $product): View
     {
         $categoryData = $this->findCategory($category);
         $productData = collect($categoryData['products'])
@@ -86,13 +86,21 @@ class HomeController extends Controller
             ->all();
 
         $enrichedProduct = $this->enrichProduct($productData, $categoryData);
-        $reviews = DB::table('product_reviews')
+        $sort = $request->query('reviews', 'newest');
+        $reviewQuery = DB::table('product_reviews')
             ->where('category', $category)
-            ->where('product', $product)
-            ->latest()
-            ->get();
+            ->where('product', $product);
+        $reviews = match ($sort) {
+            'helpful' => $reviewQuery->orderByDesc('helpful_count')->latest()->get(),
+            'highest' => $reviewQuery->orderByDesc('rating')->latest()->get(),
+            'lowest' => $reviewQuery->orderBy('rating')->latest()->get(),
+            default => $reviewQuery->latest()->get(),
+        };
         $reviewCount = $reviews->count();
         $averageRating = $reviewCount > 0 ? round((float) $reviews->avg('rating'), 1) : null;
+        $ratingDistribution = collect(range(5, 1))->mapWithKeys(fn (int $rating) => [
+            $rating => $reviews->where('rating', $rating)->count(),
+        ]);
 
         $productSchema = [
             '@context' => 'https://schema.org',
@@ -124,6 +132,9 @@ class HomeController extends Controller
             'reviews' => $reviews,
             'reviewCount' => $reviewCount,
             'averageRating' => $averageRating,
+            'ratingDistribution' => $ratingDistribution,
+            'reviewSort' => $sort,
+            'customer' => $request->session()->get('customer_user_id') ? DB::table('customer_users')->find($request->session()->get('customer_user_id')) : null,
             'productSchema' => json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         ]);
     }
@@ -136,14 +147,33 @@ class HomeController extends Controller
             'name' => ['required', 'string', 'min:2', 'max:80'],
             'rating' => ['required', 'integer', 'between:1,5'],
             'comment' => ['required', 'string', 'min:10', 'max:1500'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
         ]);
 
+        $customerId = $request->session()->get('customer_user_id');
+        $verifiedPurchase = false;
+        if ($customerId) {
+            $verifiedPurchase = DB::table('checkout_requests')
+                ->where('customer_user_id', $customerId)
+                ->get(['cart'])
+                ->contains(function ($order) use ($category, $product) {
+                    return collect(json_decode($order->cart ?: '[]', true))->contains(
+                        fn (array $item) => ($item['category_key'] ?? null) === $category && ($item['product_handle'] ?? null) === $product
+                    );
+                });
+        }
+
+        $imagePath = $request->file('image')?->store('review-images', 'public');
+
         DB::table('product_reviews')->insert([
+            'customer_user_id' => $customerId,
             'category' => $category,
             'product' => $product,
             'name' => trim($validated['name']),
             'rating' => $validated['rating'],
             'comment' => trim($validated['comment']),
+            'verified_purchase' => $verifiedPurchase,
+            'image_path' => $imagePath,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
@@ -152,6 +182,21 @@ class HomeController extends Controller
             ->route('products.show', [$category, $product])
             ->withFragment('bewertungen')
             ->with('review_success', 'Danke! Deine Bewertung wurde veröffentlicht.');
+    }
+
+    public function markReviewHelpful(Request $request, int $review): RedirectResponse
+    {
+        abort_unless(DB::table('product_reviews')->where('id', $review)->exists(), 404);
+        $inserted = DB::table('review_helpful_votes')->insertOrIgnore([
+            'review_id' => $review,
+            'visitor_hash' => hash('sha256', $request->session()->getId()),
+            'created_at' => now(),
+        ]);
+        if ($inserted) {
+            DB::table('product_reviews')->where('id', $review)->increment('helpful_count');
+        }
+
+        return back()->withFragment('bewertungen');
     }
 
     public function cart(): View
@@ -258,7 +303,7 @@ class HomeController extends Controller
         return $this->legalPage('Datenschutz', [
             ['title' => 'Verantwortliche Stelle', 'text' => "{$legal['business_name']}, {$legal['street']}, {$legal['city']}\nE-Mail: {$legal['email']}"],
             ['title' => 'Bestellungen und Kontakt', 'text' => 'Wir verarbeiten Kontakt-, Liefer- und Bestelldaten zur Vertragsanbahnung und Vertragsabwicklung gemäß Art. 6 Abs. 1 lit. b DSGVO. Gesetzliche Aufbewahrungspflichten bleiben unberührt.'],
-            ['title' => 'Warenkorb und Einstellungen', 'text' => 'Warenkorb und Datenschutzentscheidung werden ausschließlich im lokalen Speicher deines Browsers gespeichert. Es findet kein Werbe- oder Analyse-Tracking statt.'],
+            ['title' => 'Warenkorb und Einstellungen', 'text' => 'Warenkorb und Datenschutzentscheidung werden im lokalen Speicher deines Browsers gespeichert. Die interne, cookielose Shop-Statistik wird nur nach Auswahl von „Alle akzeptieren“ aktiviert. Dabei speichern wir Seiten- und Produktaufrufe sowie Warenkorb- und Bestellereignisse zusammen mit einem zufälligen Sitzungskennzeichen, jedoch keine IP-Adresse und keine Daten bei externen Analysediensten. Ereignisdaten werden nach spätestens 90 Tagen gelöscht.'],
             ['title' => 'Empfänger', 'text' => 'Daten werden nur an erforderliche Zahlungs-, Hosting-, E-Mail- und Versanddienstleister weitergegeben. Die konkret eingesetzten Anbieter müssen vor dem Verkaufsstart ergänzt werden.'],
             ['title' => 'Deine Rechte', 'text' => 'Du hast insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.'],
         ], 'Die tatsächlich eingesetzten Dienstleister müssen vor dem Verkaufsstart konkret ergänzt werden.');
@@ -344,6 +389,25 @@ class HomeController extends Controller
         );
 
         return back()->with('success', 'Produkt wurde aktualisiert.');
+    }
+
+    public function adminReviews(): View
+    {
+        return view('admin-reviews', [
+            'reviews' => DB::table('product_reviews')->latest()->get(),
+        ]);
+    }
+
+    public function replyToReview(Request $request, int $review): RedirectResponse
+    {
+        $validated = $request->validate(['owner_reply' => ['required', 'string', 'min:2', 'max:1500']]);
+        DB::table('product_reviews')->where('id', $review)->update([
+            'owner_reply' => trim($validated['owner_reply']),
+            'replied_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+        return back()->with('success', 'Antwort wurde veröffentlicht.');
     }
 
     public function newsletter(Request $request): RedirectResponse

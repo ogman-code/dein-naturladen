@@ -15,7 +15,7 @@
     <nav class="admin-nav container" aria-label="Admin-Navigation">
         <a class="brand" href="{{ route('home') }}"><img class="brand-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a>
         <div class="admin-nav-copy"><strong>Shop-Verwaltung</strong><span>Produkte einfach bearbeiten</span></div>
-        <div class="admin-nav-links"><a href="{{ route('admin.orders') }}">Bestellungen</a><a class="active" href="{{ route('admin.products') }}">Produkte</a><a class="admin-shop-link" href="{{ route('home') }}">Shop ansehen ↗</a><form method="post" action="{{ route('owner.logout') }}">@csrf<button type="submit">Abmelden</button></form></div>
+        <div class="admin-nav-links"><a href="{{ route('admin.orders') }}">Bestellungen</a><a class="active" href="{{ route('admin.products') }}">Produkte</a><a href="{{ route('admin.reviews') }}">Bewertungen</a><a href="{{ route('admin.analytics') }}">Statistik</a><a class="admin-shop-link" href="{{ route('home') }}">Shop ansehen ↗</a><form method="post" action="{{ route('owner.logout') }}">@csrf<button type="submit">Abmelden</button></form></div>
     </nav>
 </header>
 <main class="admin-page">

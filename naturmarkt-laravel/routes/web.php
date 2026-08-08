@@ -2,6 +2,7 @@
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerAuthController;
 use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\AnalyticsController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -21,6 +22,7 @@ Route::get('/produkte/{category}/{product}', [HomeController::class, 'product'])
 Route::post('/produkte/{category}/{product}/bewertungen', [HomeController::class, 'storeReview'])
     ->middleware('throttle:5,1')
     ->name('products.reviews.store');
+Route::post('/bewertungen/{review}/hilfreich', [HomeController::class, 'markReviewHelpful'])->middleware('throttle:15,1')->name('products.reviews.helpful');
 Route::get('/warenkorb', [HomeController::class, 'cart'])->name('cart');
 Route::get('/kasse', [HomeController::class, 'checkoutPage'])->name('checkout.page');
 Route::get('/kontakt', [HomeController::class, 'contact'])->name('contact');
@@ -46,7 +48,11 @@ Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(funct
     Route::post('/bestellungen/{id}/status', [HomeController::class, 'updateOrderStatus'])->name('admin.orders.status');
     Route::get('/produkte', [HomeController::class, 'adminProducts'])->name('admin.products');
     Route::post('/produkte/{category}/{product}', [HomeController::class, 'updateProduct'])->name('admin.products.update');
+    Route::get('/bewertungen', [HomeController::class, 'adminReviews'])->name('admin.reviews');
+    Route::post('/bewertungen/{review}/antwort', [HomeController::class, 'replyToReview'])->name('admin.reviews.reply');
+    Route::get('/statistik', [AnalyticsController::class, 'dashboard'])->name('admin.analytics');
 });
+Route::post('/analytics/events', [AnalyticsController::class, 'track'])->middleware('throttle:120,1')->name('analytics.track');
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->name('checkout');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');

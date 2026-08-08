@@ -118,6 +118,18 @@
         </div>
     </section>
 
+    <section class="shop-reasons" aria-labelledby="shop-reasons-title">
+        <div class="container">
+            <div class="shop-reasons-heading"><span class="eyebrow">Darum Naturmarkt</span><h2 id="shop-reasons-title">Natürlich einkaufen. Persönlich betreut.</h2><p>Wir wählen bewusst aus, verpacken sorgfältig und sind bei Fragen persönlich für dich da.</p></div>
+            <div class="shop-reasons-grid">
+                <article><span aria-hidden="true">✦</span><strong>Sorgfältig ausgewählt</strong><p>Produkte, die zu unserer natürlichen und ehrlichen Produktwelt passen.</p></article>
+                <article><span aria-hidden="true">♡</span><strong>Persönlicher Service</strong><p>Keine anonyme Massenabfertigung – wir kümmern uns um deine Bestellung.</p></article>
+                <article><span aria-hidden="true">▣</span><strong>Liebevoll verpackt</strong><p>Deine Produkte werden geschützt und mit Sorgfalt für den Versand vorbereitet.</p></article>
+                <article><span aria-hidden="true">✓</span><strong>Transparent bestellen</strong><p>Klare Preise, sichere Zahlung und kostenloser Versand ab 60 EUR.</p></article>
+            </div>
+        </div>
+    </section>
+
     <section class="section" id="kategorien">
         <div class="container">
             <div class="section-heading compact">
