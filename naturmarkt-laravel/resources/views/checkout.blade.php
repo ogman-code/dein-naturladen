@@ -114,16 +114,13 @@
                         <label class="payment-option">
                             <input type="radio" name="payment_method" value="Kreditkarte" @disabled(!$payments['stripe_enabled'])>
                             <span class="payment-icon visa-icon" aria-hidden="true">VISA</span>
-                            <span>Kreditkarte <small>Visa, Mastercard und weitere Karten · sicher über Stripe</small>@if(!$payments['stripe_enabled'])<small>Noch nicht aktiviert</small>@endif</span>
+                            <span>Kreditkarte</span>
                         </label>
                         <label class="payment-option">
                             <input type="radio" name="payment_method" value="Ueberweisung" checked>
                             <span class="payment-icon bank-icon" aria-hidden="true">IBAN</span>
                             <span>Überweisung</span>
                         </label>
-                        @if(!$payments['paypal_enabled'] || !$payments['stripe_enabled'])
-                            <small>Nicht aktivierte Zahlungsarten werden verfügbar, sobald die Händlerzugangsdaten hinterlegt sind.</small>
-                        @endif
                     </div>
 
                     <label class="checkout-consent">
