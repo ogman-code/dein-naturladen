@@ -83,6 +83,8 @@ class StripeController extends Controller
                 return;
             }
 
+            if ($order->coupon_id) DB::table('coupons')->where('id', $order->coupon_id)->increment('uses_count');
+
             foreach (json_decode($order->cart ?: '[]', true) as $item) {
                 DB::table('product_overrides')
                     ->where('category_key', $item['category_key'])

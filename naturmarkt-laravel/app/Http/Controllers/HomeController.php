@@ -14,12 +14,14 @@ use Stripe\StripeClient;
 
 class HomeController extends Controller
 {
-    public function __invoke(): View
+    public function __invoke(Request $request): View
     {
         $categories = $this->homeCategories();
         $products = $this->featuredProducts();
 
-        return view('home', compact('categories', 'products'));
+        $reminder = $request->query('cart_reminder') ? DB::table('cart_reminders')->where('token', $request->query('cart_reminder'))->whereNull('unsubscribed_at')->first() : null;
+        $reminderCart = $reminder ? json_decode($reminder->cart, true) : null;
+        return view('home', compact('categories', 'products', 'reminderCart'));
     }
 
     public function honey(): View
@@ -86,6 +88,8 @@ class HomeController extends Controller
             ->values()
             ->all();
 
+        $smartRecommendations = $this->recommendationsFor($category, $product);
+
         $enrichedProduct = $this->enrichProduct($productData, $categoryData);
         $sort = $request->query('reviews', 'newest');
         $reviewQuery = DB::table('product_reviews')
@@ -129,13 +133,14 @@ class HomeController extends Controller
         return view('product', [
             'category' => $categoryData,
             'product' => $enrichedProduct,
-            'relatedProducts' => array_map(fn (array $item) => $this->enrichProduct($item, $categoryData), $relatedProducts),
+            'relatedProducts' => $smartRecommendations ?: array_map(fn (array $item) => $this->enrichProduct($item, $categoryData), $relatedProducts),
             'reviews' => $reviews,
             'reviewCount' => $reviewCount,
             'averageRating' => $averageRating,
             'ratingDistribution' => $ratingDistribution,
             'reviewSort' => $sort,
             'customer' => $request->session()->get('customer_user_id') ? DB::table('customer_users')->find($request->session()->get('customer_user_id')) : null,
+            'onWishlist' => $request->session()->get('customer_user_id') ? DB::table('wishlists')->where('customer_user_id', $request->session()->get('customer_user_id'))->where('category', $category)->where('product', $product)->exists() : false,
             'productSchema' => json_encode($productSchema, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
         ]);
     }
@@ -202,8 +207,10 @@ class HomeController extends Controller
 
     public function cart(): View
     {
+        $customerId = request()->session()->get('customer_user_id');
         return view('cart', [
             'categories' => $this->homeCategories(),
+            'customer' => $customerId ? DB::table('customer_users')->find($customerId) : null,
         ]);
     }
 
@@ -304,6 +311,7 @@ class HomeController extends Controller
         return $this->legalPage('Datenschutz', [
             ['title' => 'Verantwortliche Stelle', 'text' => "{$legal['business_name']}, {$legal['street']}, {$legal['city']}\nE-Mail: {$legal['email']}"],
             ['title' => 'Bestellungen und Kontakt', 'text' => 'Wir verarbeiten Kontakt-, Liefer- und Bestelldaten zur Vertragsanbahnung und Vertragsabwicklung gemäß Art. 6 Abs. 1 lit. b DSGVO. Gesetzliche Aufbewahrungspflichten bleiben unberührt.'],
+            ['title' => 'Wunschliste und freiwillige Benachrichtigungen', 'text' => 'Angemeldete Kunden können Produkte auf einer Wunschliste speichern. Verfügbarkeits- und Warenkorb-Erinnerungen werden nur auf ausdrücklichen Wunsch versendet. Jede Warenkorb-Erinnerung enthält eine Abmeldemöglichkeit; die Einwilligung kann jederzeit mit Wirkung für die Zukunft widerrufen werden.'],
             ['title' => 'Warenkorb und Einstellungen', 'text' => 'Warenkorb und Datenschutzentscheidung werden im lokalen Speicher deines Browsers gespeichert. Die interne, cookielose Shop-Statistik wird nur nach Auswahl von „Alle akzeptieren“ aktiviert. Dabei speichern wir Seiten- und Produktaufrufe sowie Warenkorb- und Bestellereignisse zusammen mit einem zufälligen Sitzungskennzeichen, jedoch keine IP-Adresse und keine Daten bei externen Analysediensten. Ereignisdaten werden nach spätestens 90 Tagen gelöscht.'],
             ['title' => 'Empfänger', 'text' => 'Daten werden nur an erforderliche Zahlungs-, Hosting-, E-Mail- und Versanddienstleister weitergegeben. Die konkret eingesetzten Anbieter müssen vor dem Verkaufsstart ergänzt werden.'],
             ['title' => 'Deine Rechte', 'text' => 'Du hast insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.'],
@@ -340,12 +348,14 @@ class HomeController extends Controller
     public function updateOrderStatus(Request $request, int $id): RedirectResponse
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:Neu,In Bearbeitung,Erledigt'],
+            'status' => ['required', 'in:Neu,In Bearbeitung,Versendet,Erledigt'],
+            'tracking_number' => ['nullable', 'string', 'max:255'],
+            'tracking_url' => ['nullable', 'url', 'max:1000'],
         ]);
 
         DB::table('checkout_requests')
             ->where('id', $id)
-            ->update(['status' => $validated['status'], 'updated_at' => now()]);
+            ->update(['status' => $validated['status'], 'tracking_number' => $validated['tracking_number'] ?? null, 'tracking_url' => $validated['tracking_url'] ?? null, 'shipped_at' => $validated['status'] === 'Versendet' ? now() : null, 'updated_at' => now()]);
 
         return back()->with('success', 'Status wurde aktualisiert.');
     }
@@ -389,6 +399,16 @@ class HomeController extends Controller
             ],
         );
 
+        if ((int) $validated['stock'] > 0) {
+            $subscriptions = DB::table('availability_subscriptions')->where('category', $category)->where('product', $product)->where('active', true)->get();
+            foreach ($subscriptions as $subscription) {
+                try {
+                    Mail::raw("Das gewünschte Produkt ist wieder verfügbar.\n\n".route('products.show', [$category, $product]), fn ($message) => $message->to($subscription->email)->subject('Wieder verfügbar bei Naturmarkt'));
+                    DB::table('availability_subscriptions')->where('id', $subscription->id)->update(['active' => false, 'notified_at' => now(), 'updated_at' => now()]);
+                } catch (\Throwable $exception) { Log::warning('Verfügbarkeitsmail fehlgeschlagen.', ['error' => $exception->getMessage()]); }
+            }
+        }
+
         return back()->with('success', 'Produkt wurde aktualisiert.');
     }
 
@@ -409,6 +429,36 @@ class HomeController extends Controller
         ]);
 
         return back()->with('success', 'Antwort wurde veröffentlicht.');
+    }
+
+    public function adminCoupons(): View
+    {
+        return view('admin-coupons', ['coupons' => DB::table('coupons')->latest()->get()]);
+    }
+
+    public function storeCoupon(Request $request): RedirectResponse
+    {
+        DB::table('coupons')->insert($this->validateCouponForm($request) + ['uses_count' => 0, 'created_at' => now(), 'updated_at' => now()]);
+        return back()->with('success', 'Gutschein wurde erstellt.');
+    }
+
+    public function updateCoupon(Request $request, int $coupon): RedirectResponse
+    {
+        DB::table('coupons')->where('id', $coupon)->update($this->validateCouponForm($request, $coupon) + ['updated_at' => now()]);
+        return back()->with('success', 'Gutschein wurde aktualisiert.');
+    }
+
+    public function previewCoupon(Request $request)
+    {
+        $validated = $request->validate(['coupon_code' => ['required', 'string', 'max:40'], 'country_code' => ['required', 'in:DE,AT,NL,LU'], 'cart' => ['required', 'array', 'min:1'], 'cart.*.name' => ['required', 'string', 'max:255'], 'cart.*.quantity' => ['required', 'integer', 'min:1', 'max:20']]);
+        $totals = $this->calculateOrderTotals($validated['cart'], $validated['country_code'], $validated['coupon_code']);
+        return response()->json(['discount' => $totals['discount'], 'total' => $totals['total'], 'message' => 'Gutschein wurde angewendet.']);
+    }
+
+    private function validateCouponForm(Request $request, ?int $couponId = null): array
+    {
+        $data = $request->validate(['code' => ['required', 'string', 'max:40', 'unique:coupons,code,'.($couponId ?? 'NULL')], 'type' => ['required', 'in:percent,fixed'], 'value' => ['required', 'numeric', 'min:0.01', 'max:99999'], 'minimum_order' => ['nullable', 'numeric', 'min:0'], 'maximum_uses' => ['nullable', 'integer', 'min:1'], 'starts_at' => ['nullable', 'date'], 'expires_at' => ['nullable', 'date', 'after:starts_at'], 'active' => ['nullable', 'boolean']]);
+        return ['code' => strtoupper(trim($data['code'])), 'type' => $data['type'], 'value' => $data['value'], 'minimum_order' => $data['minimum_order'] ?? 0, 'maximum_uses' => $data['maximum_uses'] ?? null, 'starts_at' => $data['starts_at'] ?? null, 'expires_at' => $data['expires_at'] ?? null, 'active' => $request->boolean('active')];
     }
 
     public function newsletter(Request $request): RedirectResponse
@@ -469,11 +519,14 @@ class HomeController extends Controller
             'shipping' => $totals['shipping'],
             'discount' => $totals['discount'],
             'coupon_code' => $totals['coupon_code'],
+            'coupon_id' => $totals['coupon_id'],
             'total' => $totals['total'],
             'status' => 'Neu',
             'created_at' => now(),
             'updated_at' => now(),
         ]);
+
+        if ($totals['coupon_id'] && $validated['payment_method'] !== 'Kreditkarte') DB::table('coupons')->where('id', $totals['coupon_id'])->increment('uses_count');
 
         $stripeCheckoutUrl = null;
         if ($validated['payment_method'] === 'Kreditkarte') {
@@ -605,12 +658,18 @@ class HomeController extends Controller
             : $weightShipping;
 
         $normalizedCoupon = strtoupper(trim((string) $couponCode));
-        $coupon = $normalizedCoupon !== '' ? config("naturmarkt.coupons.{$normalizedCoupon}") : null;
+        $coupon = $normalizedCoupon !== '' ? DB::table('coupons')->where('code', $normalizedCoupon)->where('active', true)->first() : null;
+        if (! $coupon && $normalizedCoupon === 'WILLKOMMEN10') $coupon = (object) ['id' => null, 'type' => 'percent', 'value' => 10, 'minimum_order' => 0, 'maximum_uses' => null, 'uses_count' => 0, 'starts_at' => null, 'expires_at' => null];
         abort_if($normalizedCoupon !== '' && ! $coupon, 422, 'Der Gutscheincode ist ungültig.');
 
-        $discount = $coupon && $coupon['type'] === 'percent'
-            ? round($subtotal * ((float) $coupon['value'] / 100), 2)
-            : 0.0;
+        if ($coupon) {
+            abort_if($coupon->starts_at && now()->lt($coupon->starts_at), 422, 'Der Gutschein ist noch nicht gültig.');
+            abort_if($coupon->expires_at && now()->gt($coupon->expires_at), 422, 'Der Gutschein ist abgelaufen.');
+            abort_if($coupon->maximum_uses && $coupon->uses_count >= $coupon->maximum_uses, 422, 'Der Gutschein wurde vollständig eingelöst.');
+            abort_if($subtotal < (float) $coupon->minimum_order, 422, 'Der Mindestbestellwert wurde nicht erreicht.');
+        }
+
+        $discount = $coupon ? ($coupon->type === 'percent' ? round($subtotal * ((float) $coupon->value / 100), 2) : min($subtotal, (float) $coupon->value)) : 0.0;
 
         return [
             'cart' => $cart->all(),
@@ -619,6 +678,7 @@ class HomeController extends Controller
             'shipping' => $shipping,
             'discount' => $discount,
             'coupon_code' => $coupon ? $normalizedCoupon : null,
+            'coupon_id' => $coupon->id ?? null,
             'total' => round($subtotal + $shipping - $discount, 2),
         ];
     }
@@ -750,5 +810,26 @@ class HomeController extends Controller
         abort_unless($product, 404);
 
         return $product;
+    }
+
+    private function recommendationsFor(string $categoryKey, string $handle): array
+    {
+        $target = "{$categoryKey}/{$handle}";
+        $scores = [];
+        foreach (DB::table('checkout_requests')->whereNotNull('cart')->get(['cart']) as $order) {
+            $items = collect(json_decode($order->cart, true) ?: [])->map(fn (array $item) => ($item['category_key'] ?? '').'/'.($item['product_handle'] ?? ''))->filter();
+            if (! $items->contains($target)) continue;
+            foreach ($items->reject(fn ($key) => $key === $target) as $key) $scores[$key] = ($scores[$key] ?? 0) + 1;
+        }
+        arsort($scores);
+        $products = [];
+        foreach (array_slice(array_keys($scores), 0, 4) as $key) {
+            [$category, $product] = explode('/', $key, 2);
+            if (! isset($this->catalog()[$category])) continue;
+            $categoryData = $this->findCategory($category);
+            $productData = collect($categoryData['products'])->firstWhere('handle', $product);
+            if ($productData) $products[] = $this->enrichProduct($productData, $categoryData);
+        }
+        return $products;
     }
 }

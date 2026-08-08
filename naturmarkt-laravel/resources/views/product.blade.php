@@ -81,7 +81,12 @@
                     <div class="detail-actions">
                         <button class="add-to-cart primary detail-cart-button" type="button" data-name="{{ $product['name'] }}" data-price="{{ $product['price'] }}" data-weight="{{ $product['weight_grams'] }}" data-category="{{ $category['name'] }}" data-image="{{ $product['image'] }}" data-url="{{ $product['url'] }}" @disabled(!$product['active'] || $product['stock'] === 0)>{{ (!$product['active'] || $product['stock'] === 0) ? 'Nicht verfügbar' : 'In den Warenkorb' }}</button>
                         <a class="button ghost" href="{{ $category['url'] }}">Zurück zur Kategorie</a>
+                        @if($customer)<form method="post" action="{{ route('customer.wishlist.toggle', [$category['key'], $product['handle']]) }}">@csrf<button class="button wishlist-button" type="submit">{{ $onWishlist ? '♥ Auf Wunschliste' : '♡ Zur Wunschliste' }}</button></form>@else<a class="button wishlist-button" href="{{ route('customer.login') }}">♡ Zur Wunschliste</a>@endif
                     </div>
+
+                    @if(!$product['active'] || $product['stock'] === 0)
+                        <form class="availability-form" method="post" action="{{ route('availability.subscribe', [$category['key'], $product['handle']]) }}">@csrf<strong>Informiere mich, wenn es wieder verfügbar ist</strong>@if(session('availability_success'))<p>{{ session('availability_success') }}</p>@endif<div><input type="email" name="email" value="{{ $customer?->email }}" placeholder="E-Mail-Adresse" required><button type="submit">Benachrichtigen</button></div></form>
+                    @endif
 
                     <div class="product-info-panels">
                         <article>
@@ -178,8 +183,8 @@
             <div class="container">
                 <div class="section-heading compact">
                     <div>
-                        <span class="eyebrow">Dazu passend</span>
-                        <h2>Ähnliche Produkte</h2>
+                        <span class="eyebrow">Für dich empfohlen</span>
+                        <h2>Passt gut zu diesem Produkt</h2>
                     </div>
                 </div>
                 <div class="product-grid featured-grid">

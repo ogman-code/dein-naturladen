@@ -78,7 +78,13 @@ class CustomerAuthController extends Controller
                 return $order;
             });
 
-        return view('customer-account', compact('customer', 'orders'));
+        $wishlist = DB::table('wishlists')->where('customer_user_id', $customer->id)->latest()->get()->map(function ($item) {
+            $category = config("naturmarkt.categories.{$item->category}");
+            $product = collect($category['products'] ?? [])->firstWhere('handle', $item->product);
+            return $product ? ['name' => $product['name'], 'category' => $item->category, 'product' => $item->product, 'url' => route('products.show', [$item->category, $item->product]), 'image' => $product['image'] ?? ($category['image'] ?? '')] : null;
+        })->filter();
+
+        return view('customer-account', compact('customer', 'orders', 'wishlist'));
     }
 
     public function update(Request $request): RedirectResponse

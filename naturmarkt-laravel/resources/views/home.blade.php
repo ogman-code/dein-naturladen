@@ -269,7 +269,7 @@
         <span>&copy; {{ date('Y') }} Naturmarkt</span>
     </div>
 </footer>
-<script src="{{ asset('assets/js/site.js') }}"></script>
+<script>window.NATURMARKT_REMINDER_CART = @json($reminderCart);</script><script src="{{ asset('assets/js/site.js') }}"></script>
 </body>
 </html>
 

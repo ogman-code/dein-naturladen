@@ -4,6 +4,7 @@ use App\Http\Controllers\OwnerAuthController;
 use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\AnalyticsController;
 use App\Http\Controllers\StripeController;
+use App\Http\Controllers\EngagementController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -24,6 +25,7 @@ Route::post('/produkte/{category}/{product}/bewertungen', [HomeController::class
     ->middleware('throttle:5,1')
     ->name('products.reviews.store');
 Route::post('/bewertungen/{review}/hilfreich', [HomeController::class, 'markReviewHelpful'])->middleware('throttle:15,1')->name('products.reviews.helpful');
+Route::post('/produkte/{category}/{product}/verfuegbarkeit', [EngagementController::class, 'subscribeAvailability'])->middleware('throttle:20,1')->name('availability.subscribe');
 Route::get('/warenkorb', [HomeController::class, 'cart'])->name('cart');
 Route::get('/kasse', [HomeController::class, 'checkoutPage'])->name('checkout.page');
 Route::get('/kontakt', [HomeController::class, 'contact'])->name('contact');
@@ -43,6 +45,7 @@ Route::middleware(['customer.auth', 'throttle:60,1'])->prefix('kundenkonto')->gr
     Route::get('/', [CustomerAuthController::class, 'account'])->name('customer.account');
     Route::put('/daten', [CustomerAuthController::class, 'update'])->name('customer.update');
     Route::post('/abmelden', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+    Route::post('/wunschliste/{category}/{product}', [EngagementController::class, 'toggleWishlist'])->name('customer.wishlist.toggle');
 });
 Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(function () {
     Route::get('/bestellungen', [HomeController::class, 'adminOrders'])->name('admin.orders');
@@ -52,10 +55,16 @@ Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(funct
     Route::get('/bewertungen', [HomeController::class, 'adminReviews'])->name('admin.reviews');
     Route::post('/bewertungen/{review}/antwort', [HomeController::class, 'replyToReview'])->name('admin.reviews.reply');
     Route::get('/statistik', [AnalyticsController::class, 'dashboard'])->name('admin.analytics');
+    Route::get('/gutscheine', [HomeController::class, 'adminCoupons'])->name('admin.coupons');
+    Route::post('/gutscheine', [HomeController::class, 'storeCoupon'])->name('admin.coupons.store');
+    Route::put('/gutscheine/{coupon}', [HomeController::class, 'updateCoupon'])->name('admin.coupons.update');
 });
 Route::post('/analytics/events', [AnalyticsController::class, 'track'])->middleware('throttle:120,1')->name('analytics.track');
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+Route::post('/gutscheine/pruefen', [HomeController::class, 'previewCoupon'])->middleware('throttle:30,1')->name('coupons.preview');
+Route::post('/warenkorb/erinnerung', [EngagementController::class, 'saveCartReminder'])->middleware('throttle:20,1')->name('cart-reminders.store');
+Route::get('/warenkorb/erinnerung/abbestellen/{token}', [EngagementController::class, 'unsubscribeReminder'])->name('cart-reminders.unsubscribe');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');
 Route::get('/zahlung/erfolgreich', [StripeController::class, 'success'])->name('stripe.success');
 Route::post('/stripe/webhook', [StripeController::class, 'webhook'])->name('stripe.webhook');

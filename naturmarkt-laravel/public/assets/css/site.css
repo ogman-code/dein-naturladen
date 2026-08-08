@@ -2438,3 +2438,29 @@ button:disabled { opacity: .55; cursor: not-allowed; }
 .analytics-tables li small { color: #788178; }
 @media (max-width: 1050px) { .shop-reasons-grid, .analytics-stat-grid { grid-template-columns: repeat(2, 1fr); } .admin-review-list { grid-template-columns: 1fr; } }
 @media (max-width: 700px) { .shop-reasons-grid, .analytics-stat-grid, .analytics-tables { grid-template-columns: 1fr; } .analytics-funnel > div { align-items: stretch; flex-direction: column; } .analytics-funnel b { transform: rotate(90deg); text-align: center; } }
+
+/* Customer engagement */
+.wishlist-button { border-color: #c8917d; color: #8c3f31; background: #fff7f3; }
+.detail-actions form { margin: 0; }
+.availability-form, .cart-reminder-form { display: grid; gap: 10px; margin-top: 18px; padding: 18px; border: 1px solid #d8e2d7; border-radius: 14px; background: #f4f8f3; }
+.availability-form > div { display: flex; gap: 8px; }
+.availability-form input, .cart-reminder-form input[type="email"] { min-height: 44px; flex: 1; border: 1px solid #bdc9b9; border-radius: 9px; padding: 0 12px; }
+.availability-form button, .cart-reminder-form button, .coupon-admin-form button, .coupon-admin-list button { border: 0; border-radius: 9px; padding: 10px 14px; color: white; background: #24543b; cursor: pointer; font-weight: 750; }
+.wishlist-panel { margin-top: 24px; }
+.wishlist-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+.wishlist-grid article { overflow: hidden; border: 1px solid #e0e6df; border-radius: 12px; }
+.wishlist-grid img { width: 100%; aspect-ratio: 1.2; object-fit: cover; }
+.wishlist-grid strong { display: block; padding: 12px; }
+.wishlist-grid form { padding: 0 12px 12px; }
+.wishlist-grid button { border: 0; color: #8c3f31; background: transparent; cursor: pointer; }
+.tracking-steps { display: grid !important; grid-template-columns: repeat(4, 1fr); gap: 5px !important; margin: 16px 0; }
+.tracking-steps span { padding: 8px; border-radius: 8px; color: #8a918b; background: #edf0ed; text-align: center; font-size: .75rem; }
+.tracking-steps span.done { color: #24543b; background: #dcecdf; font-weight: 800; }
+.tracking-info { display: flex; gap: 8px; padding: 10px; border-radius: 9px; background: #f5f7f4; }
+.tracking-info a { margin-left: auto; color: #24543b; font-weight: 800; }
+.admin-order-side input { width: 100%; min-height: 38px; border: 1px solid #ccd5ce; border-radius: 8px; padding: 0 9px; }
+.coupon-admin-form, .coupon-admin-list form { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 18px; }
+.coupon-admin-form h2 { grid-column: 1 / -1; }
+.coupon-admin-form input, .coupon-admin-form select, .coupon-admin-list input, .coupon-admin-list select { min-height: 42px; border: 1px solid #ccd5ce; border-radius: 8px; padding: 0 10px; }
+.coupon-admin-list { display: grid; gap: 12px; }
+@media(max-width:760px){.wishlist-grid,.coupon-admin-form,.coupon-admin-list form{grid-template-columns:1fr}.tracking-steps{grid-template-columns:1fr 1fr}.availability-form>div{flex-direction:column}}
