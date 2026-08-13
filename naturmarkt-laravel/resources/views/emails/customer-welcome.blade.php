@@ -1,0 +1,1 @@
+<h1>Herzlich willkommen, {{ $customer->name }}!</h1><p>Dein Naturmarkt-Konto ist jetzt bestätigt. Du kannst Adressen speichern und deine Bestellungen im Kundenkonto ansehen.</p><p><a href="{{ route('customer.account') }}">Mein Kundenkonto öffnen</a></p>

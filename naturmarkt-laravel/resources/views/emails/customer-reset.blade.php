@@ -1,0 +1,1 @@
+<h1>Passwort zurücksetzen</h1><p>Hallo {{ $customer->name }}, über diesen Link kannst du ein neues Passwort festlegen:</p><p><a href="{{ $url }}">Neues Passwort festlegen</a></p><p>Der Link ist 60 Minuten gültig. Wenn du das nicht angefordert hast, ignoriere diese E-Mail.</p>

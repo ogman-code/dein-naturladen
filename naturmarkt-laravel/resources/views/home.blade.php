@@ -48,12 +48,27 @@
                 </div>
             </div>
             <a href="#kontakt">Kontakt</a>
-            <a href="{{ route('owner.login') }}">Besitzer</a>
             <form class="header-search" action="{{ route('search') }}" method="get">
                 <label class="sr-only" for="global-search">Produkte suchen</label>
                 <input id="global-search" name="q" type="search" placeholder="Produkte suchen">
             </form>
         </div>
+        <details class="account-menu">
+            <summary aria-label="Kontomenü öffnen"><span>Konto</span><span class="account-arrow" aria-hidden="true">⌄</span></summary>
+            <div class="account-menu-popover">
+                @if(session('owner_user_id'))
+                    <a href="{{ route('owner.account') }}">Mein Konto</a>
+                    <a href="{{ route('admin.orders') }}">Adminbereich</a>
+                    <form method="post" action="{{ route('owner.logout') }}">@csrf<button type="submit">Abmelden</button></form>
+                @elseif(session('customer_id'))
+                    <a href="{{ route('customer.account') }}">Mein Konto</a>
+                    <form method="post" action="{{ route('customer.logout') }}">@csrf<button type="submit">Abmelden</button></form>
+                @else
+                    <a href="{{ route('customer.login') }}">Einloggen</a>
+                    <a href="{{ route('customer.register') }}">Registrieren</a>
+                @endif
+            </div>
+        </details>
         <a class="cart-button" href="{{ route('cart') }}" aria-label="Mein Warenkorb">
             <span>Warenkorb</span>
             <strong id="cart-count">0</strong>
@@ -260,4 +275,3 @@
 <script src="{{ asset('assets/js/site.js') }}"></script>
 </body>
 </html>
-

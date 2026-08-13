@@ -1,0 +1,1 @@
+<h1>Hallo {{ $name }}!</h1><p>Bitte bestätige deine E-Mail-Adresse, um dein Naturmarkt-Konto zu aktivieren.</p><p><a href="{{ $url }}">E-Mail-Adresse bestätigen</a></p><p>Der Link ist 60 Minuten gültig.</p>

@@ -54,15 +54,15 @@
                         <div class="checkout-field-grid">
                             <label>
                                 Name
-                                <input type="text" name="name" autocomplete="name" placeholder="Vor- und Nachname" required>
+                                <input type="text" name="name" autocomplete="name" placeholder="Vor- und Nachname" value="{{ $savedAddress->name ?? $customer->name ?? '' }}" required>
                             </label>
                             <label>
                                 Handy / Telefon
-                                <input type="tel" name="phone" autocomplete="tel" placeholder="Telefonnummer" required>
+                                <input type="tel" name="phone" autocomplete="tel" placeholder="Telefonnummer" value="{{ $savedAddress->phone ?? '' }}" required>
                             </label>
                             <label>
                                 E-Mail
-                                <input type="email" name="email" autocomplete="email" placeholder="deine@email.de" required>
+                                <input type="email" name="email" autocomplete="email" placeholder="deine@email.de" value="{{ $customer->email ?? '' }}" required>
                             </label>
                         </div>
                     </div>
@@ -76,17 +76,17 @@
                             </label>
                             <label>
                                 PLZ
-                                <input type="text" name="postal_code" autocomplete="postal-code" placeholder="12345" required>
+                                <input type="text" name="postal_code" autocomplete="postal-code" placeholder="12345" value="{{ $savedAddress->postal_code ?? '' }}" required>
                             </label>
                             <label>
                                 Ort
-                                <input type="text" name="city" autocomplete="address-level2" placeholder="Musterstadt" required>
+                                <input type="text" name="city" autocomplete="address-level2" placeholder="Musterstadt" value="{{ $savedAddress->city ?? '' }}" required>
                             </label>
                             <label>
                                 Lieferland
                                 <select name="country_code" id="shipping-country" required>
                                     @foreach ($shippingCountries as $code => $country)
-                                        <option value="{{ $code }}" @selected($code === 'DE')>{{ $country['name'] }}</option>
+                                        <option value="{{ $code }}" @selected($code === ($savedAddress->country_code ?? 'DE'))>{{ $country['name'] }}</option>
                                     @endforeach
                                 </select>
                             </label>
@@ -159,7 +159,7 @@
     </section>
 </main>
 
-<script>window.NATURMARKT_SHIPPING = @json(config('naturmarkt.shipping'));</script>
+<script>window.NATURMARKT_SHIPPING = @json(config('naturmarkt.shipping')); document.querySelector('[name="street"]').value = @json($savedAddress->street ?? '');</script>
 <script src="{{ asset('assets/js/site.js') }}"></script>
 </body>
 </html>

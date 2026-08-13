@@ -2293,3 +2293,28 @@ button:disabled { opacity: .55; cursor: not-allowed; }
     height: 1px !important;
     overflow: hidden !important;
 }
+
+.auth-page { min-height: 100vh; display: grid; place-items: center; padding: 32px 18px; background: #f5f1e7; }
+.auth-card { width: min(100%, 520px); background: #fff; border-radius: 24px; padding: 32px; box-shadow: 0 18px 60px rgba(40,55,35,.12); }
+.auth-card form { display: grid; gap: 16px; }
+.auth-card label:not(.checkout-consent) { display: grid; gap: 6px; font-weight: 600; }
+.auth-card input { width: 100%; padding: 13px; border: 1px solid #ccd4c5; border-radius: 10px; }
+.auth-card .checkout-consent { width: 100%; box-sizing: border-box; display: grid; grid-template-columns: 20px minmax(0, 1fr); align-items: start; gap: 11px; margin: 2px 0; }
+.auth-card .checkout-consent input[type="checkbox"] { width: 18px; height: 18px; min-width: 18px; padding: 0; margin: 2px 0 0; border-radius: 4px; }
+.auth-card .checkout-consent span { min-width: 0; overflow-wrap: anywhere; }
+.account-page { padding-block: 48px 80px; }
+.account-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+.account-panel, .account-alert { background: #fff; border: 1px solid #e0e5d9; border-radius: 18px; padding: 24px; margin-bottom: 20px; }
+.account-order { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 12px; padding: 14px 0; border-bottom: 1px solid #e8ece4; }
+.account-address { padding: 14px 0; border-bottom: 1px solid #e8ece4; }
+.account-form { display: grid; gap: 10px; }
+.account-form input, .account-form select { padding: 11px; border: 1px solid #ccd4c5; border-radius: 9px; }
+.account-menu { position: relative; flex: 0 0 auto; }
+.account-menu summary { list-style: none; display: flex; align-items: center; gap: 7px; cursor: pointer; padding: 10px 14px; border: 1px solid #d9dfd3; border-radius: 999px; background: #fff; font-weight: 700; color: #294c32; }
+.account-menu summary::-webkit-details-marker { display: none; }
+.account-arrow { font-size: 18px; line-height: 1; transition: transform .2s ease; }
+.account-menu[open] .account-arrow { transform: rotate(180deg); }
+.account-menu-popover { position: absolute; z-index: 50; top: calc(100% + 10px); right: 0; min-width: 190px; padding: 8px; background: #fff; border: 1px solid #dfe5da; border-radius: 14px; box-shadow: 0 16px 42px rgba(32,52,35,.18); }
+.account-menu-popover a, .account-menu-popover button { display: block; width: 100%; padding: 11px 12px; border: 0; border-radius: 9px; background: transparent; color: #263c2b; text-align: left; font: inherit; text-decoration: none; cursor: pointer; }
+.account-menu-popover a:hover, .account-menu-popover button:hover { background: #eef3e9; }
+@media (max-width: 760px) { .account-grid { grid-template-columns: 1fr; } .account-order { grid-template-columns: 1fr 1fr; } }

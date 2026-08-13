@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OwnerAuthController;
+use App\Http\Controllers\CustomerAuthController;
+use App\Http\Controllers\CustomerAccountController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -25,7 +27,7 @@ Route::get('/widerruf', [HomeController::class, 'returns'])->name('returns');
 Route::get('/impressum', [HomeController::class, 'imprint'])->name('imprint');
 Route::get('/datenschutz', [HomeController::class, 'privacy'])->name('privacy');
 Route::get('/agb', [HomeController::class, 'terms'])->name('terms');
-Route::get('/besitzer', [OwnerAuthController::class, 'show'])->name('owner.login');
+Route::get('/besitzer', fn () => redirect()->route('customer.login'))->name('owner.login');
 Route::post('/besitzer/registrieren', [OwnerAuthController::class, 'register'])->middleware('throttle:5,1')->name('owner.register');
 Route::post('/besitzer/anmelden', [OwnerAuthController::class, 'login'])->middleware('throttle:5,1')->name('owner.authenticate');
 Route::post('/besitzer/abmelden', [OwnerAuthController::class, 'logout'])->name('owner.logout');
@@ -34,6 +36,23 @@ Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(funct
     Route::post('/bestellungen/{id}/status', [HomeController::class, 'updateOrderStatus'])->name('admin.orders.status');
     Route::get('/produkte', [HomeController::class, 'adminProducts'])->name('admin.products');
     Route::post('/produkte/{category}/{product}', [HomeController::class, 'updateProduct'])->name('admin.products.update');
+});
+Route::get('/mein-konto', [OwnerAuthController::class, 'account'])->middleware('owner.auth')->name('owner.account');
+Route::get('/kunden/login', [CustomerAuthController::class, 'showLogin'])->name('customer.login');
+Route::get('/kunden/registrieren', [CustomerAuthController::class, 'showRegister'])->name('customer.register');
+Route::post('/kunden/registrieren', [CustomerAuthController::class, 'register'])->middleware('throttle:5,1')->name('customer.register.store');
+Route::post('/kunden/login', [CustomerAuthController::class, 'login'])->middleware('throttle:5,1')->name('customer.login.store');
+Route::get('/kunden/passwort-vergessen', [CustomerAuthController::class, 'showForgot'])->name('customer.password.request');
+Route::post('/kunden/passwort-vergessen', [CustomerAuthController::class, 'forgot'])->middleware('throttle:3,1')->name('customer.password.email');
+Route::get('/kunden/passwort-reset/{token}', [CustomerAuthController::class, 'showReset'])->name('customer.password.reset');
+Route::post('/kunden/passwort-reset', [CustomerAuthController::class, 'reset'])->middleware('throttle:5,1')->name('customer.password.update');
+Route::get('/kunden/verifizieren/{customer}', [CustomerAuthController::class, 'verify'])->middleware('signed')->name('customer.verify');
+Route::middleware('customer.auth')->group(function () {
+    Route::get('/kundenkonto', [CustomerAccountController::class, 'index'])->name('customer.account');
+    Route::post('/kunden/abmelden', [CustomerAuthController::class, 'logout'])->name('customer.logout');
+    Route::post('/kunden/verifizierung-senden', [CustomerAuthController::class, 'resend'])->middleware('throttle:3,1')->name('customer.verify.resend');
+    Route::post('/kunden/adressen', [CustomerAccountController::class, 'storeAddress'])->name('customer.address.store');
+    Route::delete('/kunden/adressen/{address}', [CustomerAccountController::class, 'deleteAddress'])->name('customer.address.delete');
 });
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->middleware('throttle:5,1')->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->middleware('throttle:10,1')->name('checkout');

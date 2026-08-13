@@ -11,6 +11,11 @@ use Illuminate\View\View;
 
 class OwnerAuthController extends Controller
 {
+    public function account(): View
+    {
+        return view('owner-account');
+    }
+
     public function show(Request $request): View|RedirectResponse
     {
         if ($request->session()->has('owner_user_id')) {

@@ -157,10 +157,14 @@ class HomeController extends Controller
 
     public function checkoutPage(): View
     {
+        $customer = ($id = session('customer_id')) ? DB::table('customers')->find($id) : null;
+        $address = $customer ? DB::table('customer_addresses')->where('customer_id', $customer->id)->orderByDesc('is_default')->first() : null;
         return view('checkout', [
             'categories' => $this->homeCategories(),
             'shippingCountries' => config('naturmarkt.shipping.countries', []),
             'payments' => config('naturmarkt.payments'),
+            'customer' => $customer,
+            'savedAddress' => $address,
         ]);
     }
 
@@ -332,6 +336,13 @@ class HomeController extends Controller
             'company_website' => ['nullable', 'string', 'max:0'],
         ]);
 
+        $customer = ($customerId = session('customer_id')) ? DB::table('customers')->find($customerId) : null;
+        if ($customer) {
+            $validated['email'] = $customer->email;
+        } else {
+            $customerId = null;
+        }
+
         abort_if($validated['payment_method'] === 'Kreditkarte' && ! config('naturmarkt.payments.stripe_enabled'), 422, 'Kreditkartenzahlung wird zum Verkaufsstart aktiviert.');
 
         $totals = $this->calculateOrderTotals(
@@ -341,6 +352,7 @@ class HomeController extends Controller
         );
 
         $orderId = DB::table('checkout_requests')->insertGetId([
+            'customer_id' => $customerId,
             'customer_name' => $validated['name'],
             'email' => $validated['email'],
             'phone' => $validated['phone'],
