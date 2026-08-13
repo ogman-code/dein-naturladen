@@ -48,7 +48,6 @@
                 </div>
             </div>
             <a href="#kontakt">Kontakt</a>
-            <a href="{{ session()->has('customer_user_id') ? route('customer.account') : route('customer.login') }}">{{ session()->has('customer_user_id') ? 'Mein Konto' : 'Anmelden' }}</a>
             <a href="{{ route('owner.login') }}">Besitzer</a>
             <form class="header-search" action="{{ route('search') }}" method="get">
                 <label class="sr-only" for="global-search">Produkte suchen</label>
@@ -115,18 +114,6 @@
             <span>Kostenloser Versand ab 60 EUR</span>
             <span>Persönlich bearbeitet</span>
             <span>Naturprodukte mit Sorgfalt</span>
-        </div>
-    </section>
-
-    <section class="shop-reasons" aria-labelledby="shop-reasons-title">
-        <div class="container">
-            <div class="shop-reasons-heading"><span class="eyebrow">Darum Naturmarkt</span><h2 id="shop-reasons-title">Natürlich einkaufen. Persönlich betreut.</h2><p>Wir wählen bewusst aus, verpacken sorgfältig und sind bei Fragen persönlich für dich da.</p></div>
-            <div class="shop-reasons-grid">
-                <article><span aria-hidden="true">✦</span><strong>Sorgfältig ausgewählt</strong><p>Produkte, die zu unserer natürlichen und ehrlichen Produktwelt passen.</p></article>
-                <article><span aria-hidden="true">♡</span><strong>Persönlicher Service</strong><p>Keine anonyme Massenabfertigung – wir kümmern uns um deine Bestellung.</p></article>
-                <article><span aria-hidden="true">▣</span><strong>Liebevoll verpackt</strong><p>Deine Produkte werden geschützt und mit Sorgfalt für den Versand vorbereitet.</p></article>
-                <article><span aria-hidden="true">✓</span><strong>Transparent bestellen</strong><p>Klare Preise, sichere Zahlung und kostenloser Versand ab 60 EUR.</p></article>
-            </div>
         </div>
     </section>
 
@@ -269,7 +256,7 @@
         <span>&copy; {{ date('Y') }} Naturmarkt</span>
     </div>
 </footer>
-<script>window.NATURMARKT_REMINDER_CART = @json($reminderCart);</script><script src="{{ asset('assets/js/site.js') }}"></script>
+<script src="{{ asset('assets/js/site.js') }}"></script>
 </body>
 </html>
 

@@ -79,7 +79,6 @@
 
                     <a class="place-order-button checkout-link-button" href="{{ route('checkout.page') }}" id="go-to-checkout">Zur Kasse</a>
                     <small id="checkout-message"></small>
-                    <form class="cart-reminder-form" method="post" action="{{ route('cart-reminders.store') }}" id="cart-reminder-form">@csrf<input type="hidden" name="cart" id="reminder-cart"><strong>Später erinnern</strong><input type="email" name="email" value="{{ $customer?->email }}" placeholder="E-Mail-Adresse" required><label><input type="checkbox" name="consent" value="1" required> Ich möchte einmalig per E-Mail an diesen Warenkorb erinnert werden.</label><button type="submit">Erinnerung aktivieren</button>@if(session('reminder_success'))<small>{{ session('reminder_success') }}</small>@endif</form>
                 </aside>
             </div>
         </div>

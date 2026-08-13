@@ -160,28 +160,6 @@ const shippingCountry = document.querySelector('#shipping-country');
 const couponCode = document.querySelector('#coupon-code');
 const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') || '';
 const shippingConfig = window.NATURMARKT_SHIPPING || {};
-let couponPreviewDiscount = null;
-
-function trackAnalytics(event, details = {}) {
-    if (document.body.classList.contains('admin-body') || localStorage.getItem('naturmarkt-cookie-consent') !== 'all') return;
-
-    fetch('/analytics/events', {
-        method: 'POST',
-        keepalive: true,
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken },
-        body: JSON.stringify({ event, path: window.location.pathname, ...details }),
-    }).catch(() => {});
-}
-
-function trackCurrentPage() {
-    trackAnalytics('page_view');
-    if (document.body.dataset.productHandle) {
-        trackAnalytics('product_view', {
-            category: document.body.dataset.productCategory,
-            product: document.body.dataset.productHandle,
-        });
-    }
-}
 
 function getCart() {
     try {
@@ -189,10 +167,6 @@ function getCart() {
     } catch {
         return [];
     }
-}
-
-if (Array.isArray(window.NATURMARKT_REMINDER_CART) && window.NATURMARKT_REMINDER_CART.length) {
-    localStorage.setItem(storageKey, JSON.stringify(window.NATURMARKT_REMINDER_CART));
 }
 
 function saveCart(cart) {
@@ -231,7 +205,7 @@ function cartTotals(cart) {
     const exceedsMaximumWeight = subtotal > 0 && weightShipping === null;
     const shipping = subtotal === 0 || subtotal >= freeFrom ? 0 : (weightShipping ?? 0);
     const normalizedCoupon = couponCode?.value.trim().toUpperCase() || '';
-    const discount = couponPreviewDiscount ?? (normalizedCoupon === 'WILLKOMMEN10' ? subtotal * 0.1 : 0);
+    const discount = normalizedCoupon === 'WILLKOMMEN10' ? subtotal * 0.1 : 0;
 
     return {
         subtotal,
@@ -352,10 +326,6 @@ document.querySelectorAll('.add-to-cart').forEach((button) => {
         saveCart(cart);
         renderCart();
         cartDrawer?.classList.add('open');
-        trackAnalytics('add_to_cart', {
-            category: button.dataset.category || '',
-            product: button.dataset.url?.split('/').filter(Boolean).pop() || button.dataset.name,
-        });
     });
 });
 
@@ -406,7 +376,6 @@ checkoutForm?.addEventListener('submit', async (event) => {
 
     checkoutMessage.textContent = 'Deine Anfrage wird gespeichert...';
     placeOrder.disabled = true;
-    trackAnalytics('checkout_started');
 
     try {
         const response = await fetch('/checkout', {
@@ -439,7 +408,6 @@ checkoutForm?.addEventListener('submit', async (event) => {
         }
 
         checkoutMessage.textContent = data.message;
-        if (!data.payment_pending) trackAnalytics('order_completed');
         window.location.href = data.redirect || '/danke';
     } catch (error) {
         checkoutMessage.textContent = error.message || 'Die Anfrage konnte nicht gespeichert werden.';
@@ -449,23 +417,9 @@ checkoutForm?.addEventListener('submit', async (event) => {
 });
 
 shippingCountry?.addEventListener('change', renderCart);
-let couponTimer;
-couponCode?.addEventListener('input', () => {
-    couponPreviewDiscount = null; clearTimeout(couponTimer); renderCart();
-    if (!couponCode.value.trim() || !getCart().length) return;
-    couponTimer = setTimeout(async () => {
-        try {
-            const response = await fetch('/gutscheine/pruefen', { method: 'POST', headers: { 'Content-Type': 'application/json', 'Accept': 'application/json', 'X-CSRF-TOKEN': csrfToken }, body: JSON.stringify({ coupon_code: couponCode.value, country_code: shippingCountry?.value || 'DE', cart: getCart() }) });
-            const data = await response.json(); if (!response.ok) throw new Error(data.message);
-            couponPreviewDiscount = Number(data.discount); checkoutMessage.textContent = data.message; renderCart();
-        } catch (error) { couponPreviewDiscount = 0; checkoutMessage.textContent = error.message || 'Gutschein ist ungültig.'; renderCart(); }
-    }, 450);
-});
+couponCode?.addEventListener('input', renderCart);
 
 renderCart();
-const reminderForm = document.querySelector('#cart-reminder-form');
-reminderForm?.addEventListener('submit', () => { document.querySelector('#reminder-cart').value = JSON.stringify(getCart()); });
-trackCurrentPage();
 
 const consentKey = 'naturmarkt-cookie-consent';
 if (!document.body.classList.contains('admin-body') && !localStorage.getItem(consentKey)) {
@@ -488,7 +442,6 @@ if (!document.body.classList.contains('admin-body') && !localStorage.getItem(con
         if (!choice) return;
         localStorage.setItem(consentKey, choice);
         banner.remove();
-        if (choice === 'all') trackCurrentPage();
     });
 }
 
@@ -512,23 +465,6 @@ adminProductSearch?.addEventListener('input', () => {
     const query = adminProductSearch.value.trim().toLowerCase();
     document.querySelectorAll('[data-admin-product]').forEach((product) => {
         product.hidden = !product.dataset.adminProduct.includes(query);
-        if (query && !product.hidden) product.closest('[data-admin-category]').open = true;
-        if (!query) product.open = false;
-    });
-    document.querySelectorAll('[data-admin-category]').forEach((category) => {
-        const hasMatches = [...category.querySelectorAll('[data-admin-product]')].some((product) => !product.hidden);
-        category.hidden = !hasMatches;
-        if (!query) category.open = false;
-    });
-});
-
-document.querySelectorAll('[data-category-target]').forEach((button) => {
-    button.addEventListener('click', () => {
-        const category = document.getElementById(button.dataset.categoryTarget);
-        if (!category) return;
-        category.hidden = false;
-        category.open = true;
-        category.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 });
 

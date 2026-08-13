@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
     <script type="application/ld+json">{!! $productSchema !!}</script>
 </head>
-<body data-product-category="{{ $category['key'] }}" data-product-handle="{{ $product['handle'] }}">
+<body>
 <header class="site-header">
     <a class="skip-link" href="#produkt">Zum Produkt springen</a>
     <div class="announcement">Kostenloser Versand ab 60 EUR | Sichere Zahlung | Rückgabe 14 Tage</div>
@@ -55,10 +55,6 @@
                 <div class="product-detail-info">
                     <span class="eyebrow">{{ $category['name'] }}</span>
                     <h1>{{ $product['name'] }}</h1>
-                    <a class="product-rating-summary" href="#bewertungen" aria-label="{{ $reviewCount ? $averageRating . ' von 5 Sternen bei ' . $reviewCount . ' Bewertungen' : 'Noch keine Bewertungen' }}">
-                        <span class="rating-stars" aria-hidden="true">{{ $reviewCount ? str_repeat('★', (int) round($averageRating)) . str_repeat('☆', 5 - (int) round($averageRating)) : '☆☆☆☆☆' }}</span>
-                        <span>{{ $reviewCount ? number_format($averageRating, 1, ',', '.') . ' (' . $reviewCount . ')' : 'Als Erste:r bewerten' }}</span>
-                    </a>
                     <strong class="detail-price">{{ $product['price'] }}</strong>
 
                     <div class="product-benefit-grid">
@@ -81,12 +77,7 @@
                     <div class="detail-actions">
                         <button class="add-to-cart primary detail-cart-button" type="button" data-name="{{ $product['name'] }}" data-price="{{ $product['price'] }}" data-weight="{{ $product['weight_grams'] }}" data-category="{{ $category['name'] }}" data-image="{{ $product['image'] }}" data-url="{{ $product['url'] }}" @disabled(!$product['active'] || $product['stock'] === 0)>{{ (!$product['active'] || $product['stock'] === 0) ? 'Nicht verfügbar' : 'In den Warenkorb' }}</button>
                         <a class="button ghost" href="{{ $category['url'] }}">Zurück zur Kategorie</a>
-                        @if($customer)<form method="post" action="{{ route('customer.wishlist.toggle', [$category['key'], $product['handle']]) }}">@csrf<button class="button wishlist-button" type="submit">{{ $onWishlist ? '♥ Auf Wunschliste' : '♡ Zur Wunschliste' }}</button></form>@else<a class="button wishlist-button" href="{{ route('customer.login') }}">♡ Zur Wunschliste</a>@endif
                     </div>
-
-                    @if(!$product['active'] || $product['stock'] === 0)
-                        <form class="availability-form" method="post" action="{{ route('availability.subscribe', [$category['key'], $product['handle']]) }}">@csrf<strong>Informiere mich, wenn es wieder verfügbar ist</strong>@if(session('availability_success'))<p>{{ session('availability_success') }}</p>@endif<div><input type="email" name="email" value="{{ $customer?->email }}" placeholder="E-Mail-Adresse" required><button type="submit">Benachrichtigen</button></div></form>
-                    @endif
 
                     <div class="product-info-panels">
                         <article>
@@ -107,84 +98,13 @@
         </div>
     </section>
 
-    <section class="section reviews-section" id="bewertungen">
-        <div class="container reviews-layout">
-            <div class="reviews-list-panel">
-                <div class="section-heading compact">
-                    <div>
-                        <span class="eyebrow">Kundenmeinungen</span>
-                        <h2>Bewertungen</h2>
-                    </div>
-                    @if ($reviewCount)
-                        <div class="reviews-average"><strong>{{ number_format($averageRating, 1, ',', '.') }}</strong><span class="rating-stars" aria-hidden="true">{{ str_repeat('★', (int) round($averageRating)) }}{{ str_repeat('☆', 5 - (int) round($averageRating)) }}</span><small>{{ $reviewCount }} {{ $reviewCount === 1 ? 'Bewertung' : 'Bewertungen' }}</small></div>
-                    @endif
-                </div>
-
-                @if ($reviewCount)
-                    <div class="rating-distribution">
-                        @foreach ($ratingDistribution as $rating => $count)
-                            <div><span>{{ $rating }} ★</span><div><i style="width: {{ $reviewCount ? ($count / $reviewCount) * 100 : 0 }}%"></i></div><strong>{{ $count }}</strong></div>
-                        @endforeach
-                    </div>
-                    <form class="review-sort" method="get" action="{{ $product['url'] }}#bewertungen">
-                        <label for="review-sort">Sortieren</label>
-                        <select id="review-sort" name="reviews" onchange="this.form.submit()">
-                            <option value="newest" @selected($reviewSort === 'newest')>Neueste zuerst</option>
-                            <option value="helpful" @selected($reviewSort === 'helpful')>Am hilfreichsten</option>
-                            <option value="highest" @selected($reviewSort === 'highest')>Beste Bewertung</option>
-                            <option value="lowest" @selected($reviewSort === 'lowest')>Kritische zuerst</option>
-                        </select>
-                    </form>
-                @endif
-
-                @forelse ($reviews as $review)
-                    <article class="review-card">
-                        <div><strong>{{ $review->name }} @if($review->verified_purchase)<small class="verified-badge">✓ Verifizierter Kauf</small>@endif</strong><span class="rating-stars" aria-label="{{ $review->rating }} von 5 Sternen">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</span></div>
-                        <p>{{ $review->comment }}</p>
-                        @if($review->image_path)<a class="review-image" href="{{ asset('storage/'.$review->image_path) }}" target="_blank"><img src="{{ asset('storage/'.$review->image_path) }}" alt="Kundenfoto zur Bewertung von {{ $product['name'] }}"></a>@endif
-                        @if($review->owner_reply)<div class="owner-review-reply"><strong>Antwort von Naturmarkt</strong><p>{{ $review->owner_reply }}</p></div>@endif
-                        <footer><time datetime="{{ $review->created_at }}">{{ \Illuminate\Support\Carbon::parse($review->created_at)->locale('de')->translatedFormat('d. F Y') }}</time><form method="post" action="{{ route('products.reviews.helpful', $review->id) }}">@csrf<button type="submit">Hilfreich ({{ $review->helpful_count }})</button></form></footer>
-                    </article>
-                @empty
-                    <div class="cart-empty-state"><strong>Noch keine Bewertungen.</strong><p>Teile deine Erfahrung mit diesem Produkt.</p></div>
-                @endforelse
-            </div>
-
-            <form class="review-form" action="{{ route('products.reviews.store', [$category['key'], $product['handle']]) }}" method="post" enctype="multipart/form-data">
-                @csrf
-                <span class="eyebrow">Deine Erfahrung</span>
-                <h2>Produkt bewerten</h2>
-
-                @if (session('review_success'))
-                    <div class="review-success" role="status">{{ session('review_success') }}</div>
-                @endif
-                @if ($errors->any())
-                    <div class="review-errors" role="alert"><strong>Bitte prüfe deine Eingaben:</strong><ul>@foreach ($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>
-                @endif
-
-                <fieldset class="star-rating-input">
-                    <legend>Bewertung</legend>
-                    @for ($star = 5; $star >= 1; $star--)
-                        <input id="rating-{{ $star }}" name="rating" type="radio" value="{{ $star }}" @checked((int) old('rating') === $star) required>
-                        <label for="rating-{{ $star }}" title="{{ $star }} Sterne">★</label>
-                    @endfor
-                </fieldset>
-                <label><span>Name</span><input name="name" type="text" value="{{ old('name', $customer?->name) }}" minlength="2" maxlength="80" autocomplete="name" required></label>
-                <label><span>Kommentar</span><textarea name="comment" rows="5" minlength="10" maxlength="1500" required>{{ old('comment') }}</textarea></label>
-                <label><span>Produktfoto (optional)</span><input name="image" type="file" accept="image/jpeg,image/png,image/webp"><small>JPG, PNG oder WebP · maximal 5 MB</small></label>
-                <button class="button primary" type="submit">Bewertung veröffentlichen</button>
-                <small>Dein Name und deine Bewertung werden öffentlich angezeigt.</small>
-            </form>
-        </div>
-    </section>
-
     @if ($relatedProducts)
         <section class="section product-section">
             <div class="container">
                 <div class="section-heading compact">
                     <div>
-                        <span class="eyebrow">Für dich empfohlen</span>
-                        <h2>Passt gut zu diesem Produkt</h2>
+                        <span class="eyebrow">Dazu passend</span>
+                        <h2>Ähnliche Produkte</h2>
                     </div>
                 </div>
                 <div class="product-grid featured-grid">

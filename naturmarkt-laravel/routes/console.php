@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Schedule;
-use App\Http\Controllers\EngagementController;
 Artisan::command('inspire', function () { $this->comment('Natur beginnt mit kleinen Entscheidungen.'); });
 
 Artisan::command('naturmarkt:backup', function () {
@@ -24,9 +23,6 @@ Artisan::command('naturmarkt:backup', function () {
 })->purpose('Sichert Naturmarkt-Bestellungen und Einstellungen als JSON');
 
 Schedule::command('naturmarkt:backup')->dailyAt('02:00')->withoutOverlapping();
-
-Artisan::command('naturmarkt:send-cart-reminders', function () { $this->info(EngagementController::sendDueReminders().' Erinnerung(en) versendet.'); });
-Schedule::command('naturmarkt:send-cart-reminders')->hourly()->withoutOverlapping();
 
 Artisan::command('naturmarkt:import-product-facts {--dry-run}', function () {
     $categories = config('naturmarkt.categories', []);

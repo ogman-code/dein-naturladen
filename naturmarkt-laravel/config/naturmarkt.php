@@ -41,8 +41,6 @@ return [
     'payments' => [
         'paypal_enabled' => filled(env('PAYPAL_CLIENT_ID')) && filled(env('PAYPAL_CLIENT_SECRET')),
         'stripe_enabled' => filled(env('STRIPE_KEY')) && filled(env('STRIPE_SECRET')),
-        'stripe_secret' => env('STRIPE_SECRET'),
-        'stripe_webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
         'bank_transfer' => [
             'account_holder' => env('BANK_ACCOUNT_HOLDER'),
             'iban' => env('BANK_IBAN'),

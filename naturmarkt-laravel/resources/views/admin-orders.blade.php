@@ -16,7 +16,7 @@
     <nav class="admin-nav container" aria-label="Admin-Navigation">
         <a class="brand" href="{{ route('home') }}"><img class="brand-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a>
         <div class="admin-nav-copy"><strong>Shop-Verwaltung</strong><span>Alles Wichtige auf einen Blick</span></div>
-        <div class="admin-nav-links"><a class="active" href="{{ route('admin.orders') }}">Bestellungen</a><a href="{{ route('admin.products') }}">Produkte</a><a href="{{ route('admin.reviews') }}">Bewertungen</a><a href="{{ route('admin.coupons') }}">Gutscheine</a><a href="{{ route('admin.analytics') }}">Statistik</a><a class="admin-shop-link" href="{{ route('home') }}">Shop ansehen ↗</a><form method="post" action="{{ route('owner.logout') }}">@csrf<button type="submit">Abmelden</button></form></div>
+        <div class="admin-nav-links"><a class="active" href="{{ route('admin.orders') }}">Bestellungen</a><a href="{{ route('admin.products') }}">Produkte</a><a class="admin-shop-link" href="{{ route('home') }}">Shop ansehen ↗</a><form method="post" action="{{ route('owner.logout') }}">@csrf<button type="submit">Abmelden</button></form></div>
     </nav>
 </header>
 <main class="admin-page">
@@ -53,12 +53,10 @@
                             @csrf
                             <label for="status-{{ $order->id }}">Bestellstatus</label>
                             <select id="status-{{ $order->id }}" name="status">
-                                @foreach (['Neu', 'In Bearbeitung', 'Versendet', 'Erledigt'] as $status)
+                                @foreach (['Neu', 'In Bearbeitung', 'Erledigt'] as $status)
                                     <option value="{{ $status }}" @selected(($order->status ?? 'Neu') === $status)>{{ $status }}</option>
                                 @endforeach
                             </select>
-                            <label for="tracking-number-{{ $order->id }}">Sendungsnummer</label><input id="tracking-number-{{ $order->id }}" name="tracking_number" value="{{ $order->tracking_number }}" placeholder="Optional">
-                            <label for="tracking-url-{{ $order->id }}">Tracking-Link</label><input id="tracking-url-{{ $order->id }}" type="url" name="tracking_url" value="{{ $order->tracking_url }}" placeholder="https://…">
                             <button type="submit">Status speichern</button>
                         </form>
                     </div>
