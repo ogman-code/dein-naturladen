@@ -13,7 +13,8 @@ class CustomerAccountController extends Controller
     {
         $customer=$request->attributes->get('customer');
         $orders=DB::table('checkout_requests')->where('customer_id',$customer->id)->orWhere('email',$customer->email)->latest()->get()->map(function($order){$order->items=json_decode($order->cart ?: '[]',true) ?: [];return $order;});
-        return view('customer-account',['customer'=>$customer,'orders'=>$orders,'addresses'=>DB::table('customer_addresses')->where('customer_id',$customer->id)->orderByDesc('is_default')->latest()->get(),'countries'=>config('naturmarkt.shipping.countries',[])]);
+        $wishlist=DB::table('wishlists')->where('customer_id',$customer->id)->latest()->get();
+        return view('customer-account',['customer'=>$customer,'orders'=>$orders,'addresses'=>DB::table('customer_addresses')->where('customer_id',$customer->id)->orderByDesc('is_default')->latest()->get(),'countries'=>config('naturmarkt.shipping.countries',[]),'wishlist'=>$wishlist]);
     }
     public function updateProfile(Request $request): RedirectResponse
     {

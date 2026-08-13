@@ -76,6 +76,7 @@
 
                     <div class="detail-actions">
                         <button class="add-to-cart primary detail-cart-button" type="button" data-name="{{ $product['name'] }}" data-price="{{ $product['price'] }}" data-weight="{{ $product['weight_grams'] }}" data-category="{{ $category['name'] }}" data-image="{{ $product['image'] }}" data-url="{{ $product['url'] }}" @disabled(!$product['active'] || $product['stock'] === 0)>{{ (!$product['active'] || $product['stock'] === 0) ? 'Nicht verfügbar' : 'In den Warenkorb' }}</button>
+                        @if(session('customer_id'))<form method="post" action="{{ route('customer.wishlist.toggle',[$category['key'],$product['handle']]) }}">@csrf<button class="wishlist-button" type="submit">{{ $wishlisted?'♥ Auf Wunschliste':'♡ Merken' }}</button></form>@else<a class="wishlist-button" href="{{ route('customer.login') }}">♡ Merken</a>@endif
                         <a class="button ghost" href="{{ $category['url'] }}">Zurück zur Kategorie</a>
                     </div>
 
@@ -133,6 +134,7 @@
             </div>
         </section>
     @endif
+    <section class="product-reviews container"><div class="review-heading"><div><span class="eyebrow">Erfahrungen</span><h2>Kundenbewertungen</h2></div><strong>{{ $averageRating ? $averageRating.' / 5 ★' : 'Noch keine Bewertung' }}</strong></div><div class="review-list">@foreach($reviews as $review)<article><div class="review-stars">{{ str_repeat('★',$review->rating) }}{{ str_repeat('☆',5-$review->rating) }}</div><p>{{ $review->comment }}</p><strong>{{ $review->name }}</strong><small>Verifizierter Kauf</small></article>@endforeach</div>@if($canReview)<form method="post" action="{{ route('customer.review.store',[$category['key'],$product['handle']]) }}" class="review-form">@csrf<h3>Produkt bewerten</h3><label>Sterne<select name="rating"><option value="5">5 – Ausgezeichnet</option><option value="4">4 – Gut</option><option value="3">3 – In Ordnung</option><option value="2">2 – Weniger gut</option><option value="1">1 – Enttäuschend</option></select></label><label>Deine Erfahrung<textarea name="comment" minlength="10" maxlength="1500" required></textarea></label><button class="button primary">Bewertung absenden</button><small>Bewertungen werden vor der Veröffentlichung geprüft.</small></form>@endif</section>
 </main>
 
 <aside class="cart-drawer" id="cart-drawer" aria-live="polite">

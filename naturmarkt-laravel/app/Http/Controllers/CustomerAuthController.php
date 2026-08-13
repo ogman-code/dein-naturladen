@@ -58,6 +58,7 @@ class CustomerAuthController extends Controller
         if (! $customer || ! Hash::check($data['password'], $customer->password)) {
             return back()->withInput($request->only('email'))->withErrors(['email' => 'E-Mail-Adresse oder Passwort ist nicht korrekt.']);
         }
+        if ($customer->is_blocked) return back()->withErrors(['email' => 'Dieses Kundenkonto wurde vorübergehend gesperrt.']);
         $request->session()->regenerate();
         $request->session()->forget('owner_user_id');
         $request->session()->put('customer_id', $customer->id);

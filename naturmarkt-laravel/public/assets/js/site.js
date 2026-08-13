@@ -172,6 +172,7 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem(storageKey, JSON.stringify(cart));
 }
+function showShopToast(message) { let toast=document.querySelector('.shop-toast'); if(!toast){toast=document.createElement('div');toast.className='shop-toast';document.body.appendChild(toast);} toast.textContent=message;toast.classList.add('show');clearTimeout(window.naturmarktToastTimer);window.naturmarktToastTimer=setTimeout(()=>toast.classList.remove('show'),2200); }
 
 function parsePrice(price) {
     return Number(String(price).replace('EUR', '').replace(/\./g, '').replace(',', '.').trim()) || 0;
@@ -204,8 +205,7 @@ function cartTotals(cart) {
     const freeFrom = Number(shippingConfig.free_from || 60);
     const exceedsMaximumWeight = subtotal > 0 && weightShipping === null;
     const shipping = subtotal === 0 || subtotal >= freeFrom ? 0 : (weightShipping ?? 0);
-    const normalizedCoupon = couponCode?.value.trim().toUpperCase() || '';
-    const discount = normalizedCoupon === 'WILLKOMMEN10' ? subtotal * 0.1 : 0;
+    const discount = 0;
 
     return {
         subtotal,
@@ -326,6 +326,7 @@ document.querySelectorAll('.add-to-cart').forEach((button) => {
         saveCart(cart);
         renderCart();
         cartDrawer?.classList.add('open');
+        showShopToast(`${button.dataset.name} wurde in den Warenkorb gelegt.`);
     });
 });
 
@@ -447,6 +448,7 @@ if (!document.body.classList.contains('admin-body') && !localStorage.getItem(con
 }
 
 const productImage = document.querySelector('.product-detail-media img');
+if(productImage){const viewedKey='naturmarkt-recent-products';let viewed=[];try{viewed=JSON.parse(localStorage.getItem(viewedKey))||[]}catch{}const current={name:document.querySelector('.product-detail-info h1')?.textContent?.trim(),url:location.pathname,image:productImage.src};if(current.name){viewed=[current,...viewed.filter(item=>item.url!==current.url)].slice(0,6);localStorage.setItem(viewedKey,JSON.stringify(viewed));}}
 productImage?.addEventListener('click', () => {
     const lightbox = document.createElement('dialog');
     lightbox.className = 'product-lightbox';
@@ -515,4 +517,3 @@ document.addEventListener('click', (event) => {
         if (dialogEvent.target === dialog) close();
     });
 });
-

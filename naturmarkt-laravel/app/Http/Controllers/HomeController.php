@@ -86,6 +86,8 @@ class HomeController extends Controller
             ->all();
 
         $enrichedProduct = $this->enrichProduct($productData, $categoryData);
+        $reviews = DB::table('product_reviews')->join('customers','customers.id','=','product_reviews.customer_id')->where(['category_key'=>$category,'product_handle'=>$product,'status'=>'approved'])->select('product_reviews.*','customers.name')->latest('product_reviews.created_at')->get();
+        $customerId = session('customer_id');
 
         return view('product', [
             'category' => $categoryData,
@@ -105,6 +107,10 @@ class HomeController extends Controller
                     'url' => $enrichedProduct['url'],
                 ],
             ], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE),
+            'reviews' => $reviews,
+            'averageRating' => $reviews->count() ? round($reviews->avg('rating'),1) : null,
+            'wishlisted' => $customerId ? DB::table('wishlists')->where(['customer_id'=>$customerId,'category_key'=>$category,'product_handle'=>$product])->exists() : false,
+            'canReview' => $customerId ? DB::table('checkout_requests')->where('customer_id',$customerId)->where('cart','like','%"product_handle":"'.$product.'"%')->exists() : false,
         ]);
     }
 
@@ -300,6 +306,18 @@ class HomeController extends Controller
 
         return back()->with('success', 'Produkt wurde aktualisiert.');
     }
+    public function storeProduct(Request $request): RedirectResponse
+    {
+        $d=$request->validate(['category_key'=>['required','string'],'name'=>['required','string','max:180'],'price'=>['required','numeric','min:0'],'stock'=>['required','integer','min:0'],'weight_grams'=>['required','integer','min:1'],'description'=>['nullable','string'],'ingredients'=>['nullable','string'],'allergens'=>['nullable','string'],'image_url'=>['nullable','url'],'featured'=>['nullable','boolean']]);
+        abort_unless(isset(config('naturmarkt.categories')[$d['category_key']]),422);
+        DB::table('custom_products')->insert([...$d,'handle'=>Str::slug($d['name']),'active'=>true,'featured'=>$request->boolean('featured'),'created_at'=>now(),'updated_at'=>now()]);
+        return back()->with('success','Produkt wurde angelegt.');
+    }
+    public function deleteProduct(string $category,string $product): RedirectResponse
+    {
+        DB::table('custom_products')->where(['category_key'=>$category,'handle'=>$product])->delete();
+        return back()->with('success','Eigenes Produkt wurde gelöscht.');
+    }
 
     public function newsletter(Request $request): RedirectResponse
     {
@@ -383,6 +401,10 @@ class HomeController extends Controller
                 ->whereNotNull('stock')
                 ->decrement('stock', $item['quantity']);
         }
+        if ($totals['coupon_id']) {
+            DB::table('coupons')->where('id',$totals['coupon_id'])->increment('uses');
+            if ($customerId) DB::table('coupon_customer')->insertOrIgnore(['coupon_id'=>$totals['coupon_id'],'customer_id'=>$customerId,'created_at'=>now(),'updated_at'=>now()]);
+        }
 
         try {
             $summary = "Vielen Dank für deine Bestellung #{$orderId} bei Naturmarkt.\n\n"
@@ -460,12 +482,15 @@ class HomeController extends Controller
             : $weightShipping;
 
         $normalizedCoupon = strtoupper(trim((string) $couponCode));
-        $coupon = $normalizedCoupon !== '' ? config("naturmarkt.coupons.{$normalizedCoupon}") : null;
+        $couponRecord = $normalizedCoupon !== '' ? DB::table('coupons')->where('code',$normalizedCoupon)->where('active',true)->first() : null;
+        $legacy = $normalizedCoupon !== '' ? config("naturmarkt.coupons.{$normalizedCoupon}") : null;
+        $coupon = $couponRecord ?: ($legacy ? (object) array_merge($legacy,['id'=>null,'minimum_order'=>0,'expires_at'=>null,'max_uses'=>null,'uses'=>0]) : null);
         abort_if($normalizedCoupon !== '' && ! $coupon, 422, 'Der Gutscheincode ist ungültig.');
 
-        $discount = $coupon && $coupon['type'] === 'percent'
-            ? round($subtotal * ((float) $coupon['value'] / 100), 2)
-            : 0.0;
+        abort_if($coupon && $coupon->expires_at && now()->isAfter($coupon->expires_at),422,'Der Gutschein ist abgelaufen.');
+        abort_if($coupon && $coupon->max_uses && $coupon->uses >= $coupon->max_uses,422,'Der Gutschein ist aufgebraucht.');
+        abort_if($coupon && $subtotal < (float)$coupon->minimum_order,422,'Der Mindestbestellwert wurde nicht erreicht.');
+        $discount = $coupon ? ($coupon->type === 'percent' ? round($subtotal*((float)$coupon->value/100),2) : min($subtotal,(float)$coupon->value)) : 0.0;
 
         return [
             'cart' => $cart->all(),
@@ -474,6 +499,7 @@ class HomeController extends Controller
             'shipping' => $shipping,
             'discount' => $discount,
             'coupon_code' => $coupon ? $normalizedCoupon : null,
+            'coupon_id' => $coupon?->id,
             'total' => round($subtotal + $shipping - $discount, 2),
         ];
     }
@@ -522,7 +548,9 @@ class HomeController extends Controller
 
     private function catalog(): array
     {
-        return config('naturmarkt.categories', []);
+        $categories=config('naturmarkt.categories', []);
+        if(Schema::hasTable('custom_products')) foreach(DB::table('custom_products')->get() as $p) if(isset($categories[$p->category_key])) $categories[$p->category_key]['products'][]=['name'=>$p->name,'handle'=>$p->handle,'price'=>number_format($p->price,2,',','.').' EUR','badge'=>$categories[$p->category_key]['name'],'image'=>$p->image_url?:$categories[$p->category_key]['image'],'description'=>$p->description?:'Ausgewähltes Naturmarkt-Produkt.','ingredients'=>$p->ingredients,'weight_grams'=>$p->weight_grams];
+        return $categories;
     }
 
     private function homeCategories(): array
