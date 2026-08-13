@@ -57,3 +57,11 @@ Route::middleware('customer.auth')->group(function () {
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->middleware('throttle:5,1')->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->middleware('throttle:10,1')->name('checkout');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');
+Route::get('/vorschau/email-bestaetigung', function () {
+    abort_unless(app()->isLocal(), 404);
+    return view('emails.customer-verify', ['name' => 'Max Mustermann', 'url' => '#bestaetigen']);
+});
+Route::get('/vorschau/willkommens-email', function () {
+    abort_unless(app()->isLocal(), 404);
+    return view('emails.customer-welcome', ['customer' => (object) ['name' => 'Max Mustermann']]);
+});
