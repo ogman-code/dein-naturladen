@@ -6,6 +6,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules\Password;
 use Illuminate\View\View;
 
 class OwnerAuthController extends Controller
@@ -28,7 +29,7 @@ class OwnerAuthController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:120'],
             'email' => ['required', 'email', 'max:255', 'unique:owner_users,email'],
-            'password' => ['required', 'string', 'min:10', 'confirmed'],
+            'password' => ['required', 'confirmed', Password::min(12)->mixedCase()->numbers()],
         ]);
 
         $ownerId = DB::table('owner_users')->insertGetId([

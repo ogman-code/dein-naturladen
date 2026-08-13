@@ -222,6 +222,7 @@
             </div>
             <form action="{{ route('newsletter') }}" method="post">
                 @csrf
+                <div class="honeypot" aria-hidden="true"><label>Webseite<input name="company_website" type="text" tabindex="-1" autocomplete="off"></label></div>
                 <label class="sr-only" for="email">E-Mail-Adresse</label>
                 <input id="email" name="email" type="email" placeholder="deine@email.de" required>
                 <button type="submit">Anfragen</button>
@@ -259,5 +260,4 @@
 <script src="{{ asset('assets/js/site.js') }}"></script>
 </body>
 </html>
-
 

@@ -299,7 +299,10 @@ class HomeController extends Controller
 
     public function newsletter(Request $request): RedirectResponse
     {
-        $validated = $request->validate(['email' => ['required', 'email', 'max:255']]);
+        $validated = $request->validate([
+            'email' => ['required', 'email', 'max:255'],
+            'company_website' => ['nullable', 'string', 'max:0'],
+        ]);
 
         DB::table('newsletter_requests')->updateOrInsert(
             ['email' => $validated['email']],
@@ -326,6 +329,7 @@ class HomeController extends Controller
             'cart.*.name' => ['required', 'string', 'max:255'],
             'cart.*.quantity' => ['required', 'integer', 'min:1', 'max:20'],
             'terms_accepted' => ['accepted'],
+            'company_website' => ['nullable', 'string', 'max:0'],
         ]);
 
         abort_if($validated['payment_method'] === 'Kreditkarte' && ! config('naturmarkt.payments.stripe_enabled'), 422, 'Kreditkartenzahlung wird zum Verkaufsstart aktiviert.');

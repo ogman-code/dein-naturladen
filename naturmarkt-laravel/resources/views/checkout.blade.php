@@ -48,6 +48,7 @@
 
             <div class="checkout-layout">
                 <form class="checkout-form-panel" id="checkout-form">
+                    <div class="honeypot" aria-hidden="true"><label>Webseite<input name="company_website" type="text" tabindex="-1" autocomplete="off"></label></div>
                     <div class="form-section">
                         <span class="payment-title">Kontakt</span>
                         <div class="checkout-field-grid">

@@ -35,6 +35,6 @@ Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(funct
     Route::get('/produkte', [HomeController::class, 'adminProducts'])->name('admin.products');
     Route::post('/produkte/{category}/{product}', [HomeController::class, 'updateProduct'])->name('admin.products.update');
 });
-Route::post('/newsletter', [HomeController::class, 'newsletter'])->name('newsletter');
-Route::post('/checkout', [HomeController::class, 'checkout'])->name('checkout');
+Route::post('/newsletter', [HomeController::class, 'newsletter'])->middleware('throttle:5,1')->name('newsletter');
+Route::post('/checkout', [HomeController::class, 'checkout'])->middleware('throttle:10,1')->name('checkout');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');

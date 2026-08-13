@@ -2286,3 +2286,10 @@ button:disabled { opacity: .55; cursor: not-allowed; }
     .owner-auth-brand ul { display: none; }
     .owner-auth-panel { padding: 24px 16px 50px; }
 }
+.honeypot {
+    position: absolute !important;
+    left: -10000px !important;
+    width: 1px !important;
+    height: 1px !important;
+    overflow: hidden !important;
+}

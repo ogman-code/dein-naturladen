@@ -397,6 +397,7 @@ checkoutForm?.addEventListener('submit', async (event) => {
                 payment_method: formData.get('payment_method') || 'Ueberweisung',
                 coupon_code: formData.get('coupon_code'),
                 terms_accepted: formData.get('terms_accepted'),
+                company_website: formData.get('company_website'),
                 cart,
             }),
         });
@@ -514,5 +515,4 @@ document.addEventListener('click', (event) => {
         if (dialogEvent.target === dialog) close();
     });
 });
-
 

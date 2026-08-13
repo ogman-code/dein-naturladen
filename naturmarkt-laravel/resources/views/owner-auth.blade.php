@@ -40,9 +40,9 @@
                     <label><span>Dein Name</span><input type="text" name="name" value="{{ old('name') }}" autocomplete="name" required autofocus></label>
                 @endunless
                 <label><span>E-Mail-Adresse</span><input type="email" name="email" value="{{ old('email') }}" autocomplete="email" required @if($ownerExists) autofocus @endif></label>
-                <label><span>Passwort</span><input type="password" name="password" autocomplete="{{ $ownerExists ? 'current-password' : 'new-password' }}" minlength="{{ $ownerExists ? 1 : 10 }}" required></label>
+                <label><span>Passwort</span><input type="password" name="password" autocomplete="{{ $ownerExists ? 'current-password' : 'new-password' }}" minlength="{{ $ownerExists ? 1 : 12 }}" required></label>
                 @unless($ownerExists)
-                    <label><span>Passwort wiederholen</span><input type="password" name="password_confirmation" autocomplete="new-password" minlength="10" required></label>
+                    <label><span>Passwort wiederholen</span><input type="password" name="password_confirmation" autocomplete="new-password" minlength="12" required></label>
                     <small>Mindestens 10 Zeichen. Verwende ein nur für diesen Shop bestimmtes Passwort.</small>
                 @endunless
                 <button type="submit">{{ $ownerExists ? 'Sicher anmelden' : 'Besitzerkonto erstellen' }}</button>
