@@ -49,9 +49,13 @@ Route::post('/kunden/passwort-reset', [CustomerAuthController::class, 'reset'])-
 Route::get('/kunden/verifizieren/{customer}', [CustomerAuthController::class, 'verify'])->middleware('signed')->name('customer.verify');
 Route::middleware('customer.auth')->group(function () {
     Route::get('/kundenkonto', [CustomerAccountController::class, 'index'])->name('customer.account');
+    Route::put('/kundenkonto/profil', [CustomerAccountController::class, 'updateProfile'])->name('customer.profile.update');
+    Route::put('/kundenkonto/passwort', [CustomerAccountController::class, 'updatePassword'])->middleware('throttle:5,1')->name('customer.password.change');
+    Route::delete('/kundenkonto', [CustomerAccountController::class, 'deleteAccount'])->middleware('throttle:3,1')->name('customer.account.delete');
     Route::post('/kunden/abmelden', [CustomerAuthController::class, 'logout'])->name('customer.logout');
     Route::post('/kunden/verifizierung-senden', [CustomerAuthController::class, 'resend'])->middleware('throttle:3,1')->name('customer.verify.resend');
     Route::post('/kunden/adressen', [CustomerAccountController::class, 'storeAddress'])->name('customer.address.store');
+    Route::put('/kunden/adressen/{address}', [CustomerAccountController::class, 'updateAddress'])->name('customer.address.update');
     Route::delete('/kunden/adressen/{address}', [CustomerAccountController::class, 'deleteAddress'])->name('customer.address.delete');
 });
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->middleware('throttle:5,1')->name('newsletter');
