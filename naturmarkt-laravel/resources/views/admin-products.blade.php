@@ -27,9 +27,25 @@
             <label for="admin-product-search"><span>Produkt suchen</span><input id="admin-product-search" type="search" placeholder="Name oder Kategorie eingeben …"></label>
             <div><strong>{{ count($products) }}</strong><span>Produkte insgesamt</span></div>
         </div>
-        <div class="admin-product-grid">
-            @foreach($products as $product)
-                <article class="admin-product-card" data-admin-product="{{ Str::lower($product['name'].' '.$product['category']) }}">
+        @php($productsByCategory = collect($products)->groupBy('category'))
+        <div class="admin-category-nav" role="tablist" aria-label="Produktkategorien">
+            @foreach($productsByCategory as $categoryName => $categoryProducts)
+                <button type="button" role="tab" class="admin-category-tab @if($loop->first) active @endif" data-admin-category-tab="admin-category-{{ Str::slug($categoryName) }}" aria-controls="admin-category-{{ Str::slug($categoryName) }}" aria-selected="{{ $loop->first ? 'true' : 'false' }}">
+                    <span>{{ $categoryName }}</span>
+                    <strong>{{ $categoryProducts->count() }}</strong>
+                </button>
+            @endforeach
+        </div>
+        <div class="admin-product-categories">
+            @foreach($productsByCategory as $categoryName => $categoryProducts)
+                <section class="admin-product-category" id="admin-category-{{ Str::slug($categoryName) }}" role="tabpanel" data-admin-category @if(!$loop->first) hidden @endif>
+                    <div class="admin-category-heading">
+                        <div><span>Produktkategorie</span><h2>{{ $categoryName }}</h2></div>
+                        <strong><span data-visible-product-count>{{ $categoryProducts->count() }}</span> Produkte</strong>
+                    </div>
+                    <div class="admin-product-grid">
+                    @foreach($categoryProducts as $product)
+                        <article class="admin-product-card" data-admin-product="{{ Str::lower($product['name'].' '.$product['category']) }}">
                     <img src="{{ $product['image'] }}" alt="">
                     <div class="admin-product-copy"><span>{{ $product['category'] }}</span><h3>{{ $product['name'] }}</h3><small>{{ $product['active'] ? (($product['stock'] ?? 100).' Stück verfügbar') : 'Im Shop ausgeblendet' }}</small></div>
                     <form method="post" action="{{ route('admin.products.update', [$product['category_key'], $product['handle']]) }}">
@@ -43,7 +59,10 @@
                         <label class="admin-product-text"><span>Zutaten und Pflichtangaben</span><textarea name="ingredients" rows="4" placeholder="Zutaten laut Verpackung eintragen">{{ str_starts_with($product['ingredients'], 'Die vollständige Zutatenliste') ? '' : $product['ingredients'] }}</textarea></label>
                         <button type="submit">Änderungen speichern</button>
                     </form>
-                </article>
+                        </article>
+                    @endforeach
+                    </div>
+                </section>
             @endforeach
         </div>
     </section>

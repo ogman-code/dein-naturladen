@@ -464,12 +464,34 @@ productImage?.addEventListener('click', () => {
 });
 
 const adminProductSearch = document.querySelector('#admin-product-search');
-adminProductSearch?.addEventListener('input', () => {
+const adminCategoryTabs = document.querySelectorAll('[data-admin-category-tab]');
+const filterAdminProducts = () => {
     const query = adminProductSearch.value.trim().toLowerCase();
-    document.querySelectorAll('[data-admin-product]').forEach((product) => {
+    const activeCategory = document.querySelector('[data-admin-category]:not([hidden])');
+    activeCategory?.querySelectorAll('[data-admin-product]').forEach((product) => {
         product.hidden = !product.dataset.adminProduct.includes(query);
     });
+    const visibleProducts = activeCategory?.querySelectorAll('[data-admin-product]:not([hidden])').length ?? 0;
+    const count = activeCategory?.querySelector('[data-visible-product-count]');
+    if (count) count.textContent = visibleProducts;
+};
+
+adminCategoryTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+        adminCategoryTabs.forEach((item) => {
+            const isActive = item === tab;
+            item.classList.toggle('active', isActive);
+            item.setAttribute('aria-selected', isActive ? 'true' : 'false');
+        });
+        document.querySelectorAll('[data-admin-category]').forEach((category) => {
+            category.hidden = category.id !== tab.dataset.adminCategoryTab;
+            category.querySelectorAll('[data-admin-product]').forEach((product) => product.hidden = false);
+        });
+        adminProductSearch.value = '';
+        filterAdminProducts();
+    });
 });
+adminProductSearch?.addEventListener('input', filterAdminProducts);
 
 document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-description-name]');
