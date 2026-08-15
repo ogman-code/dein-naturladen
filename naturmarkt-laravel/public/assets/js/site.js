@@ -467,14 +467,28 @@ const adminProductSearch = document.querySelector('#admin-product-search');
 const adminCategoryTabs = document.querySelectorAll('[data-admin-category-tab]');
 const filterAdminProducts = () => {
     const query = adminProductSearch.value.trim().toLowerCase();
+    const filter = document.querySelector('[data-admin-product-filter].active')?.dataset.adminProductFilter ?? 'all';
     const activeCategory = document.querySelector('[data-admin-category]:not([hidden])');
     activeCategory?.querySelectorAll('[data-admin-product]').forEach((product) => {
-        product.hidden = !product.dataset.adminProduct.includes(query);
+        const stock = Number(product.dataset.stock);
+        const matchesFilter = filter === 'all'
+            || (filter === 'out-of-stock' && stock === 0)
+            || (filter === 'hidden' && product.dataset.active === '0')
+            || (filter === 'incomplete' && product.dataset.incomplete === '1')
+            || (filter === 'low-stock' && stock > 0 && stock <= 10);
+        product.hidden = !product.dataset.adminProduct.includes(query) || !matchesFilter;
     });
     const visibleProducts = activeCategory?.querySelectorAll('[data-admin-product]:not([hidden])').length ?? 0;
     const count = activeCategory?.querySelector('[data-visible-product-count]');
     if (count) count.textContent = visibleProducts;
 };
+
+document.querySelectorAll('[data-admin-product-filter]').forEach((button) => {
+    button.addEventListener('click', () => {
+        document.querySelectorAll('[data-admin-product-filter]').forEach((item) => item.classList.toggle('active', item === button));
+        filterAdminProducts();
+    });
+});
 
 adminCategoryTabs.forEach((tab) => {
     tab.addEventListener('click', () => {
@@ -492,6 +506,42 @@ adminCategoryTabs.forEach((tab) => {
     });
 });
 adminProductSearch?.addEventListener('input', filterAdminProducts);
+
+document.querySelectorAll('.admin-product-expand').forEach((button) => {
+    button.addEventListener('click', () => {
+        const editor = button.closest('.admin-product-card')?.querySelector('.admin-product-editor');
+        if (!editor) return;
+        const isOpen = !editor.hidden;
+        editor.hidden = isOpen;
+        button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        button.querySelector('span').textContent = isOpen ? 'Bearbeiten' : 'Schließen';
+    });
+});
+
+const updateAdminSelection = () => {
+    const selected = document.querySelectorAll('[data-admin-product-select]:checked').length;
+    const count = document.querySelector('[data-admin-selected-count]');
+    const submit = document.querySelector('[data-admin-bulk-submit]');
+    if (count) count.textContent = selected;
+    if (submit) submit.disabled = selected === 0;
+};
+document.querySelectorAll('[data-admin-product-select]').forEach((checkbox) => checkbox.addEventListener('change', updateAdminSelection));
+document.querySelector('[data-admin-select-visible]')?.addEventListener('click', () => {
+    document.querySelectorAll('[data-admin-category]:not([hidden]) [data-admin-product]:not([hidden]) [data-admin-product-select]').forEach((checkbox) => checkbox.checked = true);
+    updateAdminSelection();
+});
+document.querySelector('[data-admin-clear-selection]')?.addEventListener('click', () => {
+    document.querySelectorAll('[data-admin-product-select]:checked').forEach((checkbox) => checkbox.checked = false);
+    updateAdminSelection();
+});
+const adminBulkAction = document.querySelector('[name="bulk_action"]');
+adminBulkAction?.addEventListener('change', () => {
+    const stockField = document.querySelector('.admin-bulk-stock');
+    const stockInput = stockField?.querySelector('input');
+    const needsStock = adminBulkAction.value === 'set_stock';
+    if (stockField) stockField.hidden = !needsStock;
+    if (stockInput) stockInput.required = needsStock;
+});
 
 document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-description-name]');

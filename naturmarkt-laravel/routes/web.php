@@ -37,6 +37,7 @@ Route::middleware(['owner.auth', 'throttle:60,1'])->prefix('admin')->group(funct
     Route::get('/bestellungen', [HomeController::class, 'adminOrders'])->name('admin.orders');
     Route::post('/bestellungen/{id}/status', [HomeController::class, 'updateOrderStatus'])->name('admin.orders.status');
     Route::get('/produkte', [HomeController::class, 'adminProducts'])->name('admin.products');
+    Route::post('/produkte/mehrfachaktion', [HomeController::class, 'bulkUpdateProducts'])->name('admin.products.bulk-update');
     Route::post('/produkte/{category}/{product}', [HomeController::class, 'updateProduct'])->name('admin.products.update');
     Route::post('/produkte', [HomeController::class, 'storeProduct'])->name('admin.products.store');
     Route::delete('/produkte/{category}/{product}', [HomeController::class, 'deleteProduct'])->name('admin.products.delete');

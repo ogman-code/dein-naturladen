@@ -306,6 +306,45 @@ class HomeController extends Controller
 
         return back()->with('success', 'Produkt wurde aktualisiert.');
     }
+
+    public function bulkUpdateProducts(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'products' => ['required', 'array', 'min:1', 'max:250'],
+            'products.*' => ['required', 'string', 'max:500'],
+            'bulk_action' => ['required', 'in:show,hide,set_stock'],
+            'bulk_stock' => ['nullable', 'required_if:bulk_action,set_stock', 'integer', 'min:0', 'max:999999'],
+        ]);
+
+        $selectedProducts = collect($validated['products'])->map(function (string $value): array {
+            [$category, $product] = array_pad(explode('|', $value, 2), 2, null);
+            abort_unless($category && $product, 422, 'Ungültige Produktauswahl.');
+            $this->productFromCatalog($category, $product);
+
+            return ['category_key' => $category, 'product_handle' => $product];
+        })->unique(fn (array $product) => $product['category_key'].'|'.$product['product_handle'])->values();
+
+        DB::transaction(function () use ($selectedProducts, $validated): void {
+            foreach ($selectedProducts as $product) {
+                $changes = ['updated_at' => now()];
+                if ($validated['bulk_action'] === 'set_stock') {
+                    $changes['stock'] = $validated['bulk_stock'];
+                } else {
+                    $changes['active'] = $validated['bulk_action'] === 'show';
+                }
+
+                DB::table('product_overrides')->updateOrInsert($product, $changes);
+            }
+        });
+
+        $message = match ($validated['bulk_action']) {
+            'show' => 'Ausgewählte Produkte wurden eingeblendet.',
+            'hide' => 'Ausgewählte Produkte wurden ausgeblendet.',
+            'set_stock' => 'Der Lagerbestand der ausgewählten Produkte wurde aktualisiert.',
+        };
+
+        return back()->with('success', $message);
+    }
     public function storeProduct(Request $request): RedirectResponse
     {
         $d=$request->validate(['category_key'=>['required','string'],'name'=>['required','string','max:180'],'price'=>['required','numeric','min:0'],'stock'=>['required','integer','min:0'],'weight_grams'=>['required','integer','min:1'],'description'=>['nullable','string'],'ingredients'=>['nullable','string'],'allergens'=>['nullable','string'],'image_url'=>['nullable','url'],'featured'=>['nullable','boolean']]);
