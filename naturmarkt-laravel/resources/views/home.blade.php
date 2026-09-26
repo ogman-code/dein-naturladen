@@ -4,12 +4,19 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Naturmarkt - Kaufseite für Honig, Bienenprodukte, Salben, Sirup, Seifen und Kerzen.">
+    <link rel="canonical" href="{{ route('home') }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Naturmarkt | Naturprodukte online kaufen">
+    <meta property="og:description" content="Honig, Bienenprodukte und ausgewählte Naturwaren bequem online entdecken.">
+    <meta property="og:url" content="{{ route('home') }}">
+    <meta property="og:image" content="{{ asset('assets/images/hero-naturmarkt.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Naturmarkt | Naturprodukte online kaufen</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
+    <script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'OnlineStore','name'=>config('app.name'),'url'=>route('home'),'logo'=>asset('assets/images/naturmarkt-logo.svg'),'email'=>config('naturmarkt.legal.email')], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
 </head>
 <body>
 <aside class="shop-intro" id="shop-intro" aria-label="Naturmarkt Produktvorschau" aria-modal="true" role="dialog">

@@ -29,7 +29,7 @@
         <div class="product-grid">
             @forelse ($products as $product)
                 <article class="product-card">
-                    <a class="product-media" href="{{ $product['url'] }}"><img src="{{ $product['image'] }}" alt="{{ $product['name'] }}"></a>
+                    <a class="product-media" href="{{ $product['url'] }}"><img src="{{ $product['image'] }}" alt="{{ $product['name'] }}" loading="lazy" decoding="async"></a>
                     <div class="product-info">
                         <span class="product-category">{{ $product['category'] }}</span>
                         <h3><a href="{{ $product['url'] }}">{{ $product['name'] }}</a></h3>

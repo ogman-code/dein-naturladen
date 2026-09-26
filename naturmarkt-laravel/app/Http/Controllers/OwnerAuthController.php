@@ -19,7 +19,7 @@ class OwnerAuthController extends Controller
     public function show(Request $request): View|RedirectResponse
     {
         if ($request->session()->has('owner_user_id')) {
-            return redirect()->route('admin.orders');
+            return redirect()->route('admin.dashboard');
         }
 
         return view('owner-auth', [
@@ -49,7 +49,7 @@ class OwnerAuthController extends Controller
         $request->session()->regenerate();
         $request->session()->put('owner_user_id', $ownerId);
 
-        return redirect()->route('admin.orders')->with('success', 'Dein Besitzerkonto wurde eingerichtet.');
+        return redirect()->route('admin.dashboard')->with('success', 'Dein Besitzerkonto wurde eingerichtet.');
     }
 
     public function login(Request $request): RedirectResponse
@@ -71,7 +71,7 @@ class OwnerAuthController extends Controller
         $request->session()->put('owner_user_id', $owner->id);
         DB::table('owner_users')->where('id', $owner->id)->update(['last_login_at' => now()]);
 
-        return redirect()->intended(route('admin.orders'));
+        return redirect()->intended(route('admin.dashboard'));
     }
 
     public function logout(Request $request): RedirectResponse

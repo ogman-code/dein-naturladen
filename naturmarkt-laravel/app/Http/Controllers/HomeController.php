@@ -9,10 +9,13 @@ use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class HomeController extends Controller
 {
+    private ?array $catalogCache = null;
+    private ?array $overrideCache = null;
     public function __invoke(): View
     {
         $categories = $this->homeCategories();
@@ -140,6 +143,35 @@ class HomeController extends Controller
             'products' => $products,
             'categories' => $this->homeCategories(),
         ]);
+    }
+
+    public function searchSuggestions(Request $request)
+    {
+        $query = Str::lower(trim((string) $request->query('q')));
+        if (mb_strlen($query) < 2) {
+            return response()->json(['suggestions' => []]);
+        }
+
+        $products = collect($this->catalog())->flatMap(function (array $category) {
+            $category = $this->enrichCategory($category);
+            return collect($category['products'])->map(fn (array $product) => $this->enrichProduct($product, $category));
+        });
+
+        $suggestions = $products->map(function (array $product) use ($query) {
+            $name = Str::lower($product['name']);
+            $contains = Str::contains($name.' '.$product['category'], $query);
+            $distance = levenshtein($query, mb_substr($name, 0, max(mb_strlen($query), 1)));
+            return ['product' => $product, 'score' => $contains ? 0 : $distance + 10];
+        })->filter(fn (array $item) => $item['score'] === 0 || $item['score'] <= 13)
+          ->sortBy('score')->take(6)->map(fn (array $item) => [
+              'name' => $item['product']['name'],
+              'category' => $item['product']['category'],
+              'price' => $item['product']['price'],
+              'image' => $item['product']['image'],
+              'url' => $item['product']['url'],
+          ])->values();
+
+        return response()->json(['suggestions' => $suggestions], 200, ['Cache-Control' => 'public, max-age=60']);
     }
 
     public function sitemap()
@@ -284,11 +316,14 @@ class HomeController extends Controller
             'ingredients' => ['nullable', 'string', 'max:10000'],
             'weight_grams' => ['required', 'integer', 'min:1', 'max:20000'],
             'image_url' => ['nullable', 'url', 'max:2000'],
+            'image_file' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:4096'],
             'active' => ['nullable', 'boolean'],
         ]);
 
         $this->productFromCatalog($category, $product);
 
+        $imageUrl = $validated['image_url'] ?: null;
+        if ($request->hasFile('image_file')) $imageUrl = Storage::url($request->file('image_file')->store('products', 'public'));
         DB::table('product_overrides')->updateOrInsert(
             ['category_key' => $category, 'product_handle' => $product],
             [
@@ -297,7 +332,7 @@ class HomeController extends Controller
                 'description' => $validated['description'] ?: null,
                 'ingredients' => $validated['ingredients'] ?: null,
                 'weight_grams' => $validated['weight_grams'],
-                'image_url' => $validated['image_url'] ?: null,
+                'image_url' => $imageUrl,
                 'active' => $request->boolean('active'),
                 'updated_at' => now(),
                 'created_at' => now(),
@@ -548,9 +583,10 @@ class HomeController extends Controller
 
     private function catalog(): array
     {
+        if ($this->catalogCache !== null) return $this->catalogCache;
         $categories=config('naturmarkt.categories', []);
         if(Schema::hasTable('custom_products')) foreach(DB::table('custom_products')->get() as $p) if(isset($categories[$p->category_key])) $categories[$p->category_key]['products'][]=['name'=>$p->name,'handle'=>$p->handle,'price'=>number_format($p->price,2,',','.').' EUR','badge'=>$categories[$p->category_key]['name'],'image'=>$p->image_url?:$categories[$p->category_key]['image'],'description'=>$p->description?:'Ausgewähltes Naturmarkt-Produkt.','ingredients'=>$p->ingredients,'weight_grams'=>$p->weight_grams];
-        return $categories;
+        return $this->catalogCache = $categories;
     }
 
     private function homeCategories(): array
@@ -593,12 +629,12 @@ class HomeController extends Controller
 
     private function enrichProduct(array $product, array $category): array
     {
-        $override = Schema::hasTable('product_overrides')
-            ? DB::table('product_overrides')
-                ->where('category_key', $category['key'])
-                ->where('product_handle', $product['handle'])
-                ->first()
-            : null;
+        if ($this->overrideCache === null) {
+            $this->overrideCache = Schema::hasTable('product_overrides')
+                ? DB::table('product_overrides')->get()->keyBy(fn ($row) => $row->category_key.'|'.$row->product_handle)->all()
+                : [];
+        }
+        $override = $this->overrideCache[$category['key'].'|'.$product['handle']] ?? null;
 
         if ($override && $override->price !== null) {
             $product['price'] = number_format((float) $override->price, 2, ',', '.').' EUR';

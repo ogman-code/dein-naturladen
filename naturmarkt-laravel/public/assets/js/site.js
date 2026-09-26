@@ -1,6 +1,41 @@
 ﻿const toggle = document.querySelector('.menu-toggle');
 const links = document.querySelector('.nav-links');
 
+document.querySelectorAll('.header-search').forEach((form) => {
+    const input = form.querySelector('input[type="search"]');
+    if (!input) return;
+    const results = document.createElement('div');
+    results.className = 'live-search-results';
+    results.setAttribute('role', 'listbox');
+    form.appendChild(results);
+    let controller;
+    let timer;
+
+    const closeResults = () => { results.hidden = true; results.innerHTML = ''; };
+    input.addEventListener('input', () => {
+        window.clearTimeout(timer);
+        const query = input.value.trim();
+        if (query.length < 2) return closeResults();
+        timer = window.setTimeout(async () => {
+            controller?.abort();
+            controller = new AbortController();
+            try {
+                const response = await fetch(`/api/suche?q=${encodeURIComponent(query)}`, { signal: controller.signal, headers: { Accept: 'application/json' } });
+                if (!response.ok) return closeResults();
+                const data = await response.json();
+                results.innerHTML = (data.suggestions || []).map((item) => `
+                    <a href="${item.url}" role="option">
+                        <img src="${item.image}" alt="">
+                        <span><strong>${item.name}</strong><small>${item.category} · ${item.price}</small></span>
+                    </a>`).join('') || `<a href="/suche?q=${encodeURIComponent(query)}"><span><strong>Nach „${query}“ suchen</strong><small>Alle Ergebnisse anzeigen</small></span></a>`;
+                results.hidden = false;
+            } catch (error) { if (error.name !== 'AbortError') closeResults(); }
+        }, 180);
+    });
+    document.addEventListener('click', (event) => { if (!form.contains(event.target)) closeResults(); });
+    input.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeResults(); });
+});
+
 const shopIntro = document.querySelector('#shop-intro');
 const shopIntroClose = document.querySelector('#shop-intro-close');
 const shopIntroSkip = document.querySelector('#shop-intro-skip');
@@ -172,6 +207,21 @@ function getCart() {
 function saveCart(cart) {
     localStorage.setItem(storageKey, JSON.stringify(cart));
 }
+
+document.querySelectorAll('[data-reorder]').forEach((button) => {
+    button.addEventListener('click', () => {
+        try {
+            const items = JSON.parse(atob(button.dataset.reorder || 'W10=')).map((item) => ({
+                ...item,
+                quantity: Number(item.quantity || 1),
+                price: typeof item.price === 'number' ? formatPrice(item.price) : item.price,
+            }));
+            if (!items.length) return;
+            saveCart(items);
+            window.location.href = '/warenkorb';
+        } catch { showShopToast('Die Bestellung konnte nicht übernommen werden.'); }
+    });
+});
 function showShopToast(message) { let toast=document.querySelector('.shop-toast'); if(!toast){toast=document.createElement('div');toast.className='shop-toast';document.body.appendChild(toast);} toast.textContent=message;toast.classList.add('show');clearTimeout(window.naturmarktToastTimer);window.naturmarktToastTimer=setTimeout(()=>toast.classList.remove('show'),2200); }
 
 function parsePrice(price) {
@@ -464,12 +514,49 @@ productImage?.addEventListener('click', () => {
 });
 
 const adminProductSearch = document.querySelector('#admin-product-search');
-adminProductSearch?.addEventListener('input', () => {
-    const query = adminProductSearch.value.trim().toLowerCase();
-    document.querySelectorAll('[data-admin-product]').forEach((product) => {
-        product.hidden = !product.dataset.adminProduct.includes(query);
+if (adminProductSearch) {
+    const categories = [...document.querySelectorAll('[data-admin-category]')];
+    const products = [...document.querySelectorAll('[data-admin-product]')];
+    const groups = [...document.querySelectorAll('[data-admin-group]')];
+    const reset = document.querySelector('#admin-search-reset');
+    const url = new URL(window.location.href);
+    let selected = categories.find(button => button.dataset.adminCategory === url.searchParams.get('category'))
+        || categories.find(button => button.dataset.adminCategory && Number(button.querySelector('strong').textContent) > 0)
+        || categories[0];
+    const filterProducts = () => {
+        const query = adminProductSearch.value.trim().toLocaleLowerCase('de');
+        const key = selected?.dataset.adminCategory || '';
+        let count = 0;
+        products.forEach(product => {
+            product.hidden = Boolean((key && product.dataset.adminCategoryKey !== key) || !product.dataset.adminProduct.includes(query));
+            if (!product.hidden) count++;
+        });
+        groups.forEach(group => {
+            group.hidden = ![...group.querySelectorAll('[data-admin-product]')].some(product => !product.hidden);
+            group.querySelector('.admin-group-title').hidden = Boolean(key);
+        });
+        categories.forEach(button => button.setAttribute('aria-pressed', String(button === selected)));
+        document.querySelector('#admin-category-title').textContent = selected?.dataset.categoryName || 'Alle Produkte';
+        document.querySelector('#admin-product-count').textContent = `${count} ${count === 1 ? 'Produkt' : 'Produkte'}${query ? ' gefunden' : ''}`;
+        document.querySelector('#admin-catalog-empty').hidden = count > 0;
+        adminProductSearch.placeholder = key ? `In ${selected.dataset.categoryName} suchen …` : 'Alle Produkte durchsuchen …';
+        reset.hidden = !adminProductSearch.value;
+    };
+    categories.forEach(button => button.addEventListener('click', () => {
+        selected = button;
+        adminProductSearch.value = '';
+        url.searchParams.set('category', button.dataset.adminCategory);
+        window.history.replaceState(null, '', url);
+        filterProducts();
+    }));
+    adminProductSearch.addEventListener('input', filterProducts);
+    reset?.addEventListener('click', () => {
+        adminProductSearch.value = '';
+        filterProducts();
+        adminProductSearch.focus();
     });
-});
+    filterProducts();
+}
 
 document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-description-name]');

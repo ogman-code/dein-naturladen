@@ -32,6 +32,10 @@ class SecurityHeaders
             $response->headers->set('X-Robots-Tag', 'noindex, nofollow');
         }
 
+        if ($request->is('assets/*')) {
+            $response->headers->set('Cache-Control', 'public, max-age=604800, immutable');
+        }
+
         return $response;
     }
 }

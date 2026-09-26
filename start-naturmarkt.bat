@@ -25,6 +25,7 @@ if not exist vendor\autoload.php (
 echo Starte Laravel auf http://127.0.0.1:8000
 echo Dieses Fenster offen lassen, solange du die Seite sehen willst.
 echo.
+php artisan optimize:clear
 php artisan serve --host=127.0.0.1 --port=8000
 echo.
 echo Laravel wurde beendet.
