@@ -519,6 +519,8 @@ if (adminProductSearch) {
     const products = [...document.querySelectorAll('[data-admin-product]')];
     const groups = [...document.querySelectorAll('[data-admin-group]')];
     const reset = document.querySelector('#admin-search-reset');
+    const statusFilters = [...document.querySelectorAll('[data-admin-product-filter]')];
+    let selectedStatus = 'all';
     const url = new URL(window.location.href);
     let selected = categories.find(button => button.dataset.adminCategory === url.searchParams.get('category'))
         || categories.find(button => button.dataset.adminCategory && Number(button.querySelector('strong').textContent) > 0)
@@ -528,7 +530,13 @@ if (adminProductSearch) {
         const key = selected?.dataset.adminCategory || '';
         let count = 0;
         products.forEach(product => {
-            product.hidden = Boolean((key && product.dataset.adminCategoryKey !== key) || !product.dataset.adminProduct.includes(query));
+            const stock = Number(product.dataset.stock);
+            const matchesStatus = selectedStatus === 'all'
+                || (selectedStatus === 'out-of-stock' && stock === 0)
+                || (selectedStatus === 'hidden' && product.dataset.active === '0')
+                || (selectedStatus === 'incomplete' && product.dataset.incomplete === '1')
+                || (selectedStatus === 'low-stock' && stock > 0 && stock <= 10);
+            product.hidden = Boolean((key && product.dataset.adminCategoryKey !== key) || !product.dataset.adminProduct.includes(query) || !matchesStatus);
             if (!product.hidden) count++;
         });
         groups.forEach(group => {
@@ -542,8 +550,15 @@ if (adminProductSearch) {
         adminProductSearch.placeholder = key ? `In ${selected.dataset.categoryName} suchen …` : 'Alle Produkte durchsuchen …';
         reset.hidden = !adminProductSearch.value;
     };
+    statusFilters.forEach(button => button.addEventListener('click', () => {
+        selectedStatus = button.dataset.adminProductFilter;
+        statusFilters.forEach(item => item.classList.toggle('active', item === button));
+        filterProducts();
+    }));
     categories.forEach(button => button.addEventListener('click', () => {
         selected = button;
+        selectedStatus = 'all';
+        statusFilters.forEach(item => item.classList.toggle('active', item.dataset.adminProductFilter === 'all'));
         adminProductSearch.value = '';
         url.searchParams.set('category', button.dataset.adminCategory);
         window.history.replaceState(null, '', url);
@@ -557,6 +572,42 @@ if (adminProductSearch) {
     });
     filterProducts();
 }
+
+document.querySelectorAll('.admin-product-expand').forEach((button) => {
+    button.addEventListener('click', () => {
+        const editor = button.closest('.admin-product-card')?.querySelector('.admin-product-editor');
+        if (!editor) return;
+        const isOpen = !editor.hidden;
+        editor.hidden = isOpen;
+        button.setAttribute('aria-expanded', isOpen ? 'false' : 'true');
+        button.querySelector('span').textContent = isOpen ? 'Bearbeiten' : 'Schließen';
+    });
+});
+
+const updateAdminSelection = () => {
+    const selected = document.querySelectorAll('[data-admin-product-select]:checked').length;
+    const count = document.querySelector('[data-admin-selected-count]');
+    const submit = document.querySelector('[data-admin-bulk-submit]');
+    if (count) count.textContent = selected;
+    if (submit) submit.disabled = selected === 0;
+};
+document.querySelectorAll('[data-admin-product-select]').forEach((checkbox) => checkbox.addEventListener('change', updateAdminSelection));
+document.querySelector('[data-admin-select-visible]')?.addEventListener('click', () => {
+    document.querySelectorAll('[data-admin-group]:not([hidden]) [data-admin-product]:not([hidden]) [data-admin-product-select]').forEach((checkbox) => checkbox.checked = true);
+    updateAdminSelection();
+});
+document.querySelector('[data-admin-clear-selection]')?.addEventListener('click', () => {
+    document.querySelectorAll('[data-admin-product-select]:checked').forEach((checkbox) => checkbox.checked = false);
+    updateAdminSelection();
+});
+const adminBulkAction = document.querySelector('[name="bulk_action"]');
+adminBulkAction?.addEventListener('change', () => {
+    const stockField = document.querySelector('.admin-bulk-stock');
+    const stockInput = stockField?.querySelector('input');
+    const needsStock = adminBulkAction.value === 'set_stock';
+    if (stockField) stockField.hidden = !needsStock;
+    if (stockInput) stockInput.required = needsStock;
+});
 
 document.addEventListener('click', (event) => {
     const trigger = event.target.closest('[data-description-name]');

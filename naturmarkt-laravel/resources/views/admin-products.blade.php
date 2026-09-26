@@ -47,15 +47,36 @@
             <label for="admin-product-search"><span>Produkt suchen</span><input id="admin-product-search" type="search" placeholder="Name oder Kategorie eingeben …"></label>
             <button type="button" class="admin-search-reset" id="admin-search-reset" hidden>Suche zurücksetzen</button>
         </div>
+        <div class="admin-product-filters" aria-label="Produkte filtern">
+            <button type="button" class="active" data-admin-product-filter="all">Alle</button>
+            <button type="button" data-admin-product-filter="out-of-stock">Ausverkauft</button>
+            <button type="button" data-admin-product-filter="hidden">Versteckt</button>
+            <button type="button" data-admin-product-filter="incomplete">Unvollständig</button>
+            <button type="button" data-admin-product-filter="low-stock">Niedriger Bestand</button>
+        </div>
+        <form id="bulk-product-form" class="admin-bulk-actions" method="post" action="{{ route('admin.products.bulk-update') }}">
+            @csrf
+            <div><strong><span data-admin-selected-count>0</span> ausgewählt</strong><button type="button" data-admin-select-visible>Sichtbare auswählen</button><button type="button" data-admin-clear-selection>Auswahl aufheben</button></div>
+            <label><span>Mehrfachaktion</span><select name="bulk_action" required><option value="">Aktion wählen …</option><option value="show">Im Shop einblenden</option><option value="hide">Im Shop ausblenden</option><option value="set_stock">Lagerbestand setzen</option></select></label>
+            <label class="admin-bulk-stock" hidden><span>Neuer Bestand</span><input type="number" name="bulk_stock" min="0" max="999999" placeholder="0"></label>
+            <button type="submit" disabled data-admin-bulk-submit>Anwenden</button>
+        </form>
         <div class="admin-catalog-empty" id="admin-catalog-empty" hidden><h3>Keine Produkte gefunden</h3><p>Versuchen Sie einen anderen Produktnamen oder wählen Sie eine andere Kategorie.</p></div>
         @foreach($productCategories as $categoryKey => $category)
         <section class="admin-product-group" data-admin-group="{{ $categoryKey }}" aria-label="{{ $category['name'] }}">
         <h3 class="admin-group-title">{{ $category['name'] }} <span>{{ $category['count'] }} Produkte</span></h3>
         <div class="admin-product-grid">
             @foreach($productGroups->get($categoryKey, collect())->sortBy('name', SORT_NATURAL | SORT_FLAG_CASE) as $product)
-                <article class="admin-product-card" data-admin-category-key="{{ $product['category_key'] }}" data-admin-product="{{ Str::lower($product['name']) }}">
-                    <img src="{{ $product['image'] }}" alt="">
-                    <div class="admin-product-copy"><span>{{ $product['category'] }}</span><h3>{{ $product['name'] }}</h3><small>{{ $product['active'] ? (($product['stock'] ?? 100).' Stück verfügbar') : 'Im Shop ausgeblendet' }}</small></div>
+                        @php($displayStock = $product['stock'] ?? 100)
+                        @php($isIncomplete = $product['description_incomplete'] || str_starts_with($product['ingredients'], 'Die vollständige Zutatenliste'))
+                        <article class="admin-product-card" data-admin-category-key="{{ $product['category_key'] }}" data-admin-product="{{ Str::lower($product['name'].' '.$product['category']) }}" data-stock="{{ $displayStock }}" data-active="{{ $product['active'] ? '1' : '0' }}" data-incomplete="{{ $isIncomplete ? '1' : '0' }}">
+                    <div class="admin-product-row">
+                        <label class="admin-product-select" title="Produkt auswählen"><input type="checkbox" name="products[]" value="{{ $product['category_key'].'|'.$product['handle'] }}" form="bulk-product-form" data-admin-product-select><span></span></label>
+                        <img src="{{ $product['image'] }}" alt="">
+                        <div class="admin-product-copy"><span>{{ $product['category'] }}</span><h3>{{ $product['name'] }}</h3><div class="admin-product-badges"><small class="{{ $displayStock === 0 ? 'danger' : ($displayStock <= 10 ? 'warning' : '') }}">{{ $displayStock === 0 ? 'Ausverkauft' : $displayStock.' Stück verfügbar' }}</small>@if(!$product['active'])<small class="muted">Versteckt</small>@endif @if($isIncomplete)<small class="warning">Angaben fehlen</small>@endif</div></div>
+                        <button type="button" class="admin-product-expand" aria-expanded="false"><span>Bearbeiten</span><b>⌄</b></button>
+                    </div>
+                    <div class="admin-product-editor" hidden>
                     <form method="post" enctype="multipart/form-data" action="{{ route('admin.products.update', [$product['category_key'], $product['handle']]) }}">
                         @csrf
                         <label><span>Preis in €</span><input type="number" name="price" min="0" step="0.01" value="{{ str_replace(',', '.', str_replace('.', '', str_replace(' EUR', '', $product['price']))) }}" required></label>
@@ -68,6 +89,7 @@
                         <label class="admin-product-text"><span>Zutaten und Pflichtangaben</span><textarea name="ingredients" rows="4" placeholder="Zutaten laut Verpackung eintragen">{{ str_starts_with($product['ingredients'], 'Die vollständige Zutatenliste') ? '' : $product['ingredients'] }}</textarea></label>
                         <button type="submit">Änderungen speichern</button>
                     </form>
+                    </div>
                 </article>
             @endforeach
         </div>
