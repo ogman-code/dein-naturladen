@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerAuthController;
 use App\Http\Controllers\CustomerAccountController;
 use App\Http\Controllers\AdminManagementController;
 use App\Http\Controllers\CustomerEngagementController;
+use App\Http\Controllers\WithdrawalController;
 use Illuminate\Support\Facades\Route;
 Route::get('/', HomeController::class)->name('home');
 Route::get('/suche', [HomeController::class, 'search'])->name('search');
@@ -83,6 +84,9 @@ Route::middleware('customer.auth')->group(function () {
 Route::post('/newsletter', [HomeController::class, 'newsletter'])->middleware('throttle:5,1')->name('newsletter');
 Route::post('/checkout', [HomeController::class, 'checkout'])->middleware('throttle:10,1')->name('checkout');
 Route::get('/danke', [HomeController::class, 'thankYou'])->name('checkout.thank-you');
+Route::get('/vertrag-widerrufen', [WithdrawalController::class, 'show'])->name('withdrawal.form');
+Route::post('/vertrag-widerrufen', [WithdrawalController::class, 'store'])->middleware('throttle:5,1')->name('withdrawal.submit');
+Route::get('/vertrag-widerrufen/eingegangen', [WithdrawalController::class, 'done'])->name('withdrawal.done');
 Route::get('/vorschau/email-bestaetigung', function () {
     abort_unless(app()->isLocal(), 404);
     return view('emails.customer-verify', ['name' => 'Max Mustermann', 'url' => '#bestaetigen']);

@@ -12,9 +12,7 @@
     <meta property="og:image" content="{{ asset('assets/images/hero-naturmarkt.png') }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Naturmarkt | Naturprodukte online kaufen</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
     <script type="application/ld+json">{!! json_encode(['@context'=>'https://schema.org','@type'=>'OnlineStore','name'=>config('app.name'),'url'=>route('home'),'logo'=>asset('assets/images/naturmarkt-logo.svg'),'email'=>config('naturmarkt.legal.email')], JSON_UNESCAPED_SLASHES|JSON_UNESCAPED_UNICODE) !!}</script>
 </head>
@@ -271,7 +269,7 @@
     <div class="container footer-grid">
         <div><a class="brand footer-brand" href="#start" aria-label="Naturmarkt Startseite"><img class="brand-logo footer-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a><p>Honig, Bienenprodukte, Pflege, Kerzen und Naturgeschenke mit Sorgfalt ausgewählt.</p></div>
         <div><strong>Shop</strong><a href="#kategorien">Kategorien</a><a href="{{ route('cart') }}">Warenkorb</a></div>
-        <div><strong>Service</strong><a href="{{ route('contact') }}">Kontakt</a><a href="{{ route('shipping') }}">Versand</a><a href="{{ route('returns') }}">Widerruf</a></div>
+        <div><strong>Service</strong><a href="{{ route('contact') }}">Kontakt</a><a href="{{ route('shipping') }}">Versand</a><a href="{{ route('returns') }}">Widerrufsbelehrung</a><a class="withdraw-link" href="{{ route('withdrawal.form') }}">Vertrag widerrufen</a></div>
         <div><strong>Rechtliches</strong><a href="{{ route('imprint') }}">Impressum</a><a href="{{ route('privacy') }}">Datenschutz</a><a href="{{ route('terms') }}">AGB</a></div>
     </div>
     <div class="container footer-bottom">

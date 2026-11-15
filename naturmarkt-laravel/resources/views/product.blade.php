@@ -12,9 +12,7 @@
     <link rel="canonical" href="{{ $product['url'] }}">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Naturmarkt | {{ $product['name'] }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
     <script type="application/ld+json">{!! $productSchema !!}</script>
 </head>
@@ -151,7 +149,7 @@
     <div class="container footer-grid">
         <div><a class="brand footer-brand" href="{{ route('home') }}" aria-label="Naturmarkt Startseite"><img class="brand-logo footer-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a><p>Natürliche Produkte aus kleinen Manufakturen, professionell präsentiert für deinen Online-Verkauf.</p></div>
         <div><strong>Shop</strong><a href="{{ route('home') }}#kategorien">Kategorien</a><a href="{{ $category['url'] }}">{{ $category['name'] }}</a></div>
-        <div><strong>Service</strong><a href="{{ route('cart') }}">Warenkorb</a><a href="{{ route('shipping') }}">Versand</a><a href="{{ route('returns') }}">Widerruf</a></div>
+        <div><strong>Service</strong><a href="{{ route('cart') }}">Warenkorb</a><a href="{{ route('shipping') }}">Versand</a><a href="{{ route('returns') }}">Widerrufsbelehrung</a><a class="withdraw-link" href="{{ route('withdrawal.form') }}">Vertrag widerrufen</a></div>
         <div><strong>Rechtliches</strong><a href="{{ route('imprint') }}">Impressum</a><a href="{{ route('privacy') }}">Datenschutz</a><a href="{{ route('terms') }}">AGB</a></div>
     </div>
     <div class="container footer-bottom">

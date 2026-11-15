@@ -32,6 +32,8 @@ return [
     ],
     'owner_web_registration' => (bool) env('OWNER_WEB_REGISTRATION', false),
 
+    'admin_email' => env('SHOP_ADMIN_EMAIL'),
+
     'legal' => [
         'business_name' => env('LEGAL_BUSINESS_NAME', 'Naturmarkt'),
         'owner' => env('LEGAL_OWNER', '[Name ergänzen]'),

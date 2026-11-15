@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="{{ $title }} bei Naturmarkt.">
     <title>Naturmarkt | {{ $title }}</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
 </head>
 <body>
@@ -38,8 +36,10 @@
         @if ($title === 'Kontakt')
             <div class="info-contact-box">
                 <strong>Direkter Kontakt</strong>
-                <span>E-Mail: bitte-eintragen@example.com</span>
-                <span>Telefon: bitte eintragen</span>
+                @php($legal = config('naturmarkt.legal'))
+                <span>E-Mail: <a href="mailto:{{ $legal['email'] }}">{{ $legal['email'] }}</a></span>
+                <span>Telefon: {{ $legal['phone'] }}</span>
+                <span>Post: {{ $legal['owner'] }}, {{ $legal['street'] }}, {{ $legal['city'] }}</span>
             </div>
         @endif
         <a class="button primary" href="{{ route('home') }}">Zur Startseite</a>

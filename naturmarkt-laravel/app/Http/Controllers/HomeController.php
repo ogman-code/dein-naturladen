@@ -226,12 +226,36 @@ class HomeController extends Controller
 
     public function returns(): View
     {
-        return $this->legalPage('Widerruf', [
-            ['title' => 'Widerrufsrecht', 'text' => 'Verbraucher haben grundsätzlich das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen. Die Frist beginnt, sobald du oder eine von dir benannte Person die Ware erhalten hat.'],
-            ['title' => 'Widerruf erklären', 'text' => 'Sende eine eindeutige Erklärung per E-Mail oder Post an die im Impressum genannte Adresse. Nenne möglichst Bestellnummer, Ware, Bestelldatum, Namen und Anschrift.'],
-            ['title' => 'Folgen des Widerrufs', 'text' => 'Nach einem wirksamen Widerruf erstatten wir die erhaltenen Zahlungen einschließlich der Kosten der günstigsten Standardlieferung. Die Rückzahlung kann bis zum Eingang der Ware oder bis zu deinem Versandnachweis zurückgehalten werden.'],
-            ['title' => 'Rücksendung und Ausnahmen', 'text' => 'Die Ware ist spätestens binnen vierzehn Tagen nach dem Widerruf zurückzusenden. Bei entsiegelten Hygiene- oder Gesundheitswaren kann das Widerrufsrecht gesetzlich ausgeschlossen sein.'],
-        ], 'Vor Verwendung durch eine Rechtsberatung prüfen lassen.');
+        // Amtliches Muster nach Anlage 1 zu Art. 246a § 1 Abs. 2 Satz 2 EGBGB (Fassung ab 19.06.2026),
+        // ausgefüllt nach Gestaltungshinweisen 1b, 2, 3 (Widerrufsfunktion), 4, 5a, 5b ("Sie tragen ...") und 5c.
+        $legal = config('naturmarkt.legal');
+        $contact = "{$legal['business_name']}, {$legal['owner']}, {$legal['street']}, {$legal['city']}, Telefon: {$legal['phone']}, E-Mail: {$legal['email']}";
+        $address = "{$legal['business_name']}, {$legal['owner']}, {$legal['street']}, {$legal['city']}";
+        $withdrawalUrl = route('withdrawal.form');
+
+        return $this->legalPage('Widerrufsbelehrung', [
+            ['title' => 'Widerrufsrecht', 'text' => "Sie haben das Recht, binnen vierzehn Tagen ohne Angabe von Gründen diesen Vertrag zu widerrufen.\n\n"
+                ."Die Widerrufsfrist beträgt vierzehn Tage ab dem Tag, an dem Sie oder ein von Ihnen benannter Dritter, der nicht der Beförderer ist, die Waren in Besitz genommen haben bzw. hat.\n\n"
+                ."Um Ihr Widerrufsrecht auszuüben, müssen Sie uns ({$contact}) mittels einer eindeutigen Erklärung (z. B. ein mit der Post versandter Brief oder eine E-Mail) über Ihren Entschluss, diesen Vertrag zu widerrufen, informieren. Sie können dafür das beigefügte Muster-Widerrufsformular verwenden, das jedoch nicht vorgeschrieben ist. "
+                ."Sie können Ihr Widerrufsrecht auch online unter {$withdrawalUrl} ausüben. Wenn Sie diese Online-Funktion nutzen, übermitteln wir Ihnen auf einem dauerhaften Datenträger (z. B. durch eine E-Mail) unverzüglich eine Eingangsbestätigung mit Informationen zum Inhalt der Widerrufserklärung sowie dem Datum und der Uhrzeit ihres Eingangs.\n\n"
+                .'Zur Wahrung der Widerrufsfrist reicht es aus, dass Sie die Mitteilung über die Ausübung des Widerrufsrechts vor Ablauf der Widerrufsfrist absenden.'],
+            ['title' => 'Folgen des Widerrufs', 'text' => 'Wenn Sie diesen Vertrag widerrufen, haben wir Ihnen alle Zahlungen, die wir von Ihnen erhalten haben, einschließlich der Lieferkosten (mit Ausnahme der zusätzlichen Kosten, die sich daraus ergeben, dass Sie eine andere Art der Lieferung als die von uns angebotene, günstigste Standardlieferung gewählt haben), unverzüglich und spätestens binnen vierzehn Tagen ab dem Tag zurückzuzahlen, an dem die Mitteilung über Ihren Widerruf dieses Vertrags bei uns eingegangen ist. Für diese Rückzahlung verwenden wir dasselbe Zahlungsmittel, das Sie bei der ursprünglichen Transaktion eingesetzt haben, es sei denn, mit Ihnen wurde ausdrücklich etwas anderes vereinbart; in keinem Fall werden Ihnen wegen dieser Rückzahlung Entgelte berechnet. '
+                ."Wir können die Rückzahlung verweigern, bis wir die Waren wieder zurückerhalten haben oder bis Sie den Nachweis erbracht haben, dass Sie die Waren zurückgesandt haben, je nachdem, welches der frühere Zeitpunkt ist.\n\n"
+                ."Sie haben die Waren unverzüglich und in jedem Fall spätestens binnen vierzehn Tagen ab dem Tag, an dem Sie uns über den Widerruf dieses Vertrags unterrichten, an uns ({$address}) zurückzusenden oder zu übergeben. Die Frist ist gewahrt, wenn Sie die Waren vor Ablauf der Frist von vierzehn Tagen absenden.\n\n"
+                ."Sie tragen die unmittelbaren Kosten der Rücksendung der Waren.\n\n"
+                .'Sie müssen für einen etwaigen Wertverlust der Waren nur aufkommen, wenn dieser Wertverlust auf einen zur Prüfung der Beschaffenheit, Eigenschaften und Funktionsweise der Waren nicht notwendigen Umgang mit ihnen zurückzuführen ist.'],
+            ['title' => 'Ausschluss bzw. vorzeitiges Erlöschen des Widerrufsrechts', 'text' => "Das Widerrufsrecht besteht nicht bei Verträgen zur Lieferung von Waren, die schnell verderben können oder deren Verfallsdatum schnell überschritten würde (§ 312g Abs. 2 Nr. 2 BGB).\n\n"
+                .'Das Widerrufsrecht erlischt vorzeitig bei Verträgen zur Lieferung versiegelter Waren, die aus Gründen des Gesundheitsschutzes oder der Hygiene nicht zur Rückgabe geeignet sind, wenn ihre Versiegelung nach der Lieferung entfernt wurde (§ 312g Abs. 2 Nr. 3 BGB).'],
+            ['title' => 'Muster-Widerrufsformular', 'text' => "(Wenn Sie den Vertrag widerrufen wollen, dann füllen Sie bitte dieses Formular aus und senden Sie es zurück.)\n\n"
+                ."– An {$address}, E-Mail: {$legal['email']}:\n\n"
+                ."– Hiermit widerrufe(n) ich/wir (*) den von mir/uns (*) abgeschlossenen Vertrag über den Kauf der folgenden Waren (*)/die Erbringung der folgenden Dienstleistung (*)\n\n"
+                ."– Bestellt am (*)/erhalten am (*)\n\n"
+                ."– Name des/der Verbraucher(s)\n\n"
+                ."– Anschrift des/der Verbraucher(s)\n\n"
+                ."– Unterschrift des/der Verbraucher(s) (nur bei Mitteilung auf Papier)\n\n"
+                ."– Datum\n\n"
+                .'(*) Unzutreffendes streichen.'],
+        ]);
     }
 
     public function imprint(): View
@@ -242,19 +266,32 @@ class HomeController extends Controller
             ['title' => 'Kontakt', 'text' => "E-Mail: {$legal['email']}\nTelefon: {$legal['phone']}"],
             ['title' => 'Verantwortlich für Inhalte', 'text' => "{$legal['owner']}\nAnschrift wie oben"],
             ['title' => 'Verbraucherstreitbeilegung', 'text' => 'Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer Verbraucherschlichtungsstelle teilzunehmen, sofern keine gesetzliche Verpflichtung besteht.'],
-        ], 'Alle Angaben in eckigen Klammern müssen durch echte Unternehmensdaten ersetzt werden.');
+        ]);
     }
 
     public function privacy(): View
     {
+        // Entwurf auf Basis der tatsächlichen Verarbeitung im Shop (Stand 11/2026). Nicht anwaltlich geprüft.
         $legal = config('naturmarkt.legal');
+        $controller = "{$legal['business_name']}, {$legal['owner']}\n{$legal['street']}\n{$legal['city']}\nTelefon: {$legal['phone']}\nE-Mail: {$legal['email']}";
+
         return $this->legalPage('Datenschutz', [
-            ['title' => 'Verantwortliche Stelle', 'text' => "{$legal['business_name']}, {$legal['street']}, {$legal['city']}\nE-Mail: {$legal['email']}"],
-            ['title' => 'Bestellungen und Kontakt', 'text' => 'Wir verarbeiten Kontakt-, Liefer- und Bestelldaten zur Vertragsanbahnung und Vertragsabwicklung gemäß Art. 6 Abs. 1 lit. b DSGVO. Gesetzliche Aufbewahrungspflichten bleiben unberührt.'],
-            ['title' => 'Warenkorb und Einstellungen', 'text' => 'Warenkorb und Datenschutzentscheidung werden ausschließlich im lokalen Speicher deines Browsers gespeichert. Es findet kein Werbe- oder Analyse-Tracking statt.'],
-            ['title' => 'Empfänger', 'text' => 'Daten werden nur an erforderliche Zahlungs-, Hosting-, E-Mail- und Versanddienstleister weitergegeben. Die konkret eingesetzten Anbieter müssen vor dem Verkaufsstart ergänzt werden.'],
-            ['title' => 'Deine Rechte', 'text' => 'Du hast insbesondere Rechte auf Auskunft, Berichtigung, Löschung, Einschränkung, Datenübertragbarkeit und Widerspruch sowie ein Beschwerderecht bei einer Datenschutzaufsichtsbehörde.'],
-        ], 'Die tatsächlich eingesetzten Dienstleister müssen vor dem Verkaufsstart konkret ergänzt werden.');
+            ['title' => 'Verantwortlicher', 'text' => "Verantwortlich für die Datenverarbeitung auf dieser Website im Sinne der Datenschutz-Grundverordnung (DSGVO) ist:\n\n{$controller}"],
+            ['title' => 'Überblick', 'text' => 'Wir verarbeiten personenbezogene Daten nur, soweit dies für den Betrieb dieser Website, die Abwicklung deiner Bestellungen und die Kommunikation mit dir erforderlich ist oder du eingewilligt hast. Wir setzen keine Analyse-, Tracking- oder Werbedienste ein und binden keine Inhalte von Drittanbietern (z. B. Schriftarten, Karten, Videos oder Social-Media-Plugins) ein. Alle Schriftarten und Bilder werden von unserem eigenen Server geladen.'],
+            ['title' => 'Hosting und Server-Logfiles', 'text' => "Diese Website wird bei der netcup GmbH, Daimlerstraße 25, 76185 Karlsruhe, gehostet. Mit netcup besteht ein Vertrag zur Auftragsverarbeitung nach Art. 28 DSGVO. Die Server stehen in Deutschland.\n\nBei jedem Aufruf der Website speichert der Server automatisch Informationen in Protokolldateien (Server-Logfiles): IP-Adresse, Datum und Uhrzeit des Zugriffs, aufgerufene Seite, übertragene Datenmenge, Referrer-URL sowie Browser und Betriebssystem. Diese Daten sind für die sichere und stabile Bereitstellung der Website technisch erforderlich. Rechtsgrundlage ist Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse an Betrieb und Sicherheit der Website). Die Logfiles werden regelmäßig automatisch gelöscht, sofern sie nicht zur Aufklärung eines konkreten Sicherheitsvorfalls benötigt werden."],
+            ['title' => 'SSL-/TLS-Verschlüsselung', 'text' => 'Diese Website nutzt aus Sicherheitsgründen eine SSL-/TLS-Verschlüsselung. Eine verschlüsselte Verbindung erkennst du an „https://“ und dem Schloss-Symbol in der Adresszeile deines Browsers.'],
+            ['title' => 'Cookies und Speicherung im Browser', 'text' => "Wir verwenden ausschließlich technisch notwendige Speichertechniken:\n\n– Sitzungs-Cookie: hält deine Anmeldung und Sicherheitsmerkmale (z. B. Schutz vor gefälschten Formularanfragen) während deines Besuchs aufrecht. Es wird nach spätestens zwei Stunden Inaktivität bzw. beim Abmelden ungültig.\n– Lokaler Speicher deines Browsers (Local Storage): speichert deinen Warenkorb, deine Auswahl im Hinweisbanner und die zuletzt angesehenen Produkte. Diese Daten verbleiben auf deinem Gerät und werden erst an uns übertragen, wenn du eine Bestellung absendest.\n– Sitzungsspeicher (Session Storage): merkt sich, ob das Begrüßungsfenster bereits angezeigt wurde.\n\nRechtsgrundlage ist § 25 Abs. 2 Nr. 2 TDDDG, da diese Speicherung für den von dir gewünschten Dienst unbedingt erforderlich ist, sowie Art. 6 Abs. 1 lit. b bzw. f DSGVO. Du kannst gespeicherte Daten jederzeit in deinem Browser löschen."],
+            ['title' => 'Bestellungen', 'text' => "Wenn du bei uns bestellst, verarbeiten wir die dafür nötigen Daten: Name, Liefer- und ggf. Rechnungsanschrift, E-Mail-Adresse, optional Telefonnummer, bestellte Waren, Zahlungsart und Bestellhinweise. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO (Vertragserfüllung).\n\nNach vollständiger Abwicklung bewahren wir Bestell- und Rechnungsdaten nur so lange auf, wie es handels- und steuerrechtliche Aufbewahrungspflichten vorschreiben (in der Regel acht bis zehn Jahre, Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit § 147 AO und § 257 HGB). Danach werden sie gelöscht."],
+            ['title' => 'Kundenkonto', 'text' => 'Du kannst freiwillig ein Kundenkonto anlegen. Dabei speichern wir deinen Namen, deine E-Mail-Adresse, ein verschlüsseltes Passwort, optional Telefonnummer und Lieferadressen, deine Bestellungen sowie deine Wunschliste. Zur Bestätigung deiner E-Mail-Adresse senden wir dir einen Link. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Du kannst dein Konto jederzeit selbst in deinem Kundenkonto löschen; gesetzliche Aufbewahrungspflichten für Bestelldaten bleiben davon unberührt.'],
+            ['title' => 'Zahlung', 'text' => "Bei Zahlung per Überweisung (Vorkasse) verarbeiten wir die Angaben aus deiner Überweisung (Name, Betrag, Verwendungszweck) zur Zuordnung der Zahlung.\n\nWählst du PayPal, erhältst du von uns einen Zahlungslink. Die Zahlung wird dann von der PayPal (Europe) S.à r.l. et Cie, S.C.A., 22–24 Boulevard Royal, L-2449 Luxemburg, abgewickelt; dabei gelten zusätzlich die Datenschutzbestimmungen von PayPal. Wir übermitteln an PayPal nur die für die Zahlung erforderlichen Daten (z. B. Betrag, Bestellnummer, E-Mail-Adresse).\n\nRechtsgrundlage ist jeweils Art. 6 Abs. 1 lit. b DSGVO."],
+            ['title' => 'Versand', 'text' => 'Zur Zustellung deiner Bestellung geben wir deinen Namen und deine Lieferanschrift an das von uns beauftragte Versandunternehmen weiter. Rechtsgrundlage ist Art. 6 Abs. 1 lit. b DSGVO. Deine E-Mail-Adresse oder Telefonnummer geben wir nur mit deiner ausdrücklichen Einwilligung an das Versandunternehmen weiter (z. B. für Zustellbenachrichtigungen).'],
+            ['title' => 'E-Mail-Versand und Kontakt', 'text' => 'Bestell-, Konto- und Servicenachrichten versenden wir über den E-Mail-Server unseres Hosters netcup in Deutschland. Wenn du uns per E-Mail oder Telefon kontaktierst, verarbeiten wir deine Angaben zur Bearbeitung deiner Anfrage (Art. 6 Abs. 1 lit. b DSGVO bei vertragsbezogenen Anfragen, sonst Art. 6 Abs. 1 lit. f DSGVO). Wir löschen die Anfrage, sobald sie erledigt ist und keine Aufbewahrungspflichten bestehen.'],
+            ['title' => 'Widerruf über die Widerrufsfunktion', 'text' => 'Wenn du einen Vertrag über unsere Funktion „Vertrag widerrufen“ widerrufst, speichern wir deinen Namen, die Angaben zur Bestellung, deine E-Mail-Adresse sowie Datum und Uhrzeit des Eingangs und senden dir eine Eingangsbestätigung. Rechtsgrundlage ist Art. 6 Abs. 1 lit. c DSGVO in Verbindung mit § 356a BGB sowie Art. 6 Abs. 1 lit. b DSGVO für die Rückabwicklung.'],
+            ['title' => 'Produktbewertungen', 'text' => 'Angemeldete Kunden können Produkte bewerten. Wir speichern die Bewertung zusammen mit deinem Kundenkonto. Nach Freigabe wird die Bewertung mit deinem Namen öffentlich beim Produkt angezeigt. Rechtsgrundlage ist deine Einwilligung (Art. 6 Abs. 1 lit. a DSGVO), die du jederzeit widerrufen kannst; die Bewertung wird dann entfernt.'],
+            ['title' => 'Newsletter', 'text' => 'Wenn du dich für unseren Newsletter einträgst, speichern wir deine E-Mail-Adresse und den Zeitpunkt der Anmeldung. Wir versenden einen Newsletter nur mit deiner Einwilligung (Art. 6 Abs. 1 lit. a DSGVO). Du kannst die Einwilligung jederzeit mit Wirkung für die Zukunft widerrufen, z. B. per E-Mail an uns; deine Adresse wird dann gelöscht.'],
+            ['title' => 'Deine Rechte', 'text' => "Du hast das Recht auf Auskunft (Art. 15 DSGVO), Berichtigung (Art. 16), Löschung (Art. 17), Einschränkung der Verarbeitung (Art. 18), Datenübertragbarkeit (Art. 20) und Widerruf erteilter Einwilligungen mit Wirkung für die Zukunft (Art. 7 Abs. 3). Wende dich dazu einfach an {$legal['email']}.\n\nWiderspruchsrecht: Soweit wir Daten auf Grundlage von Art. 6 Abs. 1 lit. f DSGVO verarbeiten, kannst du aus Gründen, die sich aus deiner besonderen Situation ergeben, jederzeit Widerspruch einlegen (Art. 21 DSGVO).\n\nDu hast außerdem das Recht, dich bei einer Datenschutz-Aufsichtsbehörde zu beschweren. Für uns zuständig ist das Bayerische Landesamt für Datenschutzaufsicht (BayLDA), Promenade 18, 91522 Ansbach."],
+            ['title' => 'Keine automatisierte Entscheidungsfindung', 'text' => 'Wir nutzen keine automatisierte Entscheidungsfindung einschließlich Profiling im Sinne von Art. 22 DSGVO.'],
+        ]);
     }
 
     public function terms(): View
@@ -598,7 +635,7 @@ class HomeController extends Controller
         ]);
     }
 
-    private function legalPage(string $title, array $sections, string $notice): View
+    private function legalPage(string $title, array $sections, ?string $notice = null): View
     {
         return view('legal-page', compact('title', 'sections', 'notice'));
     }

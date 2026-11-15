@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Danke für deine Bestellung bei Naturmarkt.">
     <title>Naturmarkt | Danke</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
 </head>
 <body>
@@ -50,6 +48,7 @@
         @endif
         <div class="hero-actions">
             <a class="button primary" href="{{ route('home') }}">Zur Startseite</a>
+            <a class="button ghost withdraw-link" href="{{ route('withdrawal.form', isset($order['id']) ? ['bestellung' => $order['id']] : []) }}">Vertrag widerrufen</a>
             <a class="button ghost" href="{{ route('home') }}#kategorien">Weiter stöbern</a>
         </div>
     </section>

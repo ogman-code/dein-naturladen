@@ -2437,3 +2437,24 @@ button:disabled { opacity: .55; cursor: not-allowed; }
     .admin-catalog-results .admin-product-expand { grid-column: 2 / -1; }
     .admin-catalog-results .admin-bulk-actions { grid-template-columns: minmax(0, 1fr); }
 }
+
+/* Widerrufsfunktion (§ 356a BGB) */
+.withdrawal-form { display: grid; gap: 18px; max-width: 620px; margin: 26px 0 10px; }
+.withdrawal-form label { display: grid; gap: 7px; }
+.withdrawal-form label > span { color: #24432c; font-weight: 700; }
+.withdrawal-form input { width: 100%; min-height: 50px; padding: 0 14px; border: 1px solid #ccd5ce; border-radius: 12px; background: #fbfcfa; font: inherit; color: var(--ink); }
+.withdrawal-form input:focus { outline: 0; border-color: #347052; box-shadow: 0 0 0 3px rgba(52, 112, 82, .14); }
+.withdrawal-form small { color: var(--muted); line-height: 1.5; }
+.withdrawal-form button { justify-self: start; min-height: 52px; padding: 0 28px; font-size: 1.05rem; cursor: pointer; }
+.withdrawal-errors { margin: 20px 0 0; padding: 14px 18px; border: 1px solid #e8b9b0; border-radius: 12px; background: #fdf1ee; color: #8a2f22; }
+.withdrawal-errors p { margin: 0; }
+.withdrawal-alt { margin-top: 26px; color: #536258; line-height: 1.7; }
+.withdrawal-summary { display: grid; gap: 0; margin: 24px 0; border-top: 1px solid #e6ebe2; }
+.withdrawal-summary div { display: grid; grid-template-columns: minmax(140px, 220px) 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid #e6ebe2; }
+.withdrawal-summary dt { color: var(--muted); }
+.withdrawal-summary dd { margin: 0; font-weight: 600; overflow-wrap: anywhere; }
+.withdraw-link { font-weight: 700; }
+@media (max-width: 640px) {
+    .withdrawal-summary div { grid-template-columns: 1fr; gap: 2px; }
+    .withdrawal-form button { justify-self: stretch; }
+}

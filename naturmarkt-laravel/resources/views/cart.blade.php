@@ -6,9 +6,7 @@
     <meta name="description" content="Dein Warenkorb bei Naturmarkt.">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Naturmarkt | Warenkorb</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@600;700&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('assets/fonts/fonts.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/site.css') }}">
 </head>
 <body>
@@ -89,8 +87,8 @@
     <div class="container footer-grid">
         <div><a class="brand footer-brand" href="{{ route('home') }}" aria-label="Naturmarkt Startseite"><img class="brand-logo footer-logo" src="{{ asset('assets/images/naturmarkt-logo.svg') }}" alt="Naturmarkt"></a><p>Natürliche Produkte aus kleinen Manufakturen, professionell präsentiert für deinen Online-Verkauf.</p></div>
         <div><strong>Shop</strong><a href="{{ route('home') }}#kategorien">Kategorien</a><a href="{{ route('cart') }}">Warenkorb</a></div>
-        <div><strong>Service</strong><a href="{{ route('home') }}#kontakt">Kontakt</a><a href="#">Versand</a><a href="#">Widerruf</a></div>
-        <div><strong>Rechtliches</strong><a href="#">Impressum</a><a href="#">Datenschutz</a><a href="#">AGB</a></div>
+        <div><strong>Service</strong><a href="{{ route('contact') }}">Kontakt</a><a href="{{ route('shipping') }}">Versand</a><a href="{{ route('returns') }}">Widerrufsbelehrung</a><a class="withdraw-link" href="{{ route('withdrawal.form') }}">Vertrag widerrufen</a></div>
+        <div><strong>Rechtliches</strong><a href="{{ route('imprint') }}">Impressum</a><a href="{{ route('privacy') }}">Datenschutz</a><a href="{{ route('terms') }}">AGB</a></div>
     </div>
     <div class="container footer-bottom">
         <span>Hinweis gemäß § 19 UStG: Es wird keine Umsatzsteuer berechnet.</span>
