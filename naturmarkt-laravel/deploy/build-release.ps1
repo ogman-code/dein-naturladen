@@ -9,7 +9,7 @@ if (Test-Path $stage) { Remove-Item -Recurse -Force $stage }
 New-Item -ItemType Directory -Force $stage | Out-Null
 
 Write-Host 'Kopiere Projektdateien...'
-foreach ($dir in 'app', 'bootstrap', 'config', 'database', 'public', 'resources', 'routes') {
+foreach ($dir in 'app', 'bootstrap', 'config', 'database', 'lang', 'public', 'resources', 'routes') {
     robocopy (Join-Path $project $dir) (Join-Path $stage $dir) /E /NFL /NDL /NJH /NJS /NP /XF '*.log' | Out-Null
 }
 foreach ($file in 'artisan', 'composer.json', 'composer.lock', '.env.production.example') {

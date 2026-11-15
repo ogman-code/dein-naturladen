@@ -52,6 +52,26 @@ Artisan::command('naturmarkt:create-owner {name : Anzeigename} {email : Login-E-
     return 0;
 })->purpose('Legt ein Besitzer-/Admin-Konto mit zufaelligem Passwort an');
 
+Artisan::command('naturmarkt:owner-password {email : Login-E-Mail des Besitzerkontos}', function (string $email) {
+    $email = mb_strtolower(trim($email));
+    if (! DB::table('owner_users')->where('email', $email)->exists()) {
+        $this->error("Kein Besitzerkonto mit {$email} gefunden.");
+
+        return 1;
+    }
+
+    $password = \Illuminate\Support\Str::password(20, symbols: false);
+    DB::table('owner_users')->where('email', $email)->update([
+        'password' => \Illuminate\Support\Facades\Hash::make($password),
+        'updated_at' => now(),
+    ]);
+
+    $this->info("Neues Passwort fuer {$email} gesetzt. Das alte Passwort ist ab sofort ungueltig.");
+    $this->line("Neues Passwort (wird nur jetzt angezeigt, sofort im Passwortmanager speichern): {$password}");
+
+    return 0;
+})->purpose('Setzt fuer ein Besitzer-/Admin-Konto ein neues zufaelliges Passwort');
+
 Artisan::command('naturmarkt:import-product-facts {--dry-run}', function () {
     $categories = config('naturmarkt.categories', []);
     $products = collect($categories)->flatMap(fn (array $category) => collect($category['products'])
