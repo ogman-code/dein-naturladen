@@ -30,6 +30,8 @@ return [
     'coupons' => [
         'WILLKOMMEN10' => ['type' => 'percent', 'value' => 10],
     ],
+    'owner_web_registration' => (bool) env('OWNER_WEB_REGISTRATION', false),
+
     'legal' => [
         'business_name' => env('LEGAL_BUSINESS_NAME', 'Naturmarkt'),
         'owner' => env('LEGAL_OWNER', '[Name ergänzen]'),

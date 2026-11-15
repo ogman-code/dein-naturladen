@@ -23,12 +23,20 @@ class OwnerAuthController extends Controller
         }
 
         return view('owner-auth', [
-            'ownerExists' => DB::table('owner_users')->exists(),
+            // Ohne erlaubte Web-Registrierung immer das Login-Formular zeigen
+            'ownerExists' => ! $this->webRegistrationAllowed() || DB::table('owner_users')->exists(),
         ]);
+    }
+
+    /** Live wird das Besitzerkonto per "php artisan naturmarkt:create-owner" angelegt, nicht ueber das Web. */
+    private function webRegistrationAllowed(): bool
+    {
+        return app()->isLocal() || (bool) config('naturmarkt.owner_web_registration');
     }
 
     public function register(Request $request): RedirectResponse
     {
+        abort_unless($this->webRegistrationAllowed(), 404);
         abort_if(DB::table('owner_users')->exists(), 403, 'Das Besitzerkonto wurde bereits eingerichtet.');
 
         $validated = $request->validate([
