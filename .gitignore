@@ -22,3 +22,6 @@ composer.phar
 .vscode/
 .DS_Store
 Thumbs.db
+
+# Release builds
+/release/

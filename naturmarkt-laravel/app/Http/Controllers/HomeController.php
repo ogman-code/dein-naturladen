@@ -624,8 +624,22 @@ class HomeController extends Controller
     {
         if ($this->catalogCache !== null) return $this->catalogCache;
         $categories=config('naturmarkt.categories', []);
+        foreach ($categories as &$category) {
+            $category['image'] = $this->imageUrl($category['image'] ?? '');
+            $category['products'] = array_map(
+                fn (array $product) => ['image' => $this->imageUrl($product['image'] ?? '')] + $product,
+                $category['products'] ?? []
+            );
+        }
+        unset($category);
         if(Schema::hasTable('custom_products')) foreach(DB::table('custom_products')->get() as $p) if(isset($categories[$p->category_key])) $categories[$p->category_key]['products'][]=['name'=>$p->name,'handle'=>$p->handle,'price'=>number_format($p->price,2,',','.').' EUR','badge'=>$categories[$p->category_key]['name'],'image'=>$p->image_url?:$categories[$p->category_key]['image'],'description'=>$p->description?:'Ausgewähltes Naturmarkt-Produkt.','ingredients'=>$p->ingredients,'weight_grams'=>$p->weight_grams];
         return $this->catalogCache = $categories;
+    }
+
+    /** Turns a path relative to public/assets/images into an absolute URL; full URLs pass through. */
+    private function imageUrl(string $image): string
+    {
+        return $image === '' || preg_match('#^(https?:)?//#', $image) ? $image : asset('assets/images/'.ltrim($image, '/'));
     }
 
     private function homeCategories(): array

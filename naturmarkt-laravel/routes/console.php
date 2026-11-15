@@ -24,6 +24,34 @@ Artisan::command('naturmarkt:backup', function () {
 
 Schedule::command('naturmarkt:backup')->dailyAt('02:00')->withoutOverlapping();
 
+Artisan::command('naturmarkt:create-owner {name : Anzeigename} {email : Login-E-Mail}', function (string $name, string $email) {
+    $email = mb_strtolower(trim($email));
+    if (! filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $this->error("Ungueltige E-Mail-Adresse: {$email}");
+
+        return 1;
+    }
+    if (DB::table('owner_users')->where('email', $email)->exists()) {
+        $this->error("Es gibt bereits ein Besitzerkonto mit {$email}.");
+
+        return 1;
+    }
+
+    $password = \Illuminate\Support\Str::password(20, symbols: false);
+    DB::table('owner_users')->insert([
+        'name' => mb_substr($name, 0, 120),
+        'email' => $email,
+        'password' => \Illuminate\Support\Facades\Hash::make($password),
+        'created_at' => now(),
+        'updated_at' => now(),
+    ]);
+
+    $this->info("Besitzerkonto fuer {$email} erstellt. Anmeldung ueber /kunden/login");
+    $this->line("Passwort (wird nur jetzt angezeigt, sofort im Passwortmanager speichern): {$password}");
+
+    return 0;
+})->purpose('Legt ein Besitzer-/Admin-Konto mit zufaelligem Passwort an');
+
 Artisan::command('naturmarkt:import-product-facts {--dry-run}', function () {
     $categories = config('naturmarkt.categories', []);
     $products = collect($categories)->flatMap(fn (array $category) => collect($category['products'])

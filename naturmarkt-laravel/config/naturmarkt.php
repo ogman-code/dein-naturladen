@@ -54,7 +54,7 @@ return [
             'source' => 'honig',
             'name' => 'Honigsorten',
             'route' => 'categories.honey',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D4467CA9-26C6-4AC9-9362-ED77C71B4A7F.png?v=1759224784',
+            'image' => 'products/D4467CA9-26C6-4AC9-9362-ED77C71B4A7F.jpg',
             'image_fallback' => 'product-honig.png',
             'count' => '8 Produkte',
             'chips' => ['Honig', 'Im Glas', 'Direkt bestellbar'],
@@ -65,7 +65,7 @@ return [
                     'handle' => 'waldhonig',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D4467CA9-26C6-4AC9-9362-ED77C71B4A7F.png?v=1759224784',
+                    'image' => 'products/D4467CA9-26C6-4AC9-9362-ED77C71B4A7F.jpg',
                     'description' => 'Die Eigenschaften von Wald-Honig ähneln denen anderer Blumen. Insbesondere aufgrund seiner reichhaltigen Zusammensetzung an Mineralien und Bioflavonoiden hat Wald-Honi...',
                 ],
                 [
@@ -73,7 +73,7 @@ return [
                     'handle' => 'akazienhonig',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/A8264A6B-D2A2-4A59-9382-937828F99756.png?v=1753625562',
+                    'image' => 'products/A8264A6B-D2A2-4A59-9382-937828F99756.jpg',
                     'description' => 'Unter den vielen Honigsorten mit jeweils spezifischen Eigenschaften ist Akazienhonig ein allgemeines Stärkungsmittel, das Husten lindert und zur Behandlung von Astheni...',
                 ],
                 [
@@ -81,7 +81,7 @@ return [
                     'handle' => 'blutenhonig',
                     'price' => '10,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/88D39079-D6BC-4BAB-A380-E720F31D2F0F.png?v=1759226081',
+                    'image' => 'products/88D39079-D6BC-4BAB-A380-E720F31D2F0F.jpg',
                     'description' => 'Therapeutische Eigenschaften: Blütenhonig wird aus dem Nektar verschiedener Pflanzen gewonnen, wobei keine davon vorherrschend ist. Daher können Geschmack und Farbe un...',
                 ],
                 [
@@ -89,7 +89,7 @@ return [
                     'handle' => 'waldhonig-cremig',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/C591A19D-43A3-4599-9348-80B4CBA051D0_49cf949b-62cc-460a-919e-3864c150369f.png?v=1753439929',
+                    'image' => 'products/C591A19D-43A3-4599-9348-80B4CBA051D0_49cf949b-62cc-460a-919e-3864c150369f.jpg',
                     'description' => 'Die Eigenschaften von Wald-Honig ähneln denen anderer Blumen. Insbesondere aufgrund seiner reichhaltigen Zusammensetzung an Mineralien und Bioflavonoiden hat Wald-Honi...',
                 ],
                 [
@@ -97,7 +97,7 @@ return [
                     'handle' => 'tannenhonig',
                     'price' => '14,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/3029EE0D-06B6-43FF-8761-9056FE7C318C.png?v=1753440943',
+                    'image' => 'products/3029EE0D-06B6-43FF-8761-9056FE7C318C.jpg',
                     'description' => 'Die pharmakologischen Eigenschaften von Tannen-Honig, Wirkungen, Effekte Die Eigenschaften von Tannen-Honig ähneln denen anderer Blumen. Insbesondere aufgrund seiner r...',
                 ],
                 [
@@ -105,7 +105,7 @@ return [
                     'handle' => 'eichenhonig',
                     'price' => '14,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/1D2CC17C-0801-4FF1-8412-4EB81B40433D.png?v=1760087597',
+                    'image' => 'products/1D2CC17C-0801-4FF1-8412-4EB81B40433D.jpg',
                     'description' => 'Honigtauhonig (Tannenhonig, Tauhonig) ist der süße Saft (Honig), den Bienen aus bestimmten Pflanzenteilen (außer Nektardrüsen) gewinnen. Der Saft entsteht durch den St...',
                 ],
                 [
@@ -113,7 +113,7 @@ return [
                     'handle' => 'lindenhonig',
                     'price' => '8,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/3DB45923-4D64-4B51-8AB0-F3902BCDDF35.png?v=1760088056',
+                    'image' => 'products/3DB45923-4D64-4B51-8AB0-F3902BCDDF35.jpg',
                     'description' => 'Lindenhonig ist eine der begehrtesten Honigsorten. Er hat ein starkes Lindenaroma, wie ein frisches Parfüm, goldgelbe Reflexe, manchmal grünlich, ist jedoch heller und...',
                 ],
                 [
@@ -121,7 +121,7 @@ return [
                     'handle' => 'blutenhonig-cremig',
                     'price' => '10,00 EUR',
                     'badge' => 'Honigsorten',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9BC164E0-1D70-4735-8C35-CDD290CFF24C.png?v=1753626661',
+                    'image' => 'products/9BC164E0-1D70-4735-8C35-CDD290CFF24C.jpg',
                     'description' => 'Therapeutische Eigenschaften: Blütenhonig wird aus dem Nektar verschiedener Pflanzen gewonnen, wobei keine davon vorherrschend ist. Daher können Geschmack und Farbe un...',
                 ],
             ],
@@ -131,7 +131,7 @@ return [
             'source' => 'honigmix',
             'name' => 'Honigmix',
             'route' => 'categories.honey-mix',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9D2C44BA-3AD0-48EE-8164-8BBC159E3FEB.png?v=1759997170',
+            'image' => 'products/9D2C44BA-3AD0-48EE-8164-8BBC159E3FEB.jpg',
             'image_fallback' => 'product-honig.png',
             'count' => '18 Produkte',
             'chips' => ['Honigmix', 'Immuncocktail', 'Wabenstücke'],
@@ -142,7 +142,7 @@ return [
                     'handle' => 'immuncocktail-mit-mariendistel',
                     'price' => '25,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9D2C44BA-3AD0-48EE-8164-8BBC159E3FEB.png?v=1759997170',
+                    'image' => 'products/9D2C44BA-3AD0-48EE-8164-8BBC159E3FEB.jpg',
                     'description' => 'Eigenschaften: Der Bienencocktail ist eine harmonische Mischung aus Honig, Pollen, Propolis, Apilarnil, Gelée Royale und Mariendistel. Er enthält einen hohen Gehalt an...',
                 ],
                 [
@@ -150,7 +150,7 @@ return [
                     'handle' => 'akazienhonig-wabenstucke',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/62ED172E-B35A-4BCB-8517-BBFE2C6B2AA7.png?v=1759224442',
+                    'image' => 'products/62ED172E-B35A-4BCB-8517-BBFE2C6B2AA7.jpg',
                     'description' => 'Akazienhonig+Wabenstücke. Das sind die Stücke womit die Bienen die Waben verschliessen wen der Honig drin ist.',
                 ],
                 [
@@ -158,7 +158,7 @@ return [
                     'handle' => 'honig-duo',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D6FAF0E6-9B62-4FC5-9A20-86BA31252C6E.png?v=1759225316',
+                    'image' => 'products/D6FAF0E6-9B62-4FC5-9A20-86BA31252C6E.jpg',
                     'description' => 'Honig-Duo Linden & Akazienhonig. Lindenhonig ist eine der begehrtesten Honigsorten. Er hat ein starkes Lindenaroma, wie ein frisches Parfüm, goldgelbe Reflexe, manchma...',
                 ],
                 [
@@ -166,7 +166,7 @@ return [
                     'handle' => 'schoko-honig',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/DED0F899-FF0C-428D-B59F-2287289A5FB8.png?v=1759225790',
+                    'image' => 'products/DED0F899-FF0C-428D-B59F-2287289A5FB8.jpg',
                     'description' => 'Honigmischung mit Kakao Sehr gut geeignet für Kinder.',
                 ],
                 [
@@ -174,7 +174,7 @@ return [
                     'handle' => 'waldhonig-wabenstucke',
                     'price' => '12,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/608AC2FE-F941-4843-A2F5-0C6A4C0616CD.png?v=1753440588',
+                    'image' => 'products/608AC2FE-F941-4843-A2F5-0C6A4C0616CD.jpg',
                     'description' => 'Waldhonig mit Wabenstücken Das sind die Stücke womit die Bienen die Waben verschliessen wen der Honig drin ist.',
                 ],
                 [
@@ -182,7 +182,7 @@ return [
                     'handle' => 'honig-mit-sanddorn',
                     'price' => '7,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/FA2AEDFF-8987-43E3-B9C0-CFD652F46492.png?v=1760084939',
+                    'image' => 'products/FA2AEDFF-8987-43E3-B9C0-CFD652F46492.jpg',
                     'description' => 'Therapeutische Eigenschaften: Sanddorn oder „rumänischer Ginseng“ enthält den höchsten Vitamin-C-Gehalt, mehr als Hagebutten und zehnmal mehr als Zitrusfrüchte. Sanddo...',
                 ],
                 [
@@ -190,7 +190,7 @@ return [
                     'handle' => 'honig-mit-ginseng',
                     'price' => '7,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/F53DEE3A-75D0-495F-BB9E-2349AF3494B6.png?v=1760085851',
+                    'image' => 'products/F53DEE3A-75D0-495F-BB9E-2349AF3494B6.jpg',
                     'description' => 'Ginseng – Anwendungsgebiete Ginseng wurde und wird seit Jahrhunderten in der Naturheilkunde Asiens und Nordamerikas als allgemeines und psychisches Stärkungsmittel ein...',
                 ],
                 [
@@ -198,7 +198,7 @@ return [
                     'handle' => 'honigsortiment-im-holzgestell',
                     'price' => '20,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/7B2E35D9-D5D0-4D2E-956F-D414B838C12F.png?v=1759735093',
+                    'image' => 'products/7B2E35D9-D5D0-4D2E-956F-D414B838C12F.jpg',
                     'description' => 'Honigsortiment mit 4 verschiedenen Sorten. Blütenhonig, Lindenhonig, Waldhonig, Akazienhonig, Jeweils 150ml.',
                 ],
                 [
@@ -206,7 +206,7 @@ return [
                     'handle' => 'immuncocktail-fur-kinder',
                     'price' => '16,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/DF81B6B2-87E3-4272-8F5A-F2A3107509B7.png?v=1759996818',
+                    'image' => 'products/DF81B6B2-87E3-4272-8F5A-F2A3107509B7.jpg',
                     'description' => 'Der apicol® Cocktail für Kinder enthält: Honig (eine spezielle Sorte für Kinder), Rohpollen (gefroren), Propolis (Pulver und/oder Fettextrakt), Apilarnil, Gelée Royale...',
                 ],
                 [
@@ -214,7 +214,7 @@ return [
                     'handle' => 'immunitatscocktail-fur-frauen',
                     'price' => '18,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/B4B968B2-E50E-42DA-8754-B71E09BF8D79.png?v=1760083555',
+                    'image' => 'products/B4B968B2-E50E-42DA-8754-B71E09BF8D79.jpg',
                     'description' => 'Der apicol® Cocktail für Frauen enthält: Honig (Polyflora), Rohpollen (gefroren), Propolis, Propolistinktur, Gelée Royale Dosierung: Zweimal täglich (morgens und nachm...',
                 ],
                 [
@@ -222,7 +222,7 @@ return [
                     'handle' => 'immunitatscocktail-fur-manner',
                     'price' => '18,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/0661F22E-3139-4342-B74A-F612D4B16C3C.png?v=1760083925',
+                    'image' => 'products/0661F22E-3139-4342-B74A-F612D4B16C3C.jpg',
                     'description' => 'Der apicol® Cocktail für Männer enthält: Honig (Polyflora), Rohpollen (gefroren), Propolis, Propolistinktur, Apilarnil. Dosierung: Zweimal täglich (morgens und nachmit...',
                 ],
                 [
@@ -230,7 +230,7 @@ return [
                     'handle' => 'immunitatscocktail',
                     'price' => '22,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/048D9CB6-F105-4C06-81B0-93CC798B5C0C.png?v=1762939595',
+                    'image' => 'products/048D9CB6-F105-4C06-81B0-93CC798B5C0C.jpg',
                     'description' => 'Inhaltsstoffe: Bienenpollen, Gelée Royale, Apilarnil, Propolis, Honig, Bienenbrot Anwendung: Nahrungsergänzungsmittel. Anwendung: 1–2 Teelöffel (ca. 7–15 g) 2-mal tägl...',
                 ],
                 [
@@ -238,7 +238,7 @@ return [
                     'handle' => 'honig-mit-bienenbrot',
                     'price' => '8,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/29447B75-9D48-4A09-AC87-EB5E0955B665.png?v=1760085583',
+                    'image' => 'products/29447B75-9D48-4A09-AC87-EB5E0955B665.jpg',
                     'description' => 'Empfehlungen: Bienenbrot wird vor allem in der Ernährung von Kindern und Menschen eingesetzt, die an einer oder mehreren schweren Erkrankungen des Verdauungstrakts (Ge...',
                 ],
                 [
@@ -246,7 +246,7 @@ return [
                     'handle' => 'honig-mit-kurkuma',
                     'price' => '7,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/883060B9-486A-4753-88DF-9D24D852B02D.png?v=1760086138',
+                    'image' => 'products/883060B9-486A-4753-88DF-9D24D852B02D.jpg',
                     'description' => 'Honig Aufgrund seiner Zusammensetzung (Einfachzucker, Glukose und Fruktose) ist er direkt assimilierbar. Honig enthält in geringen Mengen Vitamine der Gruppe B und Vit...',
                 ],
                 [
@@ -254,7 +254,7 @@ return [
                     'handle' => 'honig-mit-blutenpollen',
                     'price' => '7,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/BF8900EE-CD8B-47EB-956E-70118CB0A560.png?v=1760086425',
+                    'image' => 'products/BF8900EE-CD8B-47EB-956E-70118CB0A560.jpg',
                     'description' => 'Pollen enthalten alle essentiellen Aminosäuren, Lipide, Kohlenhydrate, Vitamine, Mineralien, Enzyme usw.; frisch geernteter Pollen enthält viel Qi und kann daher als e...',
                 ],
                 [
@@ -262,7 +262,7 @@ return [
                     'handle' => 'honig-mit-propolis',
                     'price' => '8,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/5C143DFC-B6C5-4CBE-B5CB-DE2BF8DD847A.png?v=1760086711',
+                    'image' => 'products/5C143DFC-B6C5-4CBE-B5CB-DE2BF8DD847A.jpg',
                     'description' => 'Anwendungsempfehlungen: Husten, Bronchitis, Mandelentzündung, Asthma bronchiale, Lungenentzündung, Lungenabszess, Kehlkopfentzündung, Rachenentzündung, Leber- und Mund...',
                 ],
                 [
@@ -270,7 +270,7 @@ return [
                     'handle' => 'honig-mit-apilarnil',
                     'price' => '8,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/164CAFFE-5A9A-47FB-956D-90B435C4038E.png?v=1760087020',
+                    'image' => 'products/164CAFFE-5A9A-47FB-956D-90B435C4038E.jpg',
                     'description' => 'Es ist ein biologisch aktives Imkereiprodukt, gewonnen aus Bienenstockprodukten. Es wirkt vitalisierend, biotroph, tonisierend und psychotonisch und stärkt die natürli...',
                 ],
                 [
@@ -278,7 +278,7 @@ return [
                     'handle' => 'honig-mit-gelee-royal',
                     'price' => '7,00 EUR',
                     'badge' => 'Honigmix',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/33103CAF-EC51-4AFF-9688-3266E6417D9C.png?v=1760087305',
+                    'image' => 'products/33103CAF-EC51-4AFF-9688-3266E6417D9C.jpg',
                     'description' => 'Dank seiner außergewöhnlichen Zusammensetzung (Proteine, Lipide, Kohlenhydrate, Vitamine, Hormone, Enzyme, Mineralien, spezifische Vitalfaktoren, Substanzen, die als B...',
                 ],
             ],
@@ -288,7 +288,7 @@ return [
             'source' => 'bienenprodukte',
             'name' => 'Bienenprodukte',
             'route' => 'categories.bee-products',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/2ACF8B5C-E892-4AB8-AC23-7BD582CBCD1E.png?v=1759737426',
+            'image' => 'products/2ACF8B5C-E892-4AB8-AC23-7BD582CBCD1E.jpg',
             'image_fallback' => 'product-bienenprodukte.png',
             'count' => '21 Produkte',
             'chips' => ['Propolis', 'Pollen', 'Gelee Royal'],
@@ -299,7 +299,7 @@ return [
                     'handle' => 'korperlotion-fest-mango-orange-1',
                     'price' => '12,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/2ACF8B5C-E892-4AB8-AC23-7BD582CBCD1E.png?v=1759737426',
+                    'image' => 'products/2ACF8B5C-E892-4AB8-AC23-7BD582CBCD1E.jpg',
                     'description' => 'Zutaten: Natürliche Öle: Mango, Kakao, Shea Butter, Kokosnuss, Bienenwachs, Mandelöl, VIT E. Verwendungshinweise: Vorab an der Hand testen. Ideal nach dem Duschen. Pro...',
                 ],
                 [
@@ -307,7 +307,7 @@ return [
                     'handle' => 'korperlotion-fest-mango-orange',
                     'price' => '12,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8CB3F493-2D83-46CD-A471-EF0ED490F5C3.png?v=1759738395',
+                    'image' => 'products/8CB3F493-2D83-46CD-A471-EF0ED490F5C3.jpg',
                     'description' => 'Zutaten: Natürliche Öle: Mango, Kakao, Shea Butter, Kokosnuss, Bienenwachs, Mandelöl, VIT E. Verwendungshinweise: Vorab an der Hand testen. Ideal nach dem Duschen. Pro...',
                 ],
                 [
@@ -315,7 +315,7 @@ return [
                     'handle' => 'bienenbrot-50g',
                     'price' => '12,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/E9B12B8E-815D-4430-AA93-C0E88CEF0BFE.png?v=1760001461',
+                    'image' => 'products/E9B12B8E-815D-4430-AA93-C0E88CEF0BFE.jpg',
                     'description' => 'Empfehlungen: Die Hauptindikationen für Bienenbrot liegen in der Ernährung von Kindern und Personen, die an einer oder mehreren schweren Erkrankungen des Verdauungstra...',
                 ],
                 [
@@ -323,7 +323,7 @@ return [
                     'handle' => 'gelee-royal-pur-100g',
                     'price' => '30,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/549EA7D3-FDF5-40D1-9818-AFD8BF3DF0AC_1.png?v=1753346958',
+                    'image' => 'products/549EA7D3-FDF5-40D1-9818-AFD8BF3DF0AC_1.jpg',
                     'description' => 'Es ist die wichtigste Nahrung für die Larven und die Königin. Gelée Royale wird von den Hypopharynxdrüsen junger Arbeiterbienen (Ammenbienen) abgesondert und dient den...',
                 ],
                 [
@@ -331,7 +331,7 @@ return [
                     'handle' => 'nasenspray-propolis-koll-silber-eukalyptus',
                     'price' => '14,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/BCBDD3BD-DB86-4CDB-A644-6A20B7C4A9D9.png?v=1759999372',
+                    'image' => 'products/BCBDD3BD-DB86-4CDB-A644-6A20B7C4A9D9.jpg',
                     'description' => 'Inhaltsstoffe: kolloidales Silber 50 ppm, wässriger Propolisextrakt, ätherisches Eukalyptusöl Dosierung: 3 Sprühstöße 2 mal täglich Propolis: antimikrobiell, antiviral...',
                 ],
                 [
@@ -339,7 +339,7 @@ return [
                     'handle' => 'propolis-tinktur-30-30ml',
                     'price' => '10,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/40D8314D-3185-4BC7-A879-A58E413A8E0F.png?v=1760001118',
+                    'image' => 'products/40D8314D-3185-4BC7-A879-A58E413A8E0F.jpg',
                     'description' => 'Es gehört zur Loge „Metal“ (es hat einen scharfen, würzigen Geschmack und zahlreiche für „Metal“ spezifische Eigenschaften). Bienen gewinnen aus den Knospen und der Ri...',
                 ],
                 [
@@ -347,7 +347,7 @@ return [
                     'handle' => 'honigmet-o-a',
                     'price' => '8,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/01701F66-0686-46E1-B2A4-020042B85296.png?v=1753624906',
+                    'image' => 'products/01701F66-0686-46E1-B2A4-020042B85296.jpg',
                     'description' => 'Honigmet ohne Alkohol fermentiert. Zutaten: Honig, Wabenstücke, Frischer Pollen und Quellwasser. Er hat eine entzündungshemmende Wirkung. Natürliches Präbiotikum & Pro...',
                 ],
                 [
@@ -355,7 +355,7 @@ return [
                     'handle' => 'blutenpollen-frisch-500g',
                     'price' => '20,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/2A34DEAC-2A82-4C53-A310-FE6C5C48DC16_1.png?v=1753346852',
+                    'image' => 'products/2A34DEAC-2A82-4C53-A310-FE6C5C48DC16_1.jpg',
                     'description' => 'Muss im Gefrierfach aufbewahrt werden, man kann sich rausnehmen für ein paar Tage was man benutzt und im Kühlschrank aufbewahren, denn Rest wieder ins Gefrierfach. Eig...',
                 ],
                 [
@@ -363,7 +363,7 @@ return [
                     'handle' => 'bluttenpollen-frisch-100g',
                     'price' => '6,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/B760857C-7C3B-4E9C-9903-C33A4A6B9D85.png?v=1759222811',
+                    'image' => 'products/B760857C-7C3B-4E9C-9903-C33A4A6B9D85.jpg',
                     'description' => 'Muss im Gefrierfach aufbewahrt werden, man kann sich rausnehmen für ein paar Tage was man benutzt und im Kühlschrank aufbewahren, denn Rest wieder ins Gefrierfach. Pol...',
                 ],
                 [
@@ -371,7 +371,7 @@ return [
                     'handle' => 'gelee-royal-pur-25g',
                     'price' => '8,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/48603EEC-E14C-40C9-861E-9B13F482EC49.png?v=1759223138',
+                    'image' => 'products/48603EEC-E14C-40C9-861E-9B13F482EC49.jpg',
                     'description' => 'Es ist die wichtigste Nahrung für die Larven und die Königin. Gelée Royale wird von den Hypopharynxdrüsen junger Arbeiterbienen (Ammenbienen) abgesondert und dient den...',
                 ],
                 [
@@ -379,7 +379,7 @@ return [
                     'handle' => 'lippenbalsam',
                     'price' => '6,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/0F5979A2-7BF6-49AD-A562-98D98B9258CB.png?v=1759736821',
+                    'image' => 'products/0F5979A2-7BF6-49AD-A562-98D98B9258CB.jpg',
                     'description' => 'Lippenbalsam: 100% natürlich Zutaten: Mangobutter,Avocadoöl, Sheabutter, Kokosöl, Jojobaöl, Natürliches Wachs, Ätherische Öle: Teebaum, Zitrone, Mandarine',
                 ],
                 [
@@ -387,7 +387,7 @@ return [
                     'handle' => 'propolis-spray-o-alkohol',
                     'price' => '10,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/28DD93F9-0005-4889-AB7F-83FC7B887316.png?v=1759997462',
+                    'image' => 'products/28DD93F9-0005-4889-AB7F-83FC7B887316.jpg',
                     'description' => 'Inhaltsstoff: Natürlicher Propolisextrakt Anwendung: 3 Sprühstöße 2–5-mal täglich Kontraindikationen: Allergie gegen Propolis Propolis: antimikrobiell, antiviral, anti...',
                 ],
                 [
@@ -395,7 +395,7 @@ return [
                     'handle' => 'propolis-spray-koll-silber',
                     'price' => '11,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D549A868-2704-406E-9D5F-FEF57D70AB49.png?v=1759997716',
+                    'image' => 'products/D549A868-2704-406E-9D5F-FEF57D70AB49.jpg',
                     'description' => 'Inhaltsstoffe: 50 % natürlicher wässriger Propolisextrakt 50 % kolloidales Silber (50 ppm) Anwendung: 3 Sprühstöße 2–5 Mal täglich Kontraindikationen: Allergie gegen P...',
                 ],
                 [
@@ -403,7 +403,7 @@ return [
                     'handle' => 'propolis-tinktur-30-100ml',
                     'price' => '22,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/02758AF7-2170-4B6C-A809-CAD29ACCC262.png?v=1759998744',
+                    'image' => 'products/02758AF7-2170-4B6C-A809-CAD29ACCC262.jpg',
                     'description' => 'Zutaten: Propolis 30%, Ethylalkohol Es gehört zur Loge der „Metalle“ (es hat einen scharfen, würzigen Geschmack und zahlreiche für „Metalle“ typische Eigenschaften). B...',
                 ],
                 [
@@ -411,7 +411,7 @@ return [
                     'handle' => 'propolis-spray-koll-silber-zitrone',
                     'price' => '18,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/042DB0D5-F1B5-48C8-A3D2-60B9F58F6AD3.png?v=1759999082',
+                    'image' => 'products/042DB0D5-F1B5-48C8-A3D2-60B9F58F6AD3.jpg',
                     'description' => 'Zutaten: kolloidales Silber 50 ppm, wässriger Propolisextrakt, ätherisches Zitronenöl (Citrus Lemon) Dosierung: 3 Sprühstöße 2 mal täglich Propolis: antimikrobiell, an...',
                 ],
                 [
@@ -419,7 +419,7 @@ return [
                     'handle' => 'propolis-tinktur-purifiziert',
                     'price' => '12,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/709F2B48-3387-4483-AF63-FEC74FF329F0.png?v=1759999766',
+                    'image' => 'products/709F2B48-3387-4483-AF63-FEC74FF329F0.jpg',
                     'description' => 'Propolis ist eines der wirksamsten natürlichen Antibiotika. Für eine eisenhaltige Immunität empfiehlt sich die Einnahme von Propolis in der Erkältungssaison, um Erkält...',
                 ],
                 [
@@ -427,7 +427,7 @@ return [
                     'handle' => 'bienengift-spray',
                     'price' => '18,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/7536E0FC-3909-4531-B39A-0AF7D9539CE9.png?v=1760000066',
+                    'image' => 'products/7536E0FC-3909-4531-B39A-0AF7D9539CE9.jpg',
                     'description' => 'Was können wir mit Bienengift behandeln? Bienengift verfügt über starke Wirkstoffe und wird zur Behandlung von Rheuma als natürliches Heilmittel oder als Ergänzung zur...',
                 ],
                 [
@@ -435,7 +435,7 @@ return [
                     'handle' => 'propolis-tinktur-30-20ml',
                     'price' => '8,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/CB5E1E95-11B6-4B7D-BCC5-8F8F5C1A2AFA.png?v=1760000382',
+                    'image' => 'products/CB5E1E95-11B6-4B7D-BCC5-8F8F5C1A2AFA.jpg',
                     'description' => 'Es gehört zur Loge der „Metalle“ (es hat einen scharfen, würzigen Geschmack und zahlreiche für „Metalle“ typische Eigenschaften). Bienen gewinnen spezielle Harze aus d...',
                 ],
                 [
@@ -443,7 +443,7 @@ return [
                     'handle' => 'propolis-tinktur-30-50ml',
                     'price' => '14,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/5A47FED7-FE0E-4F04-A8C0-E9E462F3E143.png?v=1760000781',
+                    'image' => 'products/5A47FED7-FE0E-4F04-A8C0-E9E462F3E143.jpg',
                     'description' => 'Es gehört zur Loge der „Metalle“ (es hat einen scharfen, würzigen Geschmack und zahlreiche für „Metalle“ typische Eigenschaften). Bienen gewinnen spezielle Harze aus d...',
                 ],
                 [
@@ -451,7 +451,7 @@ return [
                     'handle' => 'blutenpollen-trocken',
                     'price' => '8,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/638FE546-BC40-469D-8951-B64F1F58308C.png?v=1760084471',
+                    'image' => 'products/638FE546-BC40-469D-8951-B64F1F58308C.jpg',
                     'description' => 'Pollen stellen die männlichen Geschlechtszellen der Pflanze dar. Pollen haben eine Größe von 20–200 µm und eine äußere Membran, die sogenannte Exine. Für die überwiege...',
                 ],
                 [
@@ -459,7 +459,7 @@ return [
                     'handle' => 'bienenbrot',
                     'price' => '16,00 EUR',
                     'badge' => 'Bienenprodukte',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/680757E6-D731-4D7D-B94C-1C47DBB7985C.png?v=1760085275',
+                    'image' => 'products/680757E6-D731-4D7D-B94C-1C47DBB7985C.jpg',
                     'description' => 'Empfehlungen: Die Hauptindikationen für Bienenbrot liegen in der Ernährung von Kindern und Personen, die an einer oder mehreren schweren Erkrankungen des Verdauungstra...',
                 ],
             ],
@@ -469,7 +469,7 @@ return [
             'source' => 'cremes-salben',
             'name' => 'Cremes & Salben',
             'route' => 'categories.creams-salves',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/EF0DD709-6991-4B45-9616-84EEDFD20438.png?v=1760002231',
+            'image' => 'products/EF0DD709-6991-4B45-9616-84EEDFD20438.jpg',
             'image_fallback' => 'product-salben.png',
             'count' => '7 Produkte',
             'chips' => ['Cremes', 'Salben', 'Gele'],
@@ -480,7 +480,7 @@ return [
                     'handle' => 'gesichtsgel-bienengift-gelee-royal',
                     'price' => '16,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/EF0DD709-6991-4B45-9616-84EEDFD20438.png?v=1760002231',
+                    'image' => 'products/EF0DD709-6991-4B45-9616-84EEDFD20438.jpg',
                     'description' => 'ANTI-FALTEN-, NÄHRSTOFF- UND REGENERIERENDES GESICHTSGEL Enthält: Bienengift, Gelée Royale, Aloe Vera, Schachtelhalm usw. Empfehlungen: Speziell entwickeltes Produkt z...',
                 ],
                 [
@@ -488,7 +488,7 @@ return [
                     'handle' => 'creme-propolis-aloe-vera-sanddorn',
                     'price' => '6,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/B690AA6D-CD1B-476A-8586-5505784B57F0.png?v=1760004732',
+                    'image' => 'products/B690AA6D-CD1B-476A-8586-5505784B57F0.jpg',
                     'description' => 'Die Kombination natürlicher Extrakte aus Propolis, Aloe Vera und Sanddorn verleiht der Creme hervorragende Eigenschaften: heilend antioxidativ antiseptisch schmerzstil...',
                 ],
                 [
@@ -496,7 +496,7 @@ return [
                     'handle' => 'creme-propolis-ringelblume',
                     'price' => '7,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/43C5AD4D-02C1-489E-BED1-832ECA4D8856.png?v=1760011939',
+                    'image' => 'products/43C5AD4D-02C1-489E-BED1-832ECA4D8856.jpg',
                     'description' => 'Propolis ist eine Verbindung aus Pflanzenharzen, Balsam verschiedener Zusammensetzungen, Wachs, ätherischen Ölen, Eisen und Spurenelementen – Kupfer, Zink, Mangan und...',
                 ],
                 [
@@ -504,7 +504,7 @@ return [
                     'handle' => 'hautcreme',
                     'price' => '12,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/473829AB-616E-46AB-B99C-7D1164D10713.png?v=1759737120',
+                    'image' => 'products/473829AB-616E-46AB-B99C-7D1164D10713.jpg',
                     'description' => 'Dermatitis Haut & Körpercreme: Zutaten: Natürliche Öle: Neem, Mandel, Sanddorn. Hamameliswasser, Kamillenwasser, Bienenwachs, Honig, VIT E. Ätherische Öle: Lavendel, Z...',
                 ],
                 [
@@ -512,7 +512,7 @@ return [
                     'handle' => 'creme-rheumaflex',
                     'price' => '15,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9CE6D86D-23DA-47EC-84B3-DF2468E7D571.png?v=1760012542',
+                    'image' => 'products/9CE6D86D-23DA-47EC-84B3-DF2468E7D571.jpg',
                     'description' => 'Zusammensetzung: – Weihrauchbaum (Boswellia serrata) – Arnika (Arnica montana) – Teufelskralle (Harpagophytum procumbens) – Weide (Salix alba) – Paprikaöl (Capsici fru...',
                 ],
                 [
@@ -520,7 +520,7 @@ return [
                     'handle' => 'bienengift-gel',
                     'price' => '18,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/38D7FF01-8611-4448-B465-998A73B5405D.png?v=1760001883',
+                    'image' => 'products/38D7FF01-8611-4448-B465-998A73B5405D.jpg',
                     'description' => 'Anwendungsgebiete: Rheuma, Muskelschmerzen, Gicht usw. Zur äußerlichen Anwendung. Kühl lagern Das Produkt wirkt entzündungshemmend und wird besonders für Menschen mit...',
                 ],
                 [
@@ -528,7 +528,7 @@ return [
                     'handle' => 'propolis-creme',
                     'price' => '10,00 EUR',
                     'badge' => 'Cremes & Salben',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/ABC5615F-3555-43C5-8AC1-BF97F731F7EA.png?v=1760003202',
+                    'image' => 'products/ABC5615F-3555-43C5-8AC1-BF97F731F7EA.jpg',
                     'description' => '100 % natürliches Imkereiprodukt Propolis: antimikrobiell, antiviral, antimykotisch, antioxidativ, schmerzstillend, heilend, regenerierend, epithelial regenerierend, a...',
                 ],
             ],
@@ -538,7 +538,7 @@ return [
             'source' => 'sirup',
             'name' => 'Sirupmix',
             'route' => 'categories.syrups',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8E7CDAAF-D167-4B7E-A31C-6C9029E17ED5.png?v=1760083250',
+            'image' => 'products/8E7CDAAF-D167-4B7E-A31C-6C9029E17ED5.jpg',
             'image_fallback' => 'product-sirup.png',
             'count' => '10 Produkte',
             'chips' => ['Honigsirup', 'Propolis', 'Gelee Royal'],
@@ -549,7 +549,7 @@ return [
                     'handle' => 'honigsirup-mit-echinaceea-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8E7CDAAF-D167-4B7E-A31C-6C9029E17ED5.png?v=1760083250',
+                    'image' => 'products/8E7CDAAF-D167-4B7E-A31C-6C9029E17ED5.jpg',
                     'description' => 'Sirup mit Echinacea-Extrakt und Propolis ist ein natürliches Nahrungsergänzungsmittel zur Stärkung der Immunität und zur Vorbeugung von Erkältungskrankheiten. Echinace...',
                 ],
                 [
@@ -557,7 +557,7 @@ return [
                     'handle' => 'honigsirup-mit-aloe-vera-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/14BC5146-B869-462F-930A-A3C66F351D38.png?v=1760082802',
+                    'image' => 'products/14BC5146-B869-462F-930A-A3C66F351D38.jpg',
                     'description' => 'Honig Aufgrund seiner Zusammensetzung (Einfachzucker, Glukose und Fruktose) ist er direkt assimilierbar. Honig enthält in geringen Mengen Vitamine der Gruppe B und Vit...',
                 ],
                 [
@@ -565,7 +565,7 @@ return [
                     'handle' => 'sirup-gelee-royal',
                     'price' => '10,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/A4767CD0-B717-4105-B0D0-FA3D404C0CD3.png?v=1760003556',
+                    'image' => 'products/A4767CD0-B717-4105-B0D0-FA3D404C0CD3.jpg',
                     'description' => 'Gutes biologisches Stimulans mit nährender, energetisierender, immunstimulierender und regenerierender Wirkung auf den Körper, das auch Rachitis vorbeugt. Sorgt für ei...',
                 ],
                 [
@@ -573,7 +573,7 @@ return [
                     'handle' => 'sirup-pinie-tanne-propolis',
                     'price' => '11,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/24796EFE-CA4A-410D-A02F-5578DBE573B8.png?v=1760003886',
+                    'image' => 'products/24796EFE-CA4A-410D-A02F-5578DBE573B8.jpg',
                     'description' => 'Die synergistische Wirkung der Komponenten lindert Husten, beruhigt Halsschmerzen und hilft, die Atemwege zu befreien. Lungenantiseptikum, fördert die Verflüssigung un...',
                 ],
                 [
@@ -581,7 +581,7 @@ return [
                     'handle' => 'honigsirup-mit-ginseng-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/A7214255-8C4B-4BCB-8290-C8AC8CCE656B.png?v=1760012872',
+                    'image' => 'products/A7214255-8C4B-4BCB-8290-C8AC8CCE656B.jpg',
                     'description' => 'Ginseng – Therapeutische Indikationen Ginseng wurde und wird seit Jahrhunderten in der Naturheilkunde Asiens und Nordamerikas als allgemeines und mentales Stärkungsmit...',
                 ],
                 [
@@ -589,7 +589,7 @@ return [
                     'handle' => 'honigsirup-mit-ingwer-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/4F8A18BD-38BA-4D29-A0CD-024E3E9AC8AF.png?v=1760013494',
+                    'image' => 'products/4F8A18BD-38BA-4D29-A0CD-024E3E9AC8AF.jpg',
                     'description' => 'Honig Aufgrund seiner Zusammensetzung (Einfachzucker, Glukose und Fruktose) ist er direkt assimilierbar. Honig enthält in geringen Mengen Vitamine der Gruppe B und Vit...',
                 ],
                 [
@@ -597,7 +597,7 @@ return [
                     'handle' => 'honigsirup-mit-gojibeere-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D640452F-FF34-4289-83F6-99FD3B6D68F7.png?v=1760013795',
+                    'image' => 'products/D640452F-FF34-4289-83F6-99FD3B6D68F7.jpg',
                     'description' => 'Honig Aufgrund seiner Zusammensetzung (Einfachzucker, Glukose und Fruktose) ist er direkt assimilierbar. Honig enthält in geringen Mengen Vitamine der Gruppe B und Vit...',
                 ],
                 [
@@ -605,7 +605,7 @@ return [
                     'handle' => 'honigsirup-mit-tanne-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/A7852BCF-87E4-4AC9-8730-6DD71C1FA79B.png?v=1760014086',
+                    'image' => 'products/A7852BCF-87E4-4AC9-8730-6DD71C1FA79B.jpg',
                     'description' => 'Zutaten: Tannenhonig, Tannenknospen, Propolis, Minze, Thymian, Anis, Wilde Distel, Basilikum, Schafgarbe. Empfehlungen: Für Kinder und Erwachsene, insbesondere zur Beh...',
                 ],
                 [
@@ -613,7 +613,7 @@ return [
                     'handle' => 'honigsirup-mit-sanddorn-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/2E75E690-1C1D-4EC2-A800-7747BBAD2EDB.png?v=1760014767',
+                    'image' => 'products/2E75E690-1C1D-4EC2-A800-7747BBAD2EDB.jpg',
                     'description' => 'Sanddornsirup mit Honig und Propolis, 100 % natürlich, ist ein wahres Elixier für die Immunität, ein guter Vitaminspender und Antioxidans. Der Sirup wird durch Kaltpre...',
                 ],
                 [
@@ -621,7 +621,7 @@ return [
                     'handle' => 'hustensirup',
                     'price' => '12,00 EUR',
                     'badge' => 'Sirup',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/C84946CB-DAB0-4A92-BA1A-773201951A95.png?v=1760015078',
+                    'image' => 'products/C84946CB-DAB0-4A92-BA1A-773201951A95.jpg',
                     'description' => 'Produktbeschreibung: Der schleimlösende Sirup mit Honig ist ein Hustensaft mit einer einzigartigen, synergistisch wirkenden Wirkstoffkombination. Er vereint die apithe...',
                 ],
             ],
@@ -631,7 +631,7 @@ return [
             'source' => 'seife',
             'name' => 'Naturseifen',
             'route' => 'categories.soaps',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/EA3A9840-465D-4D18-AFCF-6AD5107593CF.png?v=1759742676',
+            'image' => 'products/EA3A9840-465D-4D18-AFCF-6AD5107593CF.jpg',
             'image_fallback' => 'product-seifen.png',
             'count' => '9 Produkte',
             'chips' => ['Seifen', 'Badebombe', 'Honig'],
@@ -642,7 +642,7 @@ return [
                     'handle' => 'seife-kaffe-haselnuss',
                     'price' => '6,50 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/EA3A9840-465D-4D18-AFCF-6AD5107593CF.png?v=1759742676',
+                    'image' => 'products/EA3A9840-465D-4D18-AFCF-6AD5107593CF.jpg',
                     'description' => '100% natürlich und handgemacht. Produktbeschreibung: Ohne Rohstoffe auf Mineralölbasis & ohne tierische Fette, Ohne Konservierungsstoffe & synthetische Farb- und Dufts...',
                 ],
                 [
@@ -650,7 +650,7 @@ return [
                     'handle' => 'seife',
                     'price' => '4,00 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/75AA21FF-D46A-4F3C-A54C-1EF59F33604F.png?v=1760088716',
+                    'image' => 'products/75AA21FF-D46A-4F3C-A54C-1EF59F33604F.jpg',
                     'description' => 'Zutaten: Kokosöl, Palmöl, Wasser, Glycerin, Honig, Gelee Royal, Sodium Hydroxide, Sorbital, Sorbitan Oleate, Haferprotein, Titanium Dioxide.',
                 ],
                 [
@@ -658,7 +658,7 @@ return [
                     'handle' => 'badebombe',
                     'price' => '6,00 EUR',
                     'badge' => 'Naturseifen',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/99C22CC6-4AC5-4431-B3C6-EB1C080119EE.png?v=1759741034',
+                    'image' => 'products/99C22CC6-4AC5-4431-B3C6-EB1C080119EE.jpg',
                     'description' => 'Badebombe Duft: Orange, Geranie, Lavendel. Inhaltsstoffe: Natriumbicarbonat, Zitronensäure, Kokosnussöl, Maisstärke, Pollen, ätherische Öle: Orange, Geranie, Lavendel....',
                 ],
                 [
@@ -666,7 +666,7 @@ return [
                     'handle' => 'seife-rose-weihrauch',
                     'price' => '6,50 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/E4A5BD85-E4D7-4F37-9F59-237FF94033C8.png?v=1759742134',
+                    'image' => 'products/E4A5BD85-E4D7-4F37-9F59-237FF94033C8.jpg',
                     'description' => '100% natürlich und handgemacht. Produktbeschreibung: Ohne Rohstoffe auf Mineralölbasis & ohne tierische Fette, Ohne Konservierungsstoffe & synthetische Farb- und Dufts...',
                 ],
                 [
@@ -674,7 +674,7 @@ return [
                     'handle' => 'seife-meersalz-aktivkohle',
                     'price' => '6,50 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/FB226662-B213-4B02-92E2-BFBD00EB0C2E.png?v=1759742400',
+                    'image' => 'products/FB226662-B213-4B02-92E2-BFBD00EB0C2E.jpg',
                     'description' => '100% natürlich und handgemacht. Produktbeschreibung: Ohne Rohstoffe auf Mineralölbasis & ohne tierische Fette, Ohne Konservierungsstoffe & synthetische Farb- und Dufts...',
                 ],
                 [
@@ -682,7 +682,7 @@ return [
                     'handle' => 'seife-mango-lemongras-orange',
                     'price' => '6,50 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/E8FD1F7D-DD13-40E4-8A93-DB570DD8622F.png?v=1759742967',
+                    'image' => 'products/E8FD1F7D-DD13-40E4-8A93-DB570DD8622F.jpg',
                     'description' => '100% natürlich und handgemacht. Produktbeschreibung: Ohne Rohstoffe auf Mineralölbasis & ohne tierische Fette, Ohne Konservierungsstoffe & synthetische Farb- und Dufts...',
                 ],
                 [
@@ -690,7 +690,7 @@ return [
                     'handle' => 'seife-honig-propolis',
                     'price' => '4,00 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/A6E603CF-7392-4D7B-9652-D42D941A5032.png?v=1760088438',
+                    'image' => 'products/A6E603CF-7392-4D7B-9652-D42D941A5032.jpg',
                     'description' => 'Zutaten: Kokosöl, Palmöl, Wasser, Glycerin, Honig, Distelöl, Propolis, Sorbitol, Sodium Hydroxide, Sorbitan Oleate, Haferprotein, Titanium Dioxide.',
                 ],
                 [
@@ -698,7 +698,7 @@ return [
                     'handle' => 'seife-honig-sanddorn',
                     'price' => '4,00 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/896379A9-96D0-4B56-BB54-BDA9C4FADCE7.png?v=1760088990',
+                    'image' => 'products/896379A9-96D0-4B56-BB54-BDA9C4FADCE7.jpg',
                     'description' => 'Zutaten: Kokosöl, Palmöl, Wasser, Glycerin, Honig, Distelöl, Sanddornöl, Sodium Hydroxide, Sorbital, Sorbitan Oleate, Haferprotein, Titanium Dioxide.',
                 ],
                 [
@@ -706,7 +706,7 @@ return [
                     'handle' => 'seife-honig-lavendel',
                     'price' => '4,00 EUR',
                     'badge' => 'Seife',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/448EFB3A-8700-4683-8729-1C7F3676624D.png?v=1760089246',
+                    'image' => 'products/448EFB3A-8700-4683-8729-1C7F3676624D.jpg',
                     'description' => 'Zutaten: Kokosöl, Palmöl, Wasser, Glycerin, Honig, Distelöl, Sodium Hydroxide, Lavendelöl, Sorbitol, Sorbitan Oleate, Haferprotein.',
                 ],
             ],
@@ -716,7 +716,7 @@ return [
             'source' => 'kerzen',
             'name' => 'Kerzen',
             'route' => 'categories.candles',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/1E5D2EB0-1039-493D-AFD0-CCCC6A46ED1E.png?v=1758013691',
+            'image' => 'products/1E5D2EB0-1039-493D-AFD0-CCCC6A46ED1E.jpg',
             'image_fallback' => 'product-kerzen.png',
             'count' => '11 Produkte',
             'chips' => ['Bienenwachs', 'Motivkerzen', 'Duftkerzen'],
@@ -727,7 +727,7 @@ return [
                     'handle' => 'kerze-linde',
                     'price' => '16,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/1E5D2EB0-1039-493D-AFD0-CCCC6A46ED1E.png?v=1758013691',
+                    'image' => 'products/1E5D2EB0-1039-493D-AFD0-CCCC6A46ED1E.jpg',
                     'description' => 'Entdecken Sie jetzt die handgefertigte Kerze mit Lindenduft – ein einzigartiger, entspannender und absolut natürlicher Duft für Ihr Zuhause! Das perfekte Geschenk für...',
                 ],
                 [
@@ -735,7 +735,7 @@ return [
                     'handle' => 'kerze-litsea-cubeba',
                     'price' => '16,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/0A229059-1E46-4CBA-825F-ED37DF134171.png?v=1757944255',
+                    'image' => 'products/0A229059-1E46-4CBA-825F-ED37DF134171.jpg',
                     'description' => 'Entdecken Sie jetzt eine unglaubliche handgefertigte Kerze mit ätherischem Litsea-Cubeba-Öl. Ihr einzigartiger und belebender Duft ist ideal für entspannende Momente!...',
                 ],
                 [
@@ -743,7 +743,7 @@ return [
                     'handle' => 'kerze-7-shakren',
                     'price' => '18,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/BD3C024F-DAA3-4EDB-8F20-2072E6549063.png?v=1757942493',
+                    'image' => 'products/BD3C024F-DAA3-4EDB-8F20-2072E6549063.jpg',
                     'description' => 'Einzigartig, entspannend, exklusiv – Die perfekte Kerze zum Energieausgleich und zur Schaffung einer friedlichen und harmonischen Atmosphäre. Ein einzigartiges Geschen...',
                 ],
                 [
@@ -751,7 +751,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-wohnmobil',
                     'price' => '7,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/81515D0A-AA37-45BC-BB5D-8FC7B1528CC0.png?v=1759739076',
+                    'image' => 'products/81515D0A-AA37-45BC-BB5D-8FC7B1528CC0.jpg',
                     'description' => 'Bienenwachskerze Maße: H:7 B:10 T:3',
                 ],
                 [
@@ -759,7 +759,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-eichhornchen',
                     'price' => '4,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/FE00AFA6-4673-451C-A885-12A1DC2F38B8.png?v=1759739355',
+                    'image' => 'products/FE00AFA6-4673-451C-A885-12A1DC2F38B8.jpg',
                     'description' => 'Bienenwachskerze Maße: H:7 B:5',
                 ],
                 [
@@ -767,7 +767,7 @@ return [
                     'handle' => 'bienenwachskerze-mit-deckel',
                     'price' => '9,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/94E34BC5-62CE-422E-9082-CFBBF5E7C250.png?v=1759739693',
+                    'image' => 'products/94E34BC5-62CE-422E-9082-CFBBF5E7C250.jpg',
                     'description' => 'Bienenwachskerze Maße: H:7 B:7',
                 ],
                 [
@@ -775,7 +775,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-baumstamm',
                     'price' => '7,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/B2DA4258-63C0-434E-80F0-E12CD48AD853.png?v=1759739942',
+                    'image' => 'products/B2DA4258-63C0-434E-80F0-E12CD48AD853.jpg',
                     'description' => 'Bienenwachskerze Maße: H:10,5 B:5',
                 ],
                 [
@@ -783,7 +783,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-blumen',
                     'price' => '10,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/58DEA817-0C26-42A3-9A36-8B4194974871.png?v=1759740202',
+                    'image' => 'products/58DEA817-0C26-42A3-9A36-8B4194974871.jpg',
                     'description' => 'Bienenwachskerze Maße: H:10 B:6',
                 ],
                 [
@@ -791,7 +791,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-hirsch',
                     'price' => '6,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D1E08AE0-B0D3-4BDF-A19C-B44621E86AA7.png?v=1759740465',
+                    'image' => 'products/D1E08AE0-B0D3-4BDF-A19C-B44621E86AA7.jpg',
                     'description' => 'Bienenwachskerze Maße: H:8 B:5',
                 ],
                 [
@@ -799,7 +799,7 @@ return [
                     'handle' => 'bienenwachskerze-motiv-einhorn',
                     'price' => '8,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/E7B437E3-3B86-4C55-A5E2-3B2656837005_1.png?v=1753347046',
+                    'image' => 'products/E7B437E3-3B86-4C55-A5E2-3B2656837005_1.jpg',
                     'description' => 'Bienenwachskerze Maße: H:8 B:6,5',
                 ],
                 [
@@ -807,7 +807,7 @@ return [
                     'handle' => 'bienenwachskerze',
                     'price' => '5,00 EUR',
                     'badge' => 'Kerze',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/BA0917D8-4067-48AE-AAAA-00E497D3685B.png?v=1759740736',
+                    'image' => 'products/BA0917D8-4067-48AE-AAAA-00E497D3685B.jpg',
                     'description' => 'Bienenwachskerze Maße: H:16 B:5',
                 ],
             ],
@@ -817,7 +817,7 @@ return [
             'source' => 'nahrungserganzungsmittel',
             'name' => 'Nahrungsergänzungsmittel',
             'route' => 'categories.supplements',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/1EF57163-EC33-4430-AA7D-0FFF22A529FB.png?v=1759735418',
+            'image' => 'products/1EF57163-EC33-4430-AA7D-0FFF22A529FB.jpg',
             'image_fallback' => 'product-bienenprodukte.png',
             'count' => '4 Produkte',
             'chips' => ['Nektar', 'Gelee Royal', 'Kapseln'],
@@ -828,7 +828,7 @@ return [
                     'handle' => 'nektar-sanddorn-aronia',
                     'price' => '12,00 EUR',
                     'badge' => 'Nahrungsergänzungsmittel',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/1EF57163-EC33-4430-AA7D-0FFF22A529FB.png?v=1759735418',
+                    'image' => 'products/1EF57163-EC33-4430-AA7D-0FFF22A529FB.jpg',
                     'description' => 'Nektar Sanddorn Aronia: Kaltgepresst. Verwendung: Geeignet für ca.5 Liter Wasser zum Mischen. Vor Gebrauch schütteln. Beschreibung: Vitaminisierend, Antioxidativ, Anti...',
                 ],
                 [
@@ -836,7 +836,7 @@ return [
                     'handle' => 'nektar-sanddorn-honig-propolis',
                     'price' => '12,00 EUR',
                     'badge' => 'Nahrungsergänzungsmittel',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D541AA52-7356-40CD-B18D-7865F7A79D72.png?v=1759735767',
+                    'image' => 'products/D541AA52-7356-40CD-B18D-7865F7A79D72.jpg',
                     'description' => 'Nektar Sanddorn Honig Propolis: Kaltgepresst. Verwendung: Geeignet für ca.5 Liter Wasser zum Mischen. Vor Gebrauch schütteln. Beschreibung: Vitaminisierend, Antioxidat...',
                 ],
                 [
@@ -844,7 +844,7 @@ return [
                     'handle' => 'gelee-royal-30-kapseln',
                     'price' => '10,00 EUR',
                     'badge' => 'Nahrungsergänzungsmittel',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/39C6AD6F-7B83-4394-A476-739375788A4D.png?v=1760012233',
+                    'image' => 'products/39C6AD6F-7B83-4394-A476-739375788A4D.jpg',
                     'description' => 'Das Produkt Gelée Royale ist besonders reich an Hormonen und Hormonvorstufen, Vitaminen (B-Komplex, A, C, E), etwa 20 Aminosäuren, Fettsäuren, Sterolen, Phosphorverbin...',
                 ],
                 [
@@ -852,7 +852,7 @@ return [
                     'handle' => 'apifitness',
                     'price' => '27,00 EUR',
                     'badge' => 'Nahrungsergänzungsmittel',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/F5CD6D2C-DD3E-48A3-B07D-5DCFA6B1D944.png?v=1760089597',
+                    'image' => 'products/F5CD6D2C-DD3E-48A3-B07D-5DCFA6B1D944.jpg',
                     'description' => 'APIFITNESS ist der natürliche Energiespender und Nahrungsergänzungsmittel und die beste natürliche Quelle für Proteine, essentielle Aminosäuren, Enzyme, Vitamine, esse...',
                 ],
             ],
@@ -862,7 +862,7 @@ return [
             'source' => 'verschiedenes',
             'name' => 'Verschiedenes',
             'route' => 'categories.miscellaneous',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/46C7DD0C-BC74-4962-AE14-1F898766A603.png?v=1759736130',
+            'image' => 'products/46C7DD0C-BC74-4962-AE14-1F898766A603.jpg',
             'image_fallback' => 'product-bienenprodukte.png',
             'count' => '3 Produkte',
             'chips' => ['Alltag', 'Bienenwachs', 'Spray'],
@@ -873,7 +873,7 @@ return [
                     'handle' => 'bug-spray',
                     'price' => '12,00 EUR',
                     'badge' => 'Spray',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/46C7DD0C-BC74-4962-AE14-1F898766A603.png?v=1759736130',
+                    'image' => 'products/46C7DD0C-BC74-4962-AE14-1F898766A603.jpg',
                     'description' => 'Zutaten: Hamameliswasser, Destilliertes Wasser. Ätherische Öle: Lavendel, Citronella, Lemongras, Geranie, Zitrone.',
                 ],
                 [
@@ -881,7 +881,7 @@ return [
                     'handle' => 'bienenwachsbeutel',
                     'price' => '18,00 EUR',
                     'badge' => 'Verschiedenes',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/IMG_0179.jpg?v=1752412924',
+                    'image' => 'products/IMG_0179.jpg',
                     'description' => 'Bienenwachsbeutel: Natürliche Verpackung. 30/40cm In liebevoller Handarbeit hergestellt 100% Baumwolle, wurde in Bienenwachs, Tannenharz, Jojobaöl, Kokosöl getränkt. z...',
                 ],
                 [
@@ -889,7 +889,7 @@ return [
                     'handle' => 'bienenwachstuch-set',
                     'price' => '15,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/F30F3F53-BD17-44D9-8138-28F8D3EB56D0.png?v=1759224105',
+                    'image' => 'products/F30F3F53-BD17-44D9-8138-28F8D3EB56D0.jpg',
                     'description' => 'Bienenwachstuch: Natürliche Verpackung. In liebevoller Handarbeit hergestellt 100% Baumwolle, wurde in Bienenwachs, Tannenharz, Jojobaöl, Kokosöl getränkt. zum abdecke...',
                 ],
             ],
@@ -899,7 +899,7 @@ return [
             'source' => 'halbedelsteine-co',
             'name' => 'Halbedelsteine & Co',
             'route' => 'categories.gemstones',
-            'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8269E215-6B6D-4575-9177-352A0B333AF8.png?v=1758551130',
+            'image' => 'products/8269E215-6B6D-4575-9177-352A0B333AF8.jpg',
             'image_fallback' => 'product-bienenprodukte.png',
             'count' => '30 Produkte',
             'chips' => ['Armbänder', 'Halsketten', 'Ringe'],
@@ -910,7 +910,7 @@ return [
                     'handle' => 'tibetische-klangschale',
                     'price' => '45,00 EUR',
                     'badge' => 'Halbedelsteine & Co',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8269E215-6B6D-4575-9177-352A0B333AF8.png?v=1758551130',
+                    'image' => 'products/8269E215-6B6D-4575-9177-352A0B333AF8.jpg',
                     'description' => 'Entdecken Sie die Harmonie der Klänge mit dem einzigartigen tibetischen Klangschalen-Set. Setinhalt: Eine echte tibetische Klangschale: In antikem Dunkelbraun, handges...',
                 ],
                 [
@@ -918,7 +918,7 @@ return [
                     'handle' => 'armband-palo-santo',
                     'price' => '10,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/C06474F3-8D8F-40A1-9CE9-439EE7F156A7.png?v=1761818115',
+                    'image' => 'products/C06474F3-8D8F-40A1-9CE9-439EE7F156A7.jpg',
                     'description' => 'Palo-Santo-Essenz: Dieses außergewöhnliche Armband enthält natürliches und aromatisches Palo Santo, das Körper, Geist und Seele im Alltag in Balance und innerem Friede...',
                 ],
                 [
@@ -926,7 +926,7 @@ return [
                     'handle' => 'armband-labradorit',
                     'price' => '18,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/DA4C9905-01ED-4C2B-AC20-1C1DA4E56277.png?v=1761817583',
+                    'image' => 'products/DA4C9905-01ED-4C2B-AC20-1C1DA4E56277.jpg',
                     'description' => 'Labradorit-Herzarmband: Dieses handgefertigte Perlenarmband besteht aus sorgfältig ausgewähltem Labradorit, einer Legierung und einem elastischen Band. Die polierten P...',
                 ],
                 [
@@ -934,7 +934,7 @@ return [
                     'handle' => 'armband-howlith',
                     'price' => '15,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/FFE762CC-C9A9-41A7-838C-C48C69BF891D.png?v=1761817316',
+                    'image' => 'products/FFE762CC-C9A9-41A7-838C-C48C69BF891D.jpg',
                     'description' => 'Beschreibung: Dieses elastische Armband aus 8 mm großen Howlith-Perlen ist ein zartes und bedeutungsvolles Accessoire. Es ist perfekt für alle, die nach einem beruhige...',
                 ],
                 [
@@ -942,7 +942,7 @@ return [
                     'handle' => 'armband-set-2x-tigerauge-hamatit-obsidian',
                     'price' => '21,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/F9CF4407-9AC5-4AFF-ACB9-08C43A42D078.png?v=1761816747',
+                    'image' => 'products/F9CF4407-9AC5-4AFF-ACB9-08C43A42D078.jpg',
                     'description' => 'Phänomenale spirituelle Energie: Dieses dreifache Schutzarmband-Set besteht aus echtem Tigerauge, schwarzem Obsidian und Hämatitperlen, die für ihre kraftvolle spiritu...',
                 ],
                 [
@@ -950,7 +950,7 @@ return [
                     'handle' => 'armband-set-2x-tigerauge-lavastein',
                     'price' => '20,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/DACCF107-7D6C-491B-B212-DD4EFAF5A438.png?v=1761816045',
+                    'image' => 'products/DACCF107-7D6C-491B-B212-DD4EFAF5A438.jpg',
                     'description' => 'Das Set besteht aus zwei verstellbaren Armbändern aus natürlichem Tigerauge und schwarzem Lavastein. Lavastein nimmt ätherische Öle besonders gut auf. Besprühen Sie da...',
                 ],
                 [
@@ -958,7 +958,7 @@ return [
                     'handle' => 'armband-malachit-hamatit-obsidian',
                     'price' => '22,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/82563117-4C3D-44C3-BD0B-10E45F81FA2E.png?v=1761814861',
+                    'image' => 'products/82563117-4C3D-44C3-BD0B-10E45F81FA2E.jpg',
                     'description' => 'Entdecken Sie jetzt absoluten Schutz und emotionale Ausgeglichenheit mit diesem dreifach schützenden Armband aus den Naturkristallen Malachit, Obsidian und Hämatit! Di...',
                 ],
                 [
@@ -966,7 +966,7 @@ return [
                     'handle' => 'armband-set-3x-obsidian-hamatit-tigerauge',
                     'price' => '32,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/3151307E-D837-4B83-B7F6-59DA7A746CD1.png?v=1761814147',
+                    'image' => 'products/3151307E-D837-4B83-B7F6-59DA7A746CD1.jpg',
                     'description' => 'Set mit 3 Dreifach-Schutzarmbändern (8 mm) – Tigerauge stärkt den Glauben, verleiht Mut, Selbstvertrauen und hilft Ihnen, Ihre Ziele zu erreichen. Schwarzer Obsidian b...',
                 ],
                 [
@@ -974,7 +974,7 @@ return [
                     'handle' => 'armband-set-2x-afrikanischer-turkis',
                     'price' => '25,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/AE8D12D0-420E-491D-970F-348D4B1B7EF0.png?v=1761813409',
+                    'image' => 'products/AE8D12D0-420E-491D-970F-348D4B1B7EF0.jpg',
                     'description' => 'Heilsteine: Natursteine sind seit jeher für ihre heilenden Eigenschaften bekannt. Sie helfen, Angst und Stress abzubauen, Müdigkeit zu lindern, Depressionen zu lindern...',
                 ],
                 [
@@ -982,7 +982,7 @@ return [
                     'handle' => 'armband-tigerauge',
                     'price' => '19,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D1BF06A1-F3D8-4CF9-8F1E-232848376862.png?v=1761812954',
+                    'image' => 'products/D1BF06A1-F3D8-4CF9-8F1E-232848376862.jpg',
                     'description' => 'Herzförmiges Tigeraugen-Kristallarmband: Dieses handgefertigte Perlenarmband besteht aus sorgfältig ausgewählten Tigeraugensteinen, einer Legierung und einem elastisch...',
                 ],
                 [
@@ -990,7 +990,7 @@ return [
                     'handle' => 'armband-pyrit-6mm',
                     'price' => '14,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8EC1E262-E7F4-437D-B8B0-5431B0304C91.png?v=1761811692',
+                    'image' => 'products/8EC1E262-E7F4-437D-B8B0-5431B0304C91.jpg',
                     'description' => 'Entdecken Sie jetzt, wie Pyrit auf einfache Weise Wohlstand und energetischen Schutz schenkt! Das elastische Armband mit 6 mm großen Pyritperlen ist ein besonderes Acc...',
                 ],
                 [
@@ -998,7 +998,7 @@ return [
                     'handle' => 'armband-citrin-pyrit-aventurin',
                     'price' => '16,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/F627E42C-3101-443A-8773-3FC5D26A0AEE.png?v=1761811022',
+                    'image' => 'products/F627E42C-3101-443A-8773-3FC5D26A0AEE.jpg',
                     'description' => 'Erhalten Sie ein Armband für Harmonie und Fülle: Handgefertigt aus natürlichen Energiekristallen Über Ihr Armband: Handgefertigte Edelsteine: Dieses Armband ist sorgfä...',
                 ],
                 [
@@ -1006,7 +1006,7 @@ return [
                     'handle' => 'armband-citrin-hamatit-obsidian',
                     'price' => '16,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/32C8077D-1819-4EEE-A6ED-EE27C9C7A670.png?v=1761810435',
+                    'image' => 'products/32C8077D-1819-4EEE-A6ED-EE27C9C7A670.jpg',
                     'description' => 'Feng Shui Armband aus schwarzem Obsidian und Citrin für Wohlstand. Dieses Armband vereint die Kraft von Citrin, schwarzem Obsidian und Hämatit, um Reichtum, Wohlstand...',
                 ],
                 [
@@ -1014,7 +1014,7 @@ return [
                     'handle' => 'armband-rosa-zebrastein-10mm',
                     'price' => '18,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/B6886889-92DC-4647-99E9-0276E93001F2.png?v=1761731081',
+                    'image' => 'products/B6886889-92DC-4647-99E9-0276E93001F2.jpg',
                     'description' => 'Dieses elastische Armband ist handgefertigt und besteht aus 10 mm großen, rosafarbenen Zebrastein-Halbedelsteinperlen und 4 goldenen Strassperlen. Zebrasteinen wird na...',
                 ],
                 [
@@ -1022,7 +1022,7 @@ return [
                     'handle' => 'armband-lapis-lazuli',
                     'price' => '15,00 EUR',
                     'badge' => 'Armband',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8FC57402-96E3-40A9-9E6B-43168302523F.png?v=1761730364',
+                    'image' => 'products/8FC57402-96E3-40A9-9E6B-43168302523F.jpg',
                     'description' => '8 mm Lapislazuli-Armband aus Naturkristall für Reiki und Chakra-Ausgleich. Ein ideales Geschenk für Ihren Partner, Vater, Freunde usw. Halbedelstein-Schmuck ist für je...',
                 ],
                 [
@@ -1030,7 +1030,7 @@ return [
                     'handle' => 'halskette-mala-gruner-achat',
                     'price' => '30,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/7614FD81-1794-4FCF-A610-2072FF040BAB.png?v=1761729283',
+                    'image' => 'products/7614FD81-1794-4FCF-A610-2072FF040BAB.jpg',
                     'description' => 'Hochwertiges Material: Dieses Schmuckstück ist aus natürlichem grünem Achat gefertigt, der für seine Schönheit und Reinheit sowie seine energetischen Eigenschaften bek...',
                 ],
                 [
@@ -1038,7 +1038,7 @@ return [
                     'handle' => 'halskette-mit-anhanger-aus-zibu-grunjade',
                     'price' => '16,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9642908F-0D3B-41C5-A74A-DAB58280D341.png?v=1761728299',
+                    'image' => 'products/9642908F-0D3B-41C5-A74A-DAB58280D341.jpg',
                     'description' => 'Entdecken Sie das Geheimnis von Glück und Harmonie mit dieser einzigartigen Halskette mit Zibu-Symbolanhänger aus grünem Jade! Diese verstellbare Halskette mit rundem...',
                 ],
                 [
@@ -1046,7 +1046,7 @@ return [
                     'handle' => 'halskette-mala-turkis-7-chakren',
                     'price' => '40,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/9A94FA31-346F-4AE3-831C-D38564238E3A.png?v=1761727518',
+                    'image' => 'products/9A94FA31-346F-4AE3-831C-D38564238E3A.jpg',
                     'description' => 'Türkis in jeder Perle: Türkis, auch als „Juwel des Himmels“ bekannt, ist für seine besonderen spirituellen und ästhetischen Eigenschaften berühmt und gilt als Symbol f...',
                 ],
                 [
@@ -1054,7 +1054,7 @@ return [
                     'handle' => 'halskette-mit-anhanger-labradorit',
                     'price' => '17,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/8D1F73FF-DCFB-4D83-BB42-96CD9669FD8E.png?v=1761726879',
+                    'image' => 'products/8D1F73FF-DCFB-4D83-BB42-96CD9669FD8E.jpg',
                     'description' => 'Labradorit-Anhänger-Halskette: Eleganz und Energie in einem Schmuckstück Ein handgefertigtes Schmuckstück: Diese Halskette besticht durch einen ovalen Anhänger, der so...',
                 ],
                 [
@@ -1062,7 +1062,7 @@ return [
                     'handle' => 'mala-halskette-mit-amethyst-anhanger',
                     'price' => '30,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/2C638416-4EB6-48D9-A16D-792055BAE640.png?v=1761571605',
+                    'image' => 'products/2C638416-4EB6-48D9-A16D-792055BAE640.jpg',
                     'description' => 'Die energetische und heilende Mala-Halskette: Eine Mischung aus Schönheit, Kraft und Tradition Amethyst und Lebensbaum: Diese handgefertigte, einzigartige Halskette ko...',
                 ],
                 [
@@ -1070,7 +1070,7 @@ return [
                     'handle' => 'halskette-mit-anhanger-hexagramm',
                     'price' => '15,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/34FF35A6-C550-43EA-A620-B00A72BA1A37.png?v=1761570833',
+                    'image' => 'products/34FF35A6-C550-43EA-A620-B00A72BA1A37.jpg',
                     'description' => 'Eleganz und Schutz in einer einzigartigen Halskette Ausgewählte Halskettenmerkmale: Aufbau und Materialien: Unsere Halskette hat eine verstellbare schwarze Kordel und...',
                 ],
                 [
@@ -1078,7 +1078,7 @@ return [
                     'handle' => 'palo-santo-holz-ecuador-4st',
                     'price' => '5,00 EUR',
                     'badge' => 'Halbedelsteine & Co',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/DC33044C-3342-4580-87AB-0FEFC6D3F6C2.png?v=1758550232',
+                    'image' => 'products/DC33044C-3342-4580-87AB-0FEFC6D3F6C2.jpg',
                     'description' => 'Beschreibung: Entdecken Sie die natürliche Kraft des ecuadorianischen Palo Santo-Holzes – ideal für die Kristallreinigung, die Beseitigung negativer Energien und für M...',
                 ],
                 [
@@ -1086,7 +1086,7 @@ return [
                     'handle' => 'flasche-lapis-lazuli',
                     'price' => '45,00 EUR',
                     'badge' => 'Halbedelsteine & Co',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D36DC9FB-253D-43FF-B9B7-4C1D3467BC37.png?v=1758549753',
+                    'image' => 'products/D36DC9FB-253D-43FF-B9B7-4C1D3467BC37.jpg',
                     'description' => 'Lapislazuli – Das Tor zur alten Weisheit: Lapislazuli mit seinen königsblauen Tönen, die durch goldene Pyritfragmente verstärkt werden, wird seit Jahrtausenden für sei...',
                 ],
                 [
@@ -1094,7 +1094,7 @@ return [
                     'handle' => 'untersetzer-fur-becher-set-mandala',
                     'price' => '30,00 EUR',
                     'badge' => 'Set',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/97BB32B4-3CC2-464F-8A6D-EE417AB654C3.png?v=1758548969',
+                    'image' => 'products/97BB32B4-3CC2-464F-8A6D-EE417AB654C3.jpg',
                     'description' => 'SCHNELL ABSORBIEREND – Unser 8er-Set Untersetzer besteht aus hochwertigem, saugfähigem Stein. Die Oberfläche saugt alle Arten von Flüssigkeiten oder Wasserflecken in S...',
                 ],
                 [
@@ -1102,7 +1102,7 @@ return [
                     'handle' => 'kette-mit-anhanger-labradorit-1',
                     'price' => '25,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/4EE34E07-4937-4D33-AF99-D7059EDA037F_1.png?v=1758531612',
+                    'image' => 'products/4EE34E07-4937-4D33-AF99-D7059EDA037F_1.jpg',
                     'description' => 'Einzigartiger Schmuck: Diese Halskette mit Anhänger aus natürlichem Labradorit ist ein einzigartiges und besonderes Schmuckstück. Jeder unregelmäßige Kristall ist hand...',
                 ],
                 [
@@ -1110,7 +1110,7 @@ return [
                     'handle' => 'kette-mit-anhanger-peridot',
                     'price' => '28,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/D8EA1901-43E7-4282-8FC3-0BFBD1774D00_1.png?v=1758529723',
+                    'image' => 'products/D8EA1901-43E7-4282-8FC3-0BFBD1774D00_1.jpg',
                     'description' => 'Wie Sie mit einer einzigartigen, handgefertigten Halskette mit Natursteinen und heiligen Himmelssymbolen Fülle, Liebe und göttlichen Schutz in Ihr Leben bringen. Haupt...',
                 ],
                 [
@@ -1118,7 +1118,7 @@ return [
                     'handle' => 'kette-mit-anhanger-baum-des-lebens-labradorit',
                     'price' => '25,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/6B40FC33-0B7F-42AE-912F-3A4CC799BF88_1.png?v=1758529253',
+                    'image' => 'products/6B40FC33-0B7F-42AE-912F-3A4CC799BF88_1.jpg',
                     'description' => 'Natürliche und einzigartige Labradorit-Halskette: Jede Halskette besteht aus natürlichem Labradorit und ist handgefertigt, um die Schönheit und Einzigartigkeit jedes S...',
                 ],
                 [
@@ -1126,7 +1126,7 @@ return [
                     'handle' => 'kette-mit-anhanger-lapis-lazuli',
                     'price' => '20,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/498571B3-ED3E-433C-9F51-E925D275DAA1_1.png?v=1758528304',
+                    'image' => 'products/498571B3-ED3E-433C-9F51-E925D275DAA1_1.jpg',
                     'description' => 'Entdecken Sie das Geheimnis von Klarheit und Weisheit mit dieser einzigartigen Lapislazuli-Halskette! Diese verstellbare Kette mit goldenem Regentropfen-Anhänger aus n...',
                 ],
                 [
@@ -1134,7 +1134,7 @@ return [
                     'handle' => 'ring-verstellbar-labradorit',
                     'price' => '20,00 EUR',
                     'badge' => 'Halbedelsteine & Co',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/7195BCD7-E2AF-4B9C-86E2-8E93A8BAFD8C_1.png?v=1758527574',
+                    'image' => 'products/7195BCD7-E2AF-4B9C-86E2-8E93A8BAFD8C_1.jpg',
                     'description' => 'Absolut einzigartig! Ovaler Labradoritring für Klarheit und Ausgeglichenheit. Dieser verstellbare Silberring mit natürlichem Labradorit in ovaler Form ist die perfekte...',
                 ],
                 [
@@ -1142,7 +1142,7 @@ return [
                     'handle' => 'kette-mit-anhanger-labradorit',
                     'price' => '25,00 EUR',
                     'badge' => 'Kette',
-                    'image' => 'https://cdn.shopify.com/s/files/1/0927/7089/4211/files/91336F86-8965-4467-B86B-0E0901FAC802_4a8f4503-ba16-4a85-abb7-3aee2b9c0eb7.png?v=1758525882',
+                    'image' => 'products/91336F86-8965-4467-B86B-0E0901FAC802_4a8f4503-ba16-4a85-abb7-3aee2b9c0eb7.jpg',
                     'description' => 'Einzigartiger Schmuck: Diese Halskette mit Anhänger aus natürlichem Labradorit ist ein einzigartiges und besonderes Schmuckstück. Jeder unregelmäßige Kristall ist hand...',
                 ],
             ],
